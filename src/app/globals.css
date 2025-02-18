@@ -5,17 +5,27 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --grey: #d3d3d3;
+  --lightGrey: #313131;
+  --darkGrey: #1C1C1C;
+  --black: #000000;
+  --white: #FFFFFF;
+  --darkGreen: #003e29;
+  --green: #2bbb35;
+  --blue: #1583F8;
+  --red: #ff5733;
+  --creme: #efeba7;
+   
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+.dark {
+  --background: #0a0a0a;
+  --foreground: #ededed;
 }
 
 body {
   color: var(--foreground);
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
+  transition: background 0.3s ease, color 0.3s ease;
 }

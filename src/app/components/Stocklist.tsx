@@ -1,16 +1,17 @@
 "use client";
+import ThemeToggle from "./ThemeToggle";
 
 type Stock = {
-    symbol: string;
-    date: string;
-    reportedCurrency: string;
-    fillingDate: string;
-    revenue: string;
-}
+  symbol: string;
+  date: string;
+  reportedCurrency: string;
+  fillingDate: string;
+  revenue: string;
+};
 
 type StockListProps = {
-    stocks: Stock[]; 
-  };
+  stocks: Stock[];
+};
 
 export default function StockList({ stocks }: StockListProps) {
   return (
@@ -18,9 +19,12 @@ export default function StockList({ stocks }: StockListProps) {
       <h1 className="text-5xl">Stock Search Results</h1>
       <ul>
         {stocks.map((stock) => (
-          <li key={stock.date}>{stock.date} {stock.revenue} {stock.symbol}</li>
+          <li key={stock.date}>
+            {stock.date} {stock.revenue} {stock.symbol}
+          </li>
         ))}
       </ul>
+      <ThemeToggle />
     </div>
   );
 }
