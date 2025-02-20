@@ -1,4 +1,8 @@
+"use client"
 import { supabase } from "../lib/supabaseClient";
+import { useRouter } from "next/navigation"; 
+
+
 // const apiKey = process.env.NEXT_PUBLIC_FINANCIAL_API_KEY;
 
 // This is the link to the api endpoint for me to call each time
@@ -26,33 +30,44 @@ import { supabase } from "../lib/supabaseClient";
 //   };
 // });
 
-
-
 // Authentication Logic for Google Sign in
 
-    export const handleGoogleLogin = async () => {
-      await supabase.auth.signInWithOAuth({
-            provider: "google",
-            options: {
-              redirectTo: `${process.env.NEXT_PUBLIC_SITE_URL}/auth/callback`,
-            },
-          });
-  
-    };
+export const handleGoogleLogin = async () => {
+  await supabase.auth.signInWithOAuth({
+    provider: "google",
+    options: {
+      redirectTo: `https://igcwcmptatreplhpyico.supabase.co/auth/v1/callback`,
+    },
+  });
+};
 
-    export async function handleGithubLogin() {
-      const { error } = await supabase.auth.signInWithOAuth({
-        provider: "github",
-        options: {
-          redirectTo: "http://localhost:3000/auth/callback", // After Supabase processes login
-        },
-      });
-    
-      if (error) console.error("GitHub login error:", error);
-    }
-    
-    
-    
-  
-  
-  
+export async function handleGithubLogin() {
+  const { error } = await supabase.auth.signInWithOAuth({
+    provider: "github",
+    options: {
+      redirectTo: `https://igcwcmptatreplhpyico.supabase.co/auth/v1/callback`,
+    },
+  });
+  if (error) console.error("OAuth sign-in error:", error);
+}
+
+export async function signUpNewUser(email: string, password: string) {
+   await supabase.auth.signUp({
+    email: email,
+    password: password,
+    options: {
+      emailRedirectTo: 'https://igcwcmptatreplhpyico.supabase.co/auth/v1/callback',
+    },
+  })
+}
+
+
+export const LogoutUser = async (router: ReturnType<typeof useRouter>) => {
+ 
+  try {
+    await supabase.auth.signOut();
+    router.push("/login");
+  } catch (error) {
+    console.error("Logout failed:", error);
+  }
+};
