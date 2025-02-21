@@ -1,7 +1,6 @@
-"use client"
+"use client";
 import { supabase } from "../lib/supabaseClient";
-import { useRouter } from "next/navigation"; 
-
+import { useRouter } from "next/navigation";
 
 // const apiKey = process.env.NEXT_PUBLIC_FINANCIAL_API_KEY;
 
@@ -51,19 +50,94 @@ export async function handleGithubLogin() {
   if (error) console.error("OAuth sign-in error:", error);
 }
 
-export async function signUpNewUser(email: string, password: string) {
-   await supabase.auth.signUp({
-    email: email,
-    password: password,
-    options: {
-      emailRedirectTo: 'https://igcwcmptatreplhpyico.supabase.co/auth/v1/callback',
-    },
-  })
+
+export async function emailSignIn(email: string, password: string): Promise<boolean> {
+  try {
+    const { error } = await supabase.auth.signInWithPassword({
+      email: email,
+      password: password,
+    });
+
+    console.log("Hi");
+
+    if (error) {
+      console.error("Error signing in:", error.message); 
+      return false; // Return false if there's an error
+    }
+
+    // Return true if sign-in is successful
+    return true;
+  } catch (error) {
+    console.error("Unexpected error signing in:", error);
+    return false; // Return false for unexpected errors
+  }
+}
+
+export async function recoverEmailPassword(email: string): Promise<boolean> {
+  try {
+    const { error } = await supabase.auth.resetPasswordForEmail(email, {
+      redirectTo: 'http://localhost:3000/password-reset',
+    })
+
+    if (error) {
+      console.error("Error signing in:", error.message); 
+      return false; // Return false if there's an error
+    }
+
+    // Return true if sign-in is successful
+    return true;
+  } catch (error) {
+    console.error("Unexpected error signing in:", error);
+    return false; // Return false for unexpected errors
+  }
+}
+
+export async function resetEmailPassword(password: string): Promise<{ success: boolean; error?: string }> {
+  try {
+    const { error } = await supabase.auth.updateUser({
+      password: password
+    });
+
+    if (error) {
+      console.error("Error resetting password:", error.message);
+      return { success: false, error: error.message }; // Return error message
+    }
+
+    return { success: true }; // Return success
+  } catch (error) {
+    console.error("Unexpected error resetting password:", error);
+    return { success: false, error: (error as Error).message }; // Return unexpected error
+  }
 }
 
 
-export const LogoutUser = async (router: ReturnType<typeof useRouter>) => {
- 
+export async function signUpNewUser(email: string, password: string): Promise<boolean> {
+  try {
+    const { error } = await supabase.auth.signUp({
+      email,
+      password,
+      options: {
+        emailRedirectTo: "https://igcwcmptatreplhpyico.supabase.co/auth/v1/callback",
+      },
+    });
+
+    if (error) {
+      console.error("Error signing up:", error.message); // Log the error message
+      return false; // Return false if there's an error
+    }
+    
+    return true; // Return true if sign-up is successful
+  } catch (error) {
+    console.error("Error signing up:", error);
+    return false; // Return false for unexpected errors
+  }
+}
+
+
+
+
+
+export  const LogoutUser = async (router: ReturnType<typeof useRouter>) => {
   try {
     await supabase.auth.signOut();
     router.push("/login");

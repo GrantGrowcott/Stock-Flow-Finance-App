@@ -1,13 +1,21 @@
 "use client";
 import { useState } from "react";
 import Image from "next/image";
-import { handleGoogleLogin, handleGithubLogin } from "../../../helpers/helpers";
+import { handleGoogleLogin, handleGithubLogin, emailSignIn } from "../../../helpers/helpers";
 import { useRouter } from "next/navigation";
-const Login = () => {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
 
+const Login = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const router = useRouter();
+  
+  const handleSignIn = async () => {
+    const success = await emailSignIn(email, password);
+    if (success) {
+      router.push("/"); 
+    }
+  };
+  
   return (
     <div className="flex flex-col items-center justify-center h-screen bg-[url(/clouds.webp)] bg-cover">
       <div className="bg-gradient-to-t from-white to-[#9ac8e7] p-7 mx-5 rounded-2xl flex flex-col ">
@@ -20,8 +28,8 @@ const Login = () => {
           <input
             type="text"
             placeholder="Email"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
             className="w-full p-2 mb-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
           />
 
@@ -33,10 +41,10 @@ const Login = () => {
             className="w-full p-2 mb-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
           />
         </div>
-        <button>
+        <button onClick={() => router.push("/password-recovery")}>
           <h3 className="text-right">Forgot Password?</h3>
         </button>
-        <button className="bg-[var(--black)] text-white py-3 px-4 rounded-md my-4 ">
+        <button onClick={handleSignIn} className="bg-[var(--black)] text-white py-3 px-4 rounded-md my-4 ">
           <h3>Login</h3>
         </button>
         <h4 className="mx-auto text-sm">Or sign in with</h4>
