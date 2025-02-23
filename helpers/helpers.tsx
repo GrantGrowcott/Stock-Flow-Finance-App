@@ -1,13 +1,13 @@
-"use client";
 import { supabase } from "../lib/supabaseClient";
 import { useRouter } from "next/navigation";
-
+import { User } from "@supabase/supabase-js";
+import { Dispatch, SetStateAction } from "react";
 // const apiKey = process.env.NEXT_PUBLIC_FINANCIAL_API_KEY;
 
 // This is the link to the api endpoint for me to call each time
 // https://site.financialmodelingprep.com/developer/docs#income-statements-financial-statements
 
-// This function is invoked when ready to use the actual api endpoint.You have only 250 api calls per day on the free plan. Replace mockStocks on line 29 with getStocks().
+// This function is invoked when ready to use the actual api endpoint.You have only 250 api calls per day on the free plan.
 
 // async function getStocks() {
 //   const res = await fetch(
@@ -29,8 +29,8 @@ import { useRouter } from "next/navigation";
 //   };
 // });
 
-// Authentication Logic for Google Sign in
 
+// Authentication Logic for Google Sign in
 export const handleGoogleLogin = async () => {
   await supabase.auth.signInWithOAuth({
     provider: "google",
@@ -40,6 +40,7 @@ export const handleGoogleLogin = async () => {
   });
 };
 
+// Authentication Logic for Github Sign in
 export async function handleGithubLogin() {
   const { error } = await supabase.auth.signInWithOAuth({
     provider: "github",
@@ -50,48 +51,40 @@ export async function handleGithubLogin() {
   if (error) console.error("OAuth sign-in error:", error);
 }
 
-
+// Authentication Logic for Email Sign in
 export async function emailSignIn(email: string, password: string): Promise<boolean> {
   try {
     const { error } = await supabase.auth.signInWithPassword({
       email: email,
       password: password,
     });
-
-    console.log("Hi");
-
     if (error) {
       console.error("Error signing in:", error.message); 
-      return false; // Return false if there's an error
+      return false; 
     }
-
-    // Return true if sign-in is successful
     return true;
   } catch (error) {
     console.error("Unexpected error signing in:", error);
-    return false; // Return false for unexpected errors
+    return false; 
   }
 }
-
+// This function sends a link to the users email to perform password recovery, they are redirected to the  http://localhost:3000/password-reset end point to change their password
 export async function recoverEmailPassword(email: string): Promise<boolean> {
   try {
     const { error } = await supabase.auth.resetPasswordForEmail(email, {
       redirectTo: 'http://localhost:3000/password-reset',
     })
-
     if (error) {
       console.error("Error signing in:", error.message); 
-      return false; // Return false if there's an error
+      return false; 
     }
-
-    // Return true if sign-in is successful
     return true;
   } catch (error) {
     console.error("Unexpected error signing in:", error);
-    return false; // Return false for unexpected errors
+    return false; 
   }
 }
-
+// Changes the old password to the new password after being redirected from the email link
 export async function resetEmailPassword(password: string): Promise<{ success: boolean; error?: string }> {
   try {
     const { error } = await supabase.auth.updateUser({
@@ -100,17 +93,17 @@ export async function resetEmailPassword(password: string): Promise<{ success: b
 
     if (error) {
       console.error("Error resetting password:", error.message);
-      return { success: false, error: error.message }; // Return error message
+      return { success: false, error: error.message }; 
     }
 
-    return { success: true }; // Return success
+    return { success: true }; 
   } catch (error) {
     console.error("Unexpected error resetting password:", error);
-    return { success: false, error: (error as Error).message }; // Return unexpected error
+    return { success: false, error: (error as Error).message }; 
   }
 }
 
-
+// Creating a new email based user
 export async function signUpNewUser(email: string, password: string): Promise<boolean> {
   try {
     const { error } = await supabase.auth.signUp({
@@ -122,26 +115,37 @@ export async function signUpNewUser(email: string, password: string): Promise<bo
     });
 
     if (error) {
-      console.error("Error signing up:", error.message); // Log the error message
-      return false; // Return false if there's an error
+      console.error("Error signing up:", error.message); 
+      return false; 
     }
-    
-    return true; // Return true if sign-up is successful
+    return true; 
   } catch (error) {
     console.error("Error signing up:", error);
-    return false; // Return false for unexpected errors
+    return false; 
   }
 }
 
-
-
-
-
+// Logout the user
 export  const LogoutUser = async (router: ReturnType<typeof useRouter>) => {
   try {
     await supabase.auth.signOut();
     router.push("/login");
   } catch (error) {
     console.error("Logout failed:", error);
+  }
+};
+
+// Check if the user is authenticated and if so, set the user in state ( used on the home page)
+export const checkAuth = async (
+  router: ReturnType<typeof useRouter>, 
+  setUser: Dispatch<SetStateAction<User | null>>
+) => {
+  const { data } = await supabase.auth.getUser();
+
+  if (!data.user) {
+    router.push("/login");
+  } else {
+    setUser(data.user);
+    console.log("Authenticated user:", data.user);
   }
 };

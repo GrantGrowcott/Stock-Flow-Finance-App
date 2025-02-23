@@ -18,6 +18,7 @@ const Login = () => {
   
   return (
     <div className="flex flex-col items-center justify-center h-screen bg-[url(/clouds.webp)] bg-cover">
+    <Image src= "/stock-flow.png" width={200} height={100} className="absolute top-0 left-0" alt="Stock Flow Logo"/>
       <div className="bg-gradient-to-t from-white to-[#9ac8e7] p-7 mx-5 rounded-2xl flex flex-col ">
         <Image src="/login-icon.png" alt="Logo" width={50} height={50} className="mb-5 mx-auto" />
         <h1 className="text-2xl font-bold text-center">Sign in with email </h1>
@@ -72,6 +73,7 @@ const Login = () => {
         </h4>
       </div>
     </div>
+    
   );
 };
 

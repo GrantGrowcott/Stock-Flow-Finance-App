@@ -1,9 +1,30 @@
+"use client";
 import Logout from "./components/Logout";
-export default async function HomePage() {
+import { useState, useEffect } from "react";
+import { User } from "@supabase/supabase-js";
+import { checkAuth } from "../../helpers/helpers";
+import { useRouter } from "next/navigation";
+
+function HomePage() {
+  const [user, setUser] = useState<User | null>(null);
+  const router = useRouter();
+
+  useEffect(() => {
+    const verifyUser = async () => {
+      await checkAuth(router, setUser);
+    };
+
+    verifyUser();
+  }, [router]);
+
+  if (!user) return <p>Loading...</p>;
+
   return (
-    <div className="flex flex-col items-center justify-center">
-      <div>This will be the home page of the application</div>
+    <div>
+      <h1>Welcome, {user.email || "cool person"}</h1>
       <Logout />
     </div>
   );
 }
+
+export default HomePage;

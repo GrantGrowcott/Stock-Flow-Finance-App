@@ -7,12 +7,13 @@ const PasswordReset = () => {
   const [password, setPassword] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
   const router = useRouter();
+
   const handleSignUp = async () => {
     const result = await resetEmailPassword(password);
 
     if (result.success) {
       setSuccessMessage("Password successfully reset.");
-      router.push("/login"); 
+      router.push("/login");
     } else {
       setSuccessMessage(`Password reset failed: ${result.error}`);
     }
