@@ -126,13 +126,13 @@ export async function signUpNewUser(email: string, password: string): Promise<bo
 }
 
 // Logout the user
-export  const LogoutUser = async (router: ReturnType<typeof useRouter>) => {
+export const LogoutUser = async (router: ReturnType<typeof useRouter>) => {
   try {
     await supabase.auth.signOut();
     router.push("/login");
   } catch (error) {
     console.error("Logout failed:", error);
-  }
+  } 
 };
 
 // Check if the user is authenticated and if so, set the user in state ( used on the home page)

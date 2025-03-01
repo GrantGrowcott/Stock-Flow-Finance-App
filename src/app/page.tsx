@@ -1,5 +1,5 @@
 "use client";
-import Logout from "./components/Logout";
+
 import { useState, useEffect } from "react";
 import { User } from "@supabase/supabase-js";
 import { checkAuth } from "../../helpers/helpers";
@@ -21,8 +21,6 @@ function HomePage() {
 
   return (
     <div>
-      <h1>Welcome, {user.email || "cool person"}</h1>
-      <Logout />
     </div>
   );
 }
