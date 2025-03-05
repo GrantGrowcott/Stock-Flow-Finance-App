@@ -2,13 +2,13 @@
 import { useEffect, useState } from "react";
 import { supabase } from "../../../lib/supabaseClient";
 import Image from "next/image";
-import ThemeToggle from "./ThemeToggle";
 import Link from "next/link";
+import { useTheme } from "../context/ThemeContext";
 
 const Navbar = () => {
   const [profileImage, setProfileImage] = useState("/placeholder-black.png"); 
   const [user,setUser] = useState("Investor")
-  const [darkMode, setDarkMode] = useState(false); 
+  const { darkMode } = useTheme();
 
   useEffect(() => {
     const seeUserData = async () => {
@@ -19,7 +19,8 @@ const Navbar = () => {
       if (image_url || user_email) {
         setProfileImage(image_url);
         setUser(user_email); 
-      } else if (darkMode) {
+      } 
+      else if (darkMode) {
         setProfileImage("/placeholder-white.png"); 
       } else {
         setProfileImage("/placeholder-black.png"); 
@@ -33,7 +34,7 @@ const Navbar = () => {
       <ul className="flex flex-col">
        <Image src= "/stock-flow-blue.png" width={200} height={100} alt="Stock Flow Logo"/>
       </ul>
-      <ul className="flex flex-col space-y-10 flex-grow">
+      <ul className="flex flex-col mt-10 space-y-10 flex-grow">
         <li>
           <Link href= "/"><h3>Home</h3></Link>
         </li>
@@ -50,9 +51,6 @@ const Navbar = () => {
           <a href="#">Portfolio Tracker</a>
         </li>
       </ul>
-      <div className="mt-auto mb-4">
-        <ThemeToggle setDarkMode={setDarkMode} />
-      </div>
       <ul>
         <button>
           <div className="flex gap-4">
