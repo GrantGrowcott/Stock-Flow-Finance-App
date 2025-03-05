@@ -149,3 +149,23 @@ export const checkAuth = async (
     console.log("Authenticated user:", data.user);
   }
 };
+
+// Sets user data such as the profile picture and username based on dark mode and light mode
+export const seeUserData = async (
+  setProfileImage: React.Dispatch<React.SetStateAction<string>>,
+  setUser: React.Dispatch<React.SetStateAction<string>>,
+  darkMode: boolean
+) => {
+  const { data } = await supabase.auth.getUser();
+  const image_url = data.user?.user_metadata?.avatar_url;
+  const user_email = data.user?.user_metadata?.email;
+
+  if (image_url || user_email) {
+    setProfileImage(image_url);
+    setUser(user_email);
+  } else if (darkMode) {
+    setProfileImage("/placeholder-white.png");
+  } else {
+    setProfileImage("/placeholder-black.png");
+  }
+};
