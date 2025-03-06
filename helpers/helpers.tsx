@@ -2,6 +2,7 @@ import { supabase } from "../lib/supabaseClient";
 import { useRouter } from "next/navigation";
 import { User } from "@supabase/supabase-js";
 import { Dispatch, SetStateAction } from "react";
+import { setAuthPage } from "@/app/store/userSlice";
 
 // const apiKey = process.env.NEXT_PUBLIC_FINANCIAL_API_KEY;
 
@@ -177,4 +178,9 @@ export const seeUserData = async (
 // Toggles the Settings Modal ( contains the logout button)
 export const toggleModal = (setIsOpen: Dispatch<SetStateAction<boolean>>) => {
   setIsOpen((prev) => !prev);
+};
+
+export const pageRedirect = (page: "register" | "login" | "password-recovery", dispatch: Dispatch , router: ReturnType<typeof useRouter>) => {
+  dispatch(setAuthPage(page));  
+  router.push(`/${page}`);  
 };

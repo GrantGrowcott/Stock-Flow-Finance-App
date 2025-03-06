@@ -8,6 +8,7 @@ const EmailRegistration = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [successMessage, setSuccessMessage] = useState(""); 
+  
 
   const handleSignUp = async () => {
     const success = await signUpNewUser(email, password);

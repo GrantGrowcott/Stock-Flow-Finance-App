@@ -3,10 +3,12 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface UserState {
   isLoggedIn: boolean;
+  authPage: string;
 }
 
 const initialState: UserState = {
-  isLoggedIn: false
+  isLoggedIn: false,
+  authPage: "login"
 };
 
 const userSlice = createSlice({
@@ -16,9 +18,12 @@ const userSlice = createSlice({
     setLoginState: (state, action: PayloadAction<boolean>) => {
       state.isLoggedIn = action.payload;
     },
+    setAuthPage: (state, action: PayloadAction<string>) => {
+      state.authPage = action.payload;
+    },
   },
 });
 
-export const { setLoginState } = userSlice.actions;
+export const { setLoginState, setAuthPage } = userSlice.actions;
 
 export default userSlice.reducer;

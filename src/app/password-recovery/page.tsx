@@ -6,13 +6,16 @@ import { icons } from "@/constants";
 const PasswordRecovery = () => {
   const [password, setPassword] = useState("");
   const [successMessage, setSuccessMessage] = useState<boolean | string>(false);
+  const [errorMessage, setErrorMessage] = useState<string>(""); // To handle errors
 
   const handleSignUp = async () => {
     const success = await recoverEmailPassword(password);
     if (success) {
       setSuccessMessage(true);
+      setErrorMessage(""); // Clear error if successful
     } else {
-      console.log("Password recovery failed");
+      setSuccessMessage(false); // Reset success message if failed
+      setErrorMessage("Password recovery failed. Please try again."); // Set error message
     }
   };
 
@@ -38,6 +41,11 @@ const PasswordRecovery = () => {
         {successMessage && (
           <p className="text-[var(--green)]text-center mt-4">
             Check your email to reset your password. The email can take 2-3 minutes to be received.
+          </p>
+        )}
+        {errorMessage && (
+          <p className="text-[var(--red)] text-center mt-4">
+            {errorMessage}
           </p>
         )}
       </div>
