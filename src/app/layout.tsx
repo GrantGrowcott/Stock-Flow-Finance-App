@@ -1,10 +1,10 @@
-"use client"
+"use client";
 import { Geist, Geist_Mono, Open_Sans } from "next/font/google";
 import "./globals.css";
-import Navbar from "./components/NavBar";
-import SearchBar from "./components/SearchBar";
+import AuthWrapper from "./components/AuthWrapper";
 import { ThemeProvider } from "./context/ThemeContext";
-import { useState } from "react";
+import { Provider } from "react-redux";
+import { store } from "./store";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -21,27 +21,20 @@ const openSans = Open_Sans({
   subsets: ["latin"],
 });
 
-
-
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const [collapsed, setCollapsed] = useState(false);
-  const toggleNavbar = () => setCollapsed(prev => !prev);
-  
   return (
-    <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable}  ${openSans.variable} antialiased`}>
-        <ThemeProvider>
-          <div className="flex">
-          <Navbar collapsed={collapsed} toggleNavbar={toggleNavbar} />
-          <SearchBar collapsed={collapsed} toggleNavbar={toggleNavbar} />
-            {children}
-          </div>
-        </ThemeProvider>
-      </body>
-    </html>
+    <Provider store={store}>
+      <html lang="en">
+        <body className={`${geistSans.variable} ${geistMono.variable} ${openSans.variable} antialiased`}>
+          <ThemeProvider>
+            <AuthWrapper>{children}</AuthWrapper> 
+          </ThemeProvider>
+        </body>
+      </html>
+    </Provider>
   );
 }

@@ -1,6 +1,7 @@
 "use client";
 import ThemeToggle from "./ThemeToggle";
 import CollapseMenu from "./CollapseMenu";
+import SettingsButton from "./SettingsButton";
 
 interface SearchBarProps {
   collapsed: boolean;
@@ -13,9 +14,11 @@ const SearchBar = ({ toggleNavbar, collapsed }: SearchBarProps) => {
       <CollapseMenu toggleNavbar={toggleNavbar} collapsed = {collapsed}/>
       <input
         type="text"
+        placeholder="Search Tickers "
         className="w-full p-2 rounded-md bg-[var(--grey)] text-[var(--black)] dark:text-[var(--white)] dark:bg-gray-700"
       />
       <ThemeToggle />
+      <SettingsButton />
     </div>
   );
 };

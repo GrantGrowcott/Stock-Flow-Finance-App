@@ -21,9 +21,9 @@ const Navbar = ({ collapsed }: NavbarProps) => {
 
   return (
     <div
-      className={`h-screen transition-all duration-300 bg-[var(--white)] text-[var(--black)] dark:bg-[var(--darkGrey)] dark:text-[var(--white)] p-4 flex flex-col
-        ${collapsed ? "w-0 p-0 opacity-0 overflow-hidden" : "w-[30rem] opacity-100"}
-      `}
+      className={`h-screen transition-all duration-300 bg-[var(--white)] text-[var(--black)] dark:bg-[var(--darkGrey)] dark:text-[var(--white)] p-0 flex flex-col
+    ${collapsed ? "w-0 p-0 opacity-0 overflow-hidden" : "w-[30rem] p-4 opacity-100"}
+  `}
     >
       <ul className="flex flex-col">
         <Image src="/stock-flow-blue.png" width={200} height={100} alt="Stock Flow Logo" />

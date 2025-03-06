@@ -3,11 +3,14 @@ import { useState } from "react";
 import Image from "next/image";
 import { handleGoogleLogin, handleGithubLogin, emailSignIn } from "../../../helpers/helpers";
 import { useRouter } from "next/navigation";
+import { useDispatch } from "react-redux";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const dispatch = useDispatch();
   const router = useRouter();
+
 
   const handleSignIn = async () => {
     const success = await emailSignIn(email, password);
@@ -57,7 +60,7 @@ const Login = () => {
         <h4 className="mx-auto text-sm">Or sign in with</h4>
         <div className="flex align-items justify-around my-4">
           <button
-            onClick={handleGoogleLogin}
+            onClick={() => handleGoogleLogin(dispatch, router)}
             className="flex items-center justify-center bg-[var(--white)] p-3 rounded-xl gap-2"
           >
             <Image src="/google.png" alt="Logo" width={40} height={540} className=" mx-auto" />

@@ -2,6 +2,9 @@ import { supabase } from "../lib/supabaseClient";
 import { useRouter } from "next/navigation";
 import { User } from "@supabase/supabase-js";
 import { Dispatch, SetStateAction } from "react";
+import { setLoginState } from "@/app/store/userSlice";
+import { AppDispatch } from "@/app/store";
+import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 // const apiKey = process.env.NEXT_PUBLIC_FINANCIAL_API_KEY;
 
 // This is the link to the api endpoint for me to call each time
@@ -29,15 +32,23 @@ import { Dispatch, SetStateAction } from "react";
 //   };
 // });
 
-
 // Authentication Logic for Google Sign in
-export const handleGoogleLogin = async () => {
-  await supabase.auth.signInWithOAuth({
+export const handleGoogleLogin = async (dispatch: AppDispatch, router: AppRouterInstance) => {
+  const { data, error } = await supabase.auth.signInWithOAuth({
     provider: "google",
     options: {
       redirectTo: `https://igcwcmptatreplhpyico.supabase.co/auth/v1/callback`,
     },
   });
+
+  if (error) {
+    console.error("Login Error:", error);
+    return;
+  }
+
+  if (data) {
+    console.log("Login initiated...");
+  }
 };
 
 // Authentication Logic for Github Sign in
@@ -59,47 +70,47 @@ export async function emailSignIn(email: string, password: string): Promise<bool
       password: password,
     });
     if (error) {
-      console.error("Error signing in:", error.message); 
-      return false; 
+      console.error("Error signing in:", error.message);
+      return false;
     }
     return true;
   } catch (error) {
     console.error("Unexpected error signing in:", error);
-    return false; 
+    return false;
   }
 }
 // This function sends a link to the users email to perform password recovery, they are redirected to the  http://localhost:3000/password-reset end point to change their password
 export async function recoverEmailPassword(email: string): Promise<boolean> {
   try {
     const { error } = await supabase.auth.resetPasswordForEmail(email, {
-      redirectTo: 'http://localhost:3000/password-reset',
-    })
+      redirectTo: "http://localhost:3000/password-reset",
+    });
     if (error) {
-      console.error("Error signing in:", error.message); 
-      return false; 
+      console.error("Error signing in:", error.message);
+      return false;
     }
     return true;
   } catch (error) {
     console.error("Unexpected error signing in:", error);
-    return false; 
+    return false;
   }
 }
 // Changes the old password to the new password after being redirected from the email link
 export async function resetEmailPassword(password: string): Promise<{ success: boolean; error?: string }> {
   try {
     const { error } = await supabase.auth.updateUser({
-      password: password
+      password: password,
     });
 
     if (error) {
       console.error("Error resetting password:", error.message);
-      return { success: false, error: error.message }; 
+      return { success: false, error: error.message };
     }
 
-    return { success: true }; 
+    return { success: true };
   } catch (error) {
     console.error("Unexpected error resetting password:", error);
-    return { success: false, error: (error as Error).message }; 
+    return { success: false, error: (error as Error).message };
   }
 }
 
@@ -115,13 +126,13 @@ export async function signUpNewUser(email: string, password: string): Promise<bo
     });
 
     if (error) {
-      console.error("Error signing up:", error.message); 
-      return false; 
+      console.error("Error signing up:", error.message);
+      return false;
     }
-    return true; 
+    return true;
   } catch (error) {
     console.error("Error signing up:", error);
-    return false; 
+    return false;
   }
 }
 
@@ -132,12 +143,12 @@ export const LogoutUser = async (router: ReturnType<typeof useRouter>) => {
     router.push("/login");
   } catch (error) {
     console.error("Logout failed:", error);
-  } 
+  }
 };
 
 // Check if the user is authenticated and if so, set the user in state ( used on the home page)
 export const checkAuth = async (
-  router: ReturnType<typeof useRouter>, 
+  router: ReturnType<typeof useRouter>,
   setUser: Dispatch<SetStateAction<User | null>>
 ) => {
   const { data } = await supabase.auth.getUser();

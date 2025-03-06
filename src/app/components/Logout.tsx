@@ -7,10 +7,11 @@ const Logout = () => {
   const router = useRouter();
   
   return (
-    <button onClick={() => LogoutUser(router)} className="bg-black p-4 rounded-md">
+    <button onClick={() => LogoutUser(router)} className="bg-black p-4 rounded-md mt-3">
       <h3 className="text-white">Logout</h3>
     </button>
   );
 };
 
 export default Logout;
+
