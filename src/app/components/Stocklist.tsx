@@ -1,5 +1,4 @@
 "use client";
-import ThemeToggle from "../context/ThemeContext";
 
 type Stock = {
   symbol: string;
@@ -24,7 +23,6 @@ export default function StockList({ stocks }: StockListProps) {
           </li>
         ))}
       </ul>
-      <ThemeToggle />
     </div>
   );
 }

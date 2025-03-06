@@ -1,15 +1,10 @@
 import Image from "next/image";
+import { NavbarProps, icons } from "@/constants";
 
-
-interface CollapseMenuProps {
-    toggleNavbar: () => void;
-    collapsed: boolean;
-  }
-
-  const CollapseMenu = ({ toggleNavbar, collapsed }: CollapseMenuProps) => {
+  const CollapseMenu = ({ toggleNavbar, collapsed }: NavbarProps) => {
   return (
     <button onClick={toggleNavbar}>
-      <Image src={collapsed ? "/menu-icon.png" : "/left-arrow.png" } width={30} height={40} alt="left arrow" className="mr-3" />
+      <Image src={collapsed ? "/menu-icon.png" : "/left-arrow.png" } width={icons.nav} height={icons.nav} alt="left arrow" className="mr-3" />
     </button>
   );
 };

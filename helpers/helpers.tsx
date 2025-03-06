@@ -32,20 +32,15 @@ import { Dispatch, SetStateAction } from "react";
 
 // Authentication Logic for Google Sign in
 export const handleGoogleLogin = async () => {
-  const { data, error } = await supabase.auth.signInWithOAuth({
+  const { error } = await supabase.auth.signInWithOAuth({
     provider: "google",
     options: {
       redirectTo: `https://igcwcmptatreplhpyico.supabase.co/auth/v1/callback`,
     },
   });
-
   if (error) {
     console.error("Login Error:", error);
     return;
-  }
-
-  if (data) {
-    console.log("Login initiated...");
   }
 };
 
@@ -177,4 +172,9 @@ export const seeUserData = async (
   } else {
     setProfileImage("/placeholder-black.png");
   }
+};
+
+// Toggles the Settings Modal ( contains the logout button)
+export const toggleModal = (setIsOpen: Dispatch<SetStateAction<boolean>>) => {
+  setIsOpen((prev) => !prev);
 };
