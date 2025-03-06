@@ -2,9 +2,7 @@ import { supabase } from "../lib/supabaseClient";
 import { useRouter } from "next/navigation";
 import { User } from "@supabase/supabase-js";
 import { Dispatch, SetStateAction } from "react";
-import { setLoginState } from "@/app/store/userSlice";
-import { AppDispatch } from "@/app/store";
-import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
+
 // const apiKey = process.env.NEXT_PUBLIC_FINANCIAL_API_KEY;
 
 // This is the link to the api endpoint for me to call each time
@@ -33,7 +31,7 @@ import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.share
 // });
 
 // Authentication Logic for Google Sign in
-export const handleGoogleLogin = async (dispatch: AppDispatch, router: AppRouterInstance) => {
+export const handleGoogleLogin = async () => {
   const { data, error } = await supabase.auth.signInWithOAuth({
     provider: "google",
     options: {
