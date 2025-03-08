@@ -4,7 +4,7 @@ const RateOfReturn = () => {
    
      return (
        <div>
-        Hey there
+        Rate of Return Page
        </div>
      );
 }

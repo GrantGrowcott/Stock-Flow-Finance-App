@@ -4,7 +4,7 @@ import { NavbarProps, icons } from "@/constants";
   const CollapseMenu = ({ toggleNavbar, collapsed }: NavbarProps) => {
   return (
     <button onClick={toggleNavbar}>
-      <Image src={collapsed ? "/menu-icon.png" : "/left-arrow.png" } width={icons.nav} height={icons.nav} alt="left arrow" className="mr-3" />
+      <Image src={collapsed ? "/menu-icon.png" : "/left-arrow.png" } width={icons.nav} height={icons.nav} alt="left arrow" className="mr-5 max-[800px]:mr-10" />
     </button>
   );
 };

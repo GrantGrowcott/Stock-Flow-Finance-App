@@ -19,10 +19,7 @@ function HomePage() {
 
   if (!user) return <p>Loading...</p>;
 
-  return (
-    <div>
-    </div>
-  );
+  return <div>Home Page</div>;
 }
 
 export default HomePage;

@@ -4,17 +4,11 @@ import Image from "next/image";
 import { handleGoogleLogin, handleGithubLogin, emailSignIn } from "../../../helpers/helpers";
 import { useRouter } from "next/navigation";
 import { icons } from "@/constants";
-import { pageRedirect } from "../../../helpers/helpers";
-import { useDispatch } from "react-redux";
-
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const router = useRouter();
-  
-  const dispatch = useDispatch();
-
 
 
   const handleSignIn = async () => {
@@ -80,8 +74,8 @@ const Login = () => {
           </button>
         </div>
         <h4 className="mx-auto">
-          Don&apos;t have an account?{" "}
-          <button onClick={() => pageRedirect("register",dispatch, router)}>
+          Don&apos;t have an account?
+          <button onClick={() => router.push("/register")}>
             <span className="text-[var(--blue)]">Sign Up</span>
           </button>
         </h4>

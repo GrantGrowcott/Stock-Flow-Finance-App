@@ -10,23 +10,24 @@ import Login from "../login/page";
 import PasswordRecovery from "../password-recovery/page";
 import PasswordReset from "../password-reset/page";
 import EmailRegistration from "../register/page";
+import { usePathname, useRouter } from "next/navigation";
 
 export default function AuthWrapper({ children }: { children: React.ReactNode }) {
   const dispatch = useDispatch();
   const [collapsed, setCollapsed] = useState(false);
-  
+
   const user = useSelector((state: RootState) => state.user.isLoggedIn);
-  const authPage = useSelector((state: RootState) => state.user.authPage);
+  const router = useRouter();
+  const pathname = usePathname();
 
   const toggleNavbar = () => setCollapsed((prev) => !prev);
 
   useEffect(() => {
     const checkSession = async () => {
       const { data } = await supabase.auth.getSession();
-      console.log(authPage)
       if (data?.session) {
         dispatch(setLoginState(true)); // Update Redux state
-        console.log(data?.session)
+        console.log(data?.session);
       }
     };
 
@@ -43,20 +44,22 @@ export default function AuthWrapper({ children }: { children: React.ReactNode })
     return () => {
       authListener?.subscription.unsubscribe();
     };
-  }, [dispatch]);
+  }, [dispatch, router]);
 
-  return user ? (
+  if (!user) {
+    if (pathname === "/register") return <EmailRegistration />;
+    if (pathname === "/password-recovery") return <PasswordRecovery />;
+    if (pathname === "/password-reset") return <PasswordReset />;
+    return <Login />; // Default to login page
+  }
+
+  return (
     <div className="flex">
       <Navbar collapsed={collapsed} toggleNavbar={toggleNavbar} />
-      <SearchBar collapsed={collapsed} toggleNavbar={toggleNavbar} />
-      {children}
-    </div>
-  ) : (
-    <div>
-      {authPage === "login" && <Login />}
-      {authPage === "password-recovery" && <PasswordRecovery />}
-      {authPage === "password-reset" && <PasswordReset />}
-      {authPage === "register" && <EmailRegistration />}
+      <div className="w-full">
+        <SearchBar collapsed={collapsed} toggleNavbar={toggleNavbar} />
+        {children}
+      </div>
     </div>
   );
 }
