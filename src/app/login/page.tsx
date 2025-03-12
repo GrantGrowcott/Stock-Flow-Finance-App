@@ -23,8 +23,8 @@ const Login = () => {
       />
       <div className="bg-gradient-to-t from-[var(--white)] to-[var(--lightBlue)] p-7 mx-5 rounded-2xl flex flex-col ">
         <Image src="/login-icon.png" alt="Logo" width={icons.login} height={icons.login} className="mb-5 mx-auto" />
-        <h1 className="text-2xl font-bold text-center">Sign in with email </h1>
-        <h2 className="max-w-md text-center mx-auto text text-[var(--lightGrey)]">
+        <h1 className="text-3xl font-bold text-center text-[var(--white)] drop-shadow-md">Sign in with email </h1>
+        <h2 className="max-w-md text-center mx-auto text text-[var(--lightGrey)] ">
           Realize your investing and personal finance potential. For free
         </h2>
         <div className="mt-4">
@@ -45,7 +45,7 @@ const Login = () => {
           />
         </div>
         <button onClick={() => router.push("/password-recovery")}>
-          <h3 className="text-right">Forgot Password?</h3>
+          <h3 className="text-right text-[var(--darkGrey)] drop-shadow-md">Forgot Password?</h3>
         </button>
         <button onClick={() => handleSignIn(email, password, router)} className="bg-[var(--black)] text-[var(--white)] py-3 px-4 rounded-md my-4 ">
           <h3>Login</h3>
@@ -57,17 +57,17 @@ const Login = () => {
             className="flex items-center justify-center bg-[var(--white)] p-3 rounded-xl gap-2"
           >
             <Image src="/google.png" alt="Logo" width={icons.auth} height={icons.auth} className=" mx-auto" />
-            <h3>Google</h3>
+            <h3 className="text-[var(--lightGrey)]">Google</h3>
           </button>
           <button
             onClick={handleGithubLogin}
             className="flex items-center justify-center bg-[var(--white)] p-3 rounded-xl gap-2"
           >
             <Image src="/github.png" alt="Logo" width={icons.auth} height={icons.auth} className=" mx-auto" />
-            <h3>Github</h3>
+            <h3 className="text-[var(--lightGrey)]">Github</h3>
           </button>
         </div>
-        <h4 className="mx-auto">
+        <h4 className="mx-auto text-[var(--lightGrey)]">
           Don&apos;t have an account?
           <button onClick={() => router.push("/register")} className="ml-1">
             <span className="text-[var(--blue)]">Sign Up</span>

@@ -12,7 +12,7 @@ const PasswordRecovery = () => {
     <div className="flex flex-col items-center justify-center h-screen bg-[url(/clouds.webp)] bg-cover">
       <div className="bg-gradient-to-t from-[var(--white)] to-[var(--lightBlue)] p-7 mx-5 rounded-2xl flex flex-col ">
         <Image src="/login-icon.png" alt="Logo" width={icons.login} height={icons.login} className="mb-5 mx-auto" />
-        <h1 className="text-2xl font-bold text-center">Reset your password </h1>
+        <h1 className="text-2xl font-bold text-center text-[var(--white)] drop-shadow-md">Reset your password </h1>
 
         <div className="mt-4">
           <input

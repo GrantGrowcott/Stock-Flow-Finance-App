@@ -13,7 +13,6 @@ function HomePage() {
     const verifyUser = async () => {
       await checkAuth(router, setUser);
     };
-
     verifyUser();
   }, [router]);
 

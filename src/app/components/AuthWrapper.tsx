@@ -26,8 +26,8 @@ export default function AuthWrapper({ children }: { children: React.ReactNode })
     const checkSession = async () => {
       const { data } = await supabase.auth.getSession();
       if (data?.session) {
-        dispatch(setLoginState(true)); // Update Redux state
-        console.log(data?.session);
+        dispatch(setLoginState(true)); 
+        
       }
     };
 
