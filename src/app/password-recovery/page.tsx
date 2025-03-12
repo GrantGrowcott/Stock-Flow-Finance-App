@@ -1,23 +1,12 @@
 "use client";
 import Image from "next/image";
 import { useState } from "react";
-import { recoverEmailPassword } from "../../../helpers/helpers";
+import { handleSignUp } from "../../../helpers/helpers";
 import { icons } from "@/constants";
 const PasswordRecovery = () => {
   const [password, setPassword] = useState("");
   const [successMessage, setSuccessMessage] = useState<boolean | string>(false);
-  const [errorMessage, setErrorMessage] = useState<string>(""); // To handle errors
-
-  const handleSignUp = async () => {
-    const success = await recoverEmailPassword(password);
-    if (success) {
-      setSuccessMessage(true);
-      setErrorMessage(""); // Clear error if successful
-    } else {
-      setSuccessMessage(false); // Reset success message if failed
-      setErrorMessage("Password recovery failed. Please try again."); // Set error message
-    }
-  };
+  const [errorMessage, setErrorMessage] = useState<string>(""); 
 
   return (
     <div className="flex flex-col items-center justify-center h-screen bg-[url(/clouds.webp)] bg-cover">
@@ -35,7 +24,7 @@ const PasswordRecovery = () => {
           />
         </div>
 
-        <button onClick={handleSignUp} className="bg-[var(--black)] text-[var(--white)] py-3 px-4 rounded-md my-4">
+        <button onClick={() => handleSignUp(password,setSuccessMessage, setErrorMessage )} className="bg-[var(--black)] text-[var(--white)] py-3 px-4 rounded-md my-4">
           <h3>Reset</h3>
         </button>
         {successMessage && (

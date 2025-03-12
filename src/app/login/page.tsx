@@ -1,22 +1,15 @@
 "use client";
 import { useState } from "react";
 import Image from "next/image";
-import { handleGoogleLogin, handleGithubLogin, emailSignIn } from "../../../helpers/helpers";
+import { handleGoogleLogin, handleGithubLogin } from "../../../helpers/helpers";
 import { useRouter } from "next/navigation";
 import { icons } from "@/constants";
+import { handleSignIn } from "../../../helpers/helpers";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const router = useRouter();
-
-
-  const handleSignIn = async () => {
-    const success = await emailSignIn(email, password);
-    if (success) {
-      router.push("/");
-    }
-  };
 
   return (
     <div className="flex flex-col items-center justify-center h-screen bg-[url(/clouds.webp)] bg-cover">
@@ -24,6 +17,7 @@ const Login = () => {
         src="/stock-flow-blue.png"
         width={icons.logoWidth}
         height={icons.logoHeight}
+        priority = {true}
         className="absolute top-5 left-5"
         alt="Stock Flow Logo"
       />
@@ -53,7 +47,7 @@ const Login = () => {
         <button onClick={() => router.push("/password-recovery")}>
           <h3 className="text-right">Forgot Password?</h3>
         </button>
-        <button onClick={handleSignIn} className="bg-[var(--black)] text-[var(--white)] py-3 px-4 rounded-md my-4 ">
+        <button onClick={() => handleSignIn(email, password, router)} className="bg-[var(--black)] text-[var(--white)] py-3 px-4 rounded-md my-4 ">
           <h3>Login</h3>
         </button>
         <h4 className="mx-auto text-sm">Or sign in with</h4>
@@ -75,7 +69,7 @@ const Login = () => {
         </div>
         <h4 className="mx-auto">
           Don&apos;t have an account?
-          <button onClick={() => router.push("/register")}>
+          <button onClick={() => router.push("/register")} className="ml-1">
             <span className="text-[var(--blue)]">Sign Up</span>
           </button>
         </h4>

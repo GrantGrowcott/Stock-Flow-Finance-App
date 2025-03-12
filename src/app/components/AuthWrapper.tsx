@@ -46,18 +46,21 @@ export default function AuthWrapper({ children }: { children: React.ReactNode })
     };
   }, [dispatch, router]);
 
+  const authPages = ["/register", "/password-recovery", "/password-reset", "/login"];
+
   if (!user) {
     if (pathname === "/register") return <EmailRegistration />;
     if (pathname === "/password-recovery") return <PasswordRecovery />;
     if (pathname === "/password-reset") return <PasswordReset />;
-    return <Login />; // Default to login page
+    return <Login />; 
   }
 
   return (
     <div className="flex">
-      <Navbar collapsed={collapsed} toggleNavbar={toggleNavbar} />
+      {/* Hide Navbar and SearchBar if on an auth-related page */}
+      {!authPages.includes(pathname) && <Navbar collapsed={collapsed} toggleNavbar={toggleNavbar} />}
       <div className="w-full">
-        <SearchBar collapsed={collapsed} toggleNavbar={toggleNavbar} />
+        {!authPages.includes(pathname) && <SearchBar collapsed={collapsed} toggleNavbar={toggleNavbar} />}
         {children}
       </div>
     </div>

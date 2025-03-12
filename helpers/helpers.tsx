@@ -179,3 +179,52 @@ export const toggleModal = (setIsOpen: Dispatch<SetStateAction<boolean>>) => {
   setIsOpen((prev) => !prev);
 };
 
+export const handleSignIn = async (email: string, password: string, router: ReturnType<typeof useRouter>) => {
+  const success = await emailSignIn(email, password);
+  if (success) {
+    router.push("/");
+  }
+};
+
+export const handleSignUp = async (
+  password: string,
+  setSuccessMessage: Dispatch<SetStateAction<string | boolean>>,
+  setErrorMessage: Dispatch<SetStateAction<string>>
+) => {
+  const success = await recoverEmailPassword(password);
+  if (success) {
+    setSuccessMessage(true);
+    setErrorMessage(""); // Clear error if successful
+  } else {
+    setSuccessMessage(false); // Reset success message if failed
+    setErrorMessage("Password recovery failed. Please try again."); // Set error message
+  }
+};
+
+export const handlePassword = async (
+  password: string,
+  setSuccessMessage: Dispatch<SetStateAction<string>>,
+  router: ReturnType<typeof useRouter>
+) => {
+  const result = await resetEmailPassword(password);
+
+  if (result.success) {
+    setSuccessMessage("Password successfully reset.");
+    router.push("/login");
+  } else {
+    setSuccessMessage(`Password reset failed: ${result.error}`);
+  }
+};
+
+export const handleEmailSignUp = async (
+  email: string,
+  password: string,
+  setSuccessMessage: Dispatch<SetStateAction<string>>
+) => {
+  const success = await signUpNewUser(email, password);
+  if (success) {
+    setSuccessMessage("Check your email to verify signup.");
+  } else {
+    setSuccessMessage("");
+  }
+};

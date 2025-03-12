@@ -27,6 +27,7 @@ const Navbar = ({ collapsed }: NavbarProps) => {
           width={icons.logoWidth}
           height={icons.logoHeight}
           alt="Stock Flow Logo"
+          priority = {true}
           className="max-[800px]:hidden"
         />
       </ul>
