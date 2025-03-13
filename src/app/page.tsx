@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { User } from "@supabase/supabase-js";
 import { checkAuth } from "../../helpers/helpers";
 import { useRouter } from "next/navigation";
+import IndexWidget from "./components/NewsWidget";
 
 function HomePage() {
   const [user, setUser] = useState<User | null>(null);
@@ -18,7 +19,13 @@ function HomePage() {
 
   if (!user) return <p>Loading...</p>;
 
-  return <div>Home Page</div>;
+  return (
+    <div className="flex items-center justify-center p-7">
+      <IndexWidget />
+      <IndexWidget />
+
+    </div>
+  );
 }
 
 export default HomePage;

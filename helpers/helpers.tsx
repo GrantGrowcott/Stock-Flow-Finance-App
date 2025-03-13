@@ -228,3 +228,22 @@ export const handleEmailSignUp = async (
     setSuccessMessage("");
   }
 };
+
+export async function getNews() {
+
+  fetch("https://newsapi.org/v2/top-headlines?category=business&apiKey=ee4c5c77acfc417f97d6ec65e8c8eb5c")
+  .then((response) => response.json())
+  .then((data) => {
+    if (Array.isArray(data)) {
+      data.map((article) => console.log(article.title));
+    } else {
+      console.error("Expected an array but got:", data);
+    }
+    return data.json()
+  });
+
+
+
+
+  
+}
