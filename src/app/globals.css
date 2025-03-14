@@ -30,3 +30,11 @@ body {
   font-family: var(--font-open-sans), sans-serif;
   transition: background 0.3s ease, color 0.3s ease;
 }
+
+input::placeholder {
+  text-transform: none;
+}
+
+.uppercase {
+  text-transform: uppercase;
+}

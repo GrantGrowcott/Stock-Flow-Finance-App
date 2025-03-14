@@ -17,13 +17,14 @@ const NewsWidget = () => {
   }, []);
 
   return (
-    <div className=" p-4 border rounded-lg shadow-lg flex-1 bg-[var(--white)] dark:bg-[var(--darkGrey)] ">
+    <div className=" p-3 border rounded-lg shadow-lg flex-1 bg-[var(--white)] dark:bg-[var(--darkGrey)] ">
       <h2 className="text-xl font-bold mb-2">Latest Business News</h2>
 
       {loading ? (
         <p>Loading...</p>
       ) : (
-        <ul className="p-5 space-y-2 overflow-y-auto max-h-[80vh] ">
+        <ul className="p-4 space-y-2 overflow-y-auto" style={{ maxHeight: 'calc(100vh - 2rem - 12rem)' }}>
+
           {news.map((article: NewsArticle, index: number) => (
             <li key={index} className="border-b pb-4">
               <a

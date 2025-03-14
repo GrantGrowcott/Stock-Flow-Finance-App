@@ -10,8 +10,8 @@ const SearchBar = ({ toggleNavbar, collapsed }: NavbarProps) => {
       <input
         type="text"
         placeholder="Search Tickers"
-        className="w-full p-2 rounded-md bg-[var(--grey)] text-[var(--black)] placeholder-[var(--black)] dark:text-[var(--white)] dark:bg-[var(--black)] dark:placeholder-[var(--white)]
-      "/>
+        className="w-full p-2 rounded-md bg-[var(--grey)] text-[var(--black)] placeholder-[var(--black)] dark:text-[var(--white)] dark:bg-[var(--black)] dark:placeholder-[var(--white)] uppercase"
+      />
       <ThemeToggle />
       <SettingsButton />
     </div>
@@ -19,3 +19,4 @@ const SearchBar = ({ toggleNavbar, collapsed }: NavbarProps) => {
 };
 
 export default SearchBar;
+

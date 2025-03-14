@@ -11,23 +11,34 @@ const TrendingStocks = () => {
   }, []);
 
   return (
-    <div className="flex-1 self-start overflow-y-auto max-h-[87vh] bg-[var(--white)] dark:bg-[var(--darkGrey)] rounded-lg shadow-lg p-4">
-      <div className="flex flex-1  mb-3">
+    <div
+      className="flex-1 self-start bg-[var(--white)] dark:bg-[var(--darkGrey)] border rounded-lg shadow-lg p-3 overflow-y-auto"
+      style={{ maxHeight: "calc(100vh - 2rem - 8rem)", boxSizing: "border-box" }}
+    >
+      <div className="flex flex-1">
         <button
           onClick={() => getStockData(setStockData, setActiveData, "Active")}
           className={`py-3 flex-1 font-bold ${activeData === "Active" ? "text-[var(--blue)] underline hover:bg-[var(--lightBlue)]" : ""}`}
         >
           Most Active
         </button>
-        <button onClick={() => getStockData(setStockData, setActiveData, "Gainers")} className={`py-3 flex-1 font-bold ${activeData === "Gainers" ? "text-[var(--blue)] underline hover:bg-[var(--lightBlue)]" : ""}`}>
+        <button
+          onClick={() => getStockData(setStockData, setActiveData, "Gainers")}
+          className={`py-3 flex-1 font-bold ${activeData === "Gainers" ? "text-[var(--blue)] underline hover:bg-[var(--lightBlue)]" : ""}`}
+        >
           <h3 className="font-bold">Gainers</h3>
         </button>
-        <button onClick={() => getStockData(setStockData, setActiveData, "Losers")} className={`py-3 flex-1 font-bold ${activeData === "Losers" ? "text-[var(--blue)] underline hover:bg-[var(--lightBlue)]" : ""}`}>
+        <button
+          onClick={() => getStockData(setStockData, setActiveData, "Losers")}
+          className={`py-3 flex-1 font-bold ${activeData === "Losers" ? "text-[var(--blue)] underline hover:bg-[var(--lightBlue)]" : ""}`}
+        >
           <h3 className="font-bold">Losers</h3>
         </button>
       </div>
-      <div className="mx-auto w-full">
-        <div className="grid grid-cols-4 gap-4 mb-3 text-center">
+      
+      {/* Content list with overflow and max-height */}
+      <div className="mx-auto w-full overflow-y-auto" style={{ maxHeight: "calc(100vh - 2rem - 8rem)", boxSizing: "border-box" }}>
+        <div className="grid grid-cols-4 gap-4 text-center">
           <h3 className="font-bold">Symbol</h3>
           <h3 className="font-bold">Change</h3>
           <h3 className="font-bold">Price</h3>
