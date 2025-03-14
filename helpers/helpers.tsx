@@ -2,6 +2,7 @@ import { supabase } from "../lib/supabaseClient";
 import { useRouter } from "next/navigation";
 import { User } from "@supabase/supabase-js";
 import { Dispatch, SetStateAction } from "react";
+import { Stock } from "@/constants";
 
 // const apiKey = process.env.NEXT_PUBLIC_FINANCIAL_API_KEY;
 
@@ -194,10 +195,10 @@ export const handleSignUp = async (
   const success = await recoverEmailPassword(password);
   if (success) {
     setSuccessMessage(true);
-    setErrorMessage(""); // Clear error if successful
+    setErrorMessage(""); 
   } else {
-    setSuccessMessage(false); // Reset success message if failed
-    setErrorMessage("Password recovery failed. Please try again."); // Set error message
+    setSuccessMessage(false); 
+    setErrorMessage("Password recovery failed. Please try again."); 
   }
 };
 
@@ -229,21 +230,63 @@ export const handleEmailSignUp = async (
   }
 };
 
+// Retrieves Market News to be displayed on the home page
 export async function getNews() {
+  try {
+    const response = await fetch("https://newsapi.org/v2/top-headlines?category=business&apiKey=ee4c5c77acfc417f97d6ec65e8c8eb5c");
+    const data = await response.json();
 
-  fetch("https://newsapi.org/v2/top-headlines?category=business&apiKey=ee4c5c77acfc417f97d6ec65e8c8eb5c")
-  .then((response) => response.json())
-  .then((data) => {
-    if (Array.isArray(data)) {
-      data.map((article) => console.log(article.title));
+    if (Array.isArray(data.articles)) {
+      return data; 
     } else {
-      console.error("Expected an array but got:", data);
+      console.error("Expected articles array but got:", data);
+      return { articles: [] }; 
     }
-    return data.json()
-  });
+  } catch (error) {
+    console.error("Error fetching news:", error);
+    return { articles: [] }; 
+  }
+}
+
+// Retrieves the most active, gainers and losers from the stock market each day.
+export async function getStockData( setStockData: React.Dispatch<React.SetStateAction<Stock[]>>, setActiveData: Dispatch<SetStateAction<string>>, category:string) {
+
+  if (category === "Active") {
+    try {
+      const response = await fetch(`https://financialmodelingprep.com/api/v3/stock_market/actives?apikey=qKbye2ChaZdQ6BoVhnYPGb8ZzWj45ShM`);
+      const data = await response.json();
+      setStockData(data);
+      setActiveData("Active");
+    } catch (error) {
+      console.error("Error fetching stock data:", error);
+      setStockData([]);
+    }
+  }
+  else if (category === "Gainers") {
+    try {
+      const response = await fetch(`https://financialmodelingprep.com/api/v3/stock_market/gainers?apikey=qKbye2ChaZdQ6BoVhnYPGb8ZzWj45ShM`);
+      const data = await response.json();
+      setStockData(data);
+      setActiveData("Gainers");
+    } catch (error) {
+      console.error("Error fetching stock data:", error);
+      setStockData([]);
+    }
+  }
+  else if (category === "Losers") {
+    try {
+      const response = await fetch(`https://financialmodelingprep.com/api/v3/stock_market/losers?apikey=qKbye2ChaZdQ6BoVhnYPGb8ZzWj45ShM`);
+      const data = await response.json();
+      setStockData(data);
+      setActiveData("Losers");
+    } catch (error) {
+      console.error("Error fetching stock data:", error);
+      setStockData([]);
+    }
+  }
+}
 
 
 
 
   
-}
