@@ -2,14 +2,13 @@ import { supabase } from "../lib/supabaseClient";
 import { useRouter } from "next/navigation";
 import { User } from "@supabase/supabase-js";
 import { Dispatch, SetStateAction } from "react";
-import { Stock } from "@/constants";
 
 // Authentication Logic for Google Sign in
 export const handleGoogleLogin = async () => {
   const { error } = await supabase.auth.signInWithOAuth({
     provider: "google",
     options: {
-      redirectTo: `https://igcwcmptatreplhpyico.supabase.co/auth/v1/callback`,
+      redirectTo: `${process.env.NEXT_PUBLIC_SUPABASE_CALLBACK}`,
     },
   });
   if (error) {
@@ -23,7 +22,7 @@ export async function handleGithubLogin() {
   const { error } = await supabase.auth.signInWithOAuth({
     provider: "github",
     options: {
-      redirectTo: `https://igcwcmptatreplhpyico.supabase.co/auth/v1/callback`,
+      redirectTo: `${process.env.NEXT_PUBLIC_SUPABASE_CALLBACK}`,
     },
   });
   if (error) console.error("OAuth sign-in error:", error);
@@ -50,7 +49,7 @@ export async function emailSignIn(email: string, password: string): Promise<bool
 export async function recoverEmailPassword(email: string): Promise<boolean> {
   try {
     const { error } = await supabase.auth.resetPasswordForEmail(email, {
-      redirectTo: "http://localhost:3000/password-reset",
+      redirectTo: `${process.env.NEXT_PUBLIC_PASSWORD_RESET}`,
     });
     if (error) {
       console.error("Error signing in:", error.message);
@@ -88,7 +87,7 @@ export async function signUpNewUser(email: string, password: string): Promise<bo
       email,
       password,
       options: {
-        emailRedirectTo: "https://igcwcmptatreplhpyico.supabase.co/auth/v1/callback",
+        emailRedirectTo: `${process.env.NEXT_PUBLIC_SUPABASE_CALLBACK}`,
       },
     });
 
@@ -203,61 +202,7 @@ export const handleEmailSignUp = async (
   }
 };
 
-// Retrieves Market News to be displayed on the home page
-export async function getNews() {
-  try {
-    const response = await fetch("https://newsapi.org/v2/top-headlines?category=business&apiKey=ee4c5c77acfc417f97d6ec65e8c8eb5c");
-    const data = await response.json();
 
-    if (Array.isArray(data.articles)) {
-      return data; 
-    } else {
-      console.error("Expected articles array but got:", data);
-      return { articles: [] }; 
-    }
-  } catch (error) {
-    console.error("Error fetching news:", error);
-    return { articles: [] }; 
-  }
-}
-
-// Retrieves the most active, gainers and losers from the stock market each day.
-export async function getStockData( setStockData: React.Dispatch<React.SetStateAction<Stock[]>>, setActiveData: Dispatch<SetStateAction<string>>, category:string) {
-
-  if (category === "Active") {
-    try {
-      const response = await fetch(`https://financialmodelingprep.com/api/v3/stock_market/actives?apikey=qKbye2ChaZdQ6BoVhnYPGb8ZzWj45ShM`);
-      const data = await response.json();
-      setStockData(data);
-      setActiveData("Active");
-    } catch (error) {
-      console.error("Error fetching stock data:", error);
-      setStockData([]);
-    }
-  }
-  else if (category === "Gainers") {
-    try {
-      const response = await fetch(`https://financialmodelingprep.com/api/v3/stock_market/gainers?apikey=qKbye2ChaZdQ6BoVhnYPGb8ZzWj45ShM`);
-      const data = await response.json();
-      setStockData(data);
-      setActiveData("Gainers");
-    } catch (error) {
-      console.error("Error fetching stock data:", error);
-      setStockData([]);
-    }
-  }
-  else if (category === "Losers") {
-    try {
-      const response = await fetch(`https://financialmodelingprep.com/api/v3/stock_market/losers?apikey=qKbye2ChaZdQ6BoVhnYPGb8ZzWj45ShM`);
-      const data = await response.json();
-      setStockData(data);
-      setActiveData("Losers");
-    } catch (error) {
-      console.error("Error fetching stock data:", error);
-      setStockData([]);
-    }
-  }
-}
 
 
 

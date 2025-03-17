@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getStockData } from "../../../helpers/helpers";
+import { getStockData } from "../api/api";
 import { Stock } from "@/constants";
 
 const TrendingStocks = () => {

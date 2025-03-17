@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { NewsArticle } from "@/constants";
-import { getNews } from "../../../helpers/helpers";
+import { getNews } from "../api/api";
 
 const NewsWidget = () => {
   const [news, setNews] = useState<NewsArticle[]>([]);
