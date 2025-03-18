@@ -204,6 +204,13 @@ export const handleEmailSignUp = async (
 
 
 
+export const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>, ticker: string, router: ReturnType<typeof useRouter>, setIsFocused: Dispatch<SetStateAction<boolean>>) => {
+  if (e.key === "Enter" && ticker.trim() !== "") {
+    router.push(`/company/${ticker}`);
+    setIsFocused(false); 
+  }
+};
+
 
 
 

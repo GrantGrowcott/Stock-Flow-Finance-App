@@ -8,8 +8,6 @@ const nextConfig: NextConfig = {
         hostname: "avatars.githubusercontent.com",
       },
     ],
-    domains: ["nypost.com",
-      "image.cnbcfm.com" ]
   },
 };
 

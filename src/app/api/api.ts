@@ -48,17 +48,7 @@ import { Stock } from "@/constants";
 
 // Stock Data for Search Dropdown Menu 
 export async function getStockTicker (dispatch: Dispatch ,ticker: string) {
-    let lastApiCallTime = 0; // Track the last API call time
-    const API_CALL_DELAY = 60000; // 60 seconds in milliseconds
-
-    const currentTime = Date.now(); // Get current time
-
-    if (currentTime - lastApiCallTime < API_CALL_DELAY) {
-        console.log("API call is rate-limited. Please wait before making another call.");
-        return; // Skip the API call if 60 seconds haven't passed
-      }
-
-      lastApiCallTime = currentTime;
+   
     try {
         const response = await fetch(`https://financialmodelingprep.com/api/v3/search-ticker?query=${ticker}&limit=10&apikey=${process.env.NEXT_PUBLIC_FINANCIAL_API_KEY}`);
         const data = await response.json();

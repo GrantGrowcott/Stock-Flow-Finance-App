@@ -1,44 +1,58 @@
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../store";
 import { setTickerState } from "../store/tickerSlice";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import SearchDropdown from "./SearchDropdown";
-import { useEffect } from "react";
 import { getStockTicker } from "../api/api";
+import { useRouter } from "next/navigation";
 
 const SearchInput = () => {
   const dispatch = useDispatch();
-  const router = useRouter();
   const ticker = useSelector((state: RootState) => state.ticker.ticker);
+  const tickerData = useSelector((state: RootState) => state.ticker.tickerData);
   const [isFocused, setIsFocused] = useState(false);
-
- 
-
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter" && ticker.trim() !== "") {
-      router.push(`/company/${ticker}`);
-      setIsFocused(false); // Hide dropdown after search
-    }
-  };
+  const [activeIndex, setActiveIndex] = useState(-1); // Tracks selected item
+  const router = useRouter();
 
   useEffect(() => {
     getStockTicker(dispatch, ticker);
   }, [dispatch, ticker]);
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (!tickerData.length) return;
+
+    if (e.key === "ArrowDown") {
+      setActiveIndex((prev) => (prev < tickerData.length - 1 ? prev + 1 : 0));
+    } else if (e.key === "ArrowUp") {
+      setActiveIndex((prev) => (prev > 0 ? prev - 1 : tickerData.length - 1));
+    } else if (e.key === "Enter" && activeIndex >= 0) {
+      router.push(`/company/${tickerData[activeIndex].symbol}`);
+      setIsFocused(false);
+    }
+  };
 
   return (
     <div className="relative w-full">
       <input
         type="text"
         value={ticker}
-        onChange={(e) => dispatch(setTickerState(e.target.value.toUpperCase()))}
+        onChange={(e) => {
+          dispatch(setTickerState(e.target.value.toUpperCase()));
+          setActiveIndex(-1); 
+        }}
         onKeyDown={handleKeyDown}
         onFocus={() => setIsFocused(true)}
-        onBlur={() => setTimeout(() => setIsFocused(false), 100)}
+        onBlur={() => setTimeout(() => setIsFocused(false), 200)}
         placeholder="Search Tickers"
-        className="w-full p-2 rounded-md bg-[var(--grey)] text-[var(--black)] placeholder-[var(--black)] dark:text-[var(--white)] dark:bg-[var(--black)] dark:placeholder-[var(--white)] uppercase"
+        className="w-full p-2 rounded-md bg-gray-100 dark:bg-gray-800 text-black dark:text-white placeholder-gray-500 dark:placeholder-gray-400 uppercase"
       />
-      {isFocused && ticker.trim() !== "" && <SearchDropdown />}
+      {isFocused && ticker.trim() !== "" && (
+        <SearchDropdown
+          activeIndex={activeIndex}
+          setActiveIndex={setActiveIndex}
+          tickerData={tickerData} // Passing tickerData to SearchDropdown
+        />
+      )}
     </div>
   );
 };
