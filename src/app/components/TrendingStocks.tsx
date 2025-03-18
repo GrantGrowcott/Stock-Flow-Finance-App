@@ -36,7 +36,7 @@ const TrendingStocks = () => {
         </button>
       </div>
       
-      {/* Content list with overflow and max-height */}
+      
       <div className="mx-auto w-full overflow-y-auto" style={{ maxHeight: "calc(100vh - 2rem - 8rem)", boxSizing: "border-box" }}>
         <div className="grid grid-cols-4 gap-4 text-center">
           <h3 className="font-bold">Symbol</h3>

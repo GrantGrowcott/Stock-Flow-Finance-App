@@ -1,16 +1,12 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { TickerData } from '@/constants';
 
 interface StockState {
   ticker: string;
   tickerData: TickerData[];
 }
 
-export interface TickerData {
-  symbol : string;
-  name: string;
-  currency: string;
-  exchangeShortName: string
-}
+
 
 const initialState: StockState = {
   ticker: "",

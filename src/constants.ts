@@ -7,7 +7,6 @@ export const icons = {
     settings: 35,
     theme: 40,
     auth: 40,
-    
 }
 
 export interface NavbarProps {
@@ -33,4 +32,17 @@ export interface NewsArticle {
     change: number;
     price: number;
     changesPercentage: number;
+  }
+
+  export interface TickerData {
+    symbol : string;
+    name: string;
+    currency: string;
+    exchangeShortName: string
+  }
+
+  export interface SearchDropdownProps {
+    activeIndex: number;
+    setActiveIndex: React.Dispatch<React.SetStateAction<number>>;
+    tickerData: TickerData[];
   }

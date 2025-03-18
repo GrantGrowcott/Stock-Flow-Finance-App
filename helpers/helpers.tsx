@@ -2,6 +2,7 @@ import { supabase } from "../lib/supabaseClient";
 import { useRouter } from "next/navigation";
 import { User } from "@supabase/supabase-js";
 import { Dispatch, SetStateAction } from "react";
+import { TickerData } from "@/app/store/tickerSlice";
 
 // Authentication Logic for Google Sign in
 export const handleGoogleLogin = async () => {
@@ -204,11 +205,17 @@ export const handleEmailSignUp = async (
 
 
 
-export const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>, ticker: string, router: ReturnType<typeof useRouter>, setIsFocused: Dispatch<SetStateAction<boolean>>) => {
-  if (e.key === "Enter" && ticker.trim() !== "") {
-    router.push(`/company/${ticker}`);
-    setIsFocused(false); 
-  }
+export const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>, tickerData: TickerData[], router: ReturnType<typeof useRouter>, setActiveIndex: Dispatch<SetStateAction<number>>, setIsFocused: Dispatch<SetStateAction<boolean>>, activeIndex : number) => {
+  if (!tickerData.length) return;
+
+    if (e.key === "ArrowDown") {
+      setActiveIndex((prev) => (prev < tickerData.length - 1 ? prev + 1 : 0));
+    } else if (e.key === "ArrowUp") {
+      setActiveIndex((prev) => (prev > 0 ? prev - 1 : tickerData.length - 1));
+    } else if (e.key === "Enter" && activeIndex >= 0) {
+      router.push(`/company/${tickerData[activeIndex].symbol}`);
+      setIsFocused(false);
+    }
 };
 
 

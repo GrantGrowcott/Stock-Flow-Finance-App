@@ -1,6 +1,6 @@
 "use client";
 import { useEffect } from "react";
-import { TickerData } from "../store/tickerSlice";
+import { TickerData } from "@/constants";
 import { useRouter } from "next/navigation";
 import React from "react";
 import { useRef } from "react";
@@ -50,7 +50,7 @@ const SearchDropdown: React.FC<SearchDropdownProps> = ({
               }`}
               tabIndex={0}
               onClick={() => router.push(`/company/${data.symbol}`)}
-              onMouseEnter={() => setActiveIndex(index)} // Update selection on hover
+              onMouseEnter={() => setActiveIndex(index)} 
               onKeyDown={(e) => {
                 if (e.key === "Enter") {
                   router.push(`/company/${data.symbol}`);
