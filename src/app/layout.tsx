@@ -3,8 +3,10 @@ import { Geist, Geist_Mono, Open_Sans } from "next/font/google";
 import "./globals.css";
 import AuthWrapper from "./components/AuthWrapper";
 import { ThemeProvider } from "./context/ThemeContext";
+import { ApolloProvider } from "@apollo/client";
 import { Provider } from "react-redux";
 import { store } from "./store";
+import client from "../../lib/apollo-client";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -28,6 +30,7 @@ export default function RootLayout({
 }>) {
   return (
     <Provider store={store}>
+      <ApolloProvider client={client}> 
       <html lang="en">
         <body className={`${geistSans.variable} ${geistMono.variable} ${openSans.variable} antialiased`}>
           <ThemeProvider>
@@ -35,6 +38,7 @@ export default function RootLayout({
           </ThemeProvider>
         </body>
       </html>
+      </ApolloProvider>
     </Provider>
   );
 }

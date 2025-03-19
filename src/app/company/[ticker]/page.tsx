@@ -1,7 +1,16 @@
-// Dynamic Route of where the stock information will come in based on the search ticker symbol (ex: AA)
+"use client";
+import { usePathname } from "next/navigation";
+import { useEffect } from "react";
+import StockGraph from "@/app/components/StockGraph";
 
 const StockPage = () => {
-    return ( <div className="z-1">I will store information for each stock in this file dynamically</div> );
-}
- 
+  const company = usePathname().split("/").pop();
+
+  useEffect(() => {
+    console.log(company);
+  }, [company]);
+
+  return <div className="z-1"><StockGraph symbol = {company}/></div>;
+};
+
 export default StockPage;

@@ -1,10 +1,9 @@
 import { Dispatch } from "@reduxjs/toolkit";
 import { setTickerData } from "../store/tickerSlice";
 import { Stock } from "@/constants";
+import { PriceHistory } from "../components/StockGraph";
 
-// This the ticker search that will likely go in the search bar
 
-// https://financialmodelingprep.com/api/v3/search-ticker?query=AA&limit=10&apikey=qKbye2ChaZdQ6BoVhnYPGb8ZzWj45ShM
 
 
 // Historical Price over the last 5 years( each day)
@@ -110,5 +109,16 @@ export async function getNews() {
         console.error("Error fetching stock data:", error);
         setStockData([]);
       }
+    }
+  }
+
+  export async function getPriceHistory (company:string | undefined, setGraphData: React.Dispatch<React.SetStateAction<PriceHistory[]>>) {
+    try {
+      const response  = await fetch (`https://financialmodelingprep.com/api/v3/historical-price-full/${company}?apikey=qKbye2ChaZdQ6BoVhnYPGb8ZzWj45ShM`)
+      const data = await response.json()
+      setGraphData(data.historical)
+    }
+    catch (error) {
+      console.error("Error fetching historical price data:", error)
     }
   }

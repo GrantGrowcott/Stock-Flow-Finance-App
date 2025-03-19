@@ -1,3 +1,5 @@
+
+
 export const icons = {
     nav: 30,
     logoWidth: 200,
@@ -46,3 +48,4 @@ export interface NewsArticle {
     setActiveIndex: React.Dispatch<React.SetStateAction<number>>;
     tickerData: TickerData[];
   }
+

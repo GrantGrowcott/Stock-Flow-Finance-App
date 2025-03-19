@@ -19,9 +19,10 @@ const Navbar = ({ collapsed }: NavbarProps) => {
 
   return (
     <div
-      className={`h-screen transition-all duration-200 bg-[var(--white)] text-[var(--black)] dark:bg-[var(--darkGrey)] dark:text-[var(--white)] p-0 flex flex-col
-  ${collapsed ? "w-0 p-0 opacity-0 overflow-hidden" : "w-[30rem] p-4 opacity-100 max-[800px]:w-[5rem]"}`}
-    >
+    className={`min-h-screen transition-all duration-200 bg-[var(--white)] text-[var(--black)] dark:bg-[var(--darkGrey)] dark:text-[var(--white)] p-0 flex flex-col
+    ${collapsed ? "w-0 p-0 opacity-0 overflow-hidden" : "w-[30rem] p-4 opacity-100 max-[800px]:w-[5rem]"}`}
+  >
+  
       <ul className="flex flex-col">
         <Image
           src="/stock-flow-blue.png"
@@ -32,7 +33,7 @@ const Navbar = ({ collapsed }: NavbarProps) => {
           className="max-[800px]:hidden"
         />
       </ul>
-      <ul className={` ${collapsed ? "mt-10" : "mt-20 flex flex-col space-y-20 flex-grow font-bold text-xl"}`}>
+      <ul className={` ${collapsed ? "mt-10" : "mt-32 flex flex-col space-y-20 flex-grow font-bold text-xl"}`}>
         {[
           { href: "/", icon: "home", label: "Home" },
           { href: "/retirement-calculator", icon: "calculator", label: "Retirement Calculator" },

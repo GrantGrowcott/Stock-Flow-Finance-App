@@ -12,7 +12,7 @@ const TrendingStocks = () => {
 
   return (
     <div
-      className="flex-1 self-start bg-[var(--white)] dark:bg-[var(--darkGrey)] border rounded-lg shadow-lg p-3 overflow-y-auto"
+      className="flex-1  bg-[var(--white)] dark:bg-[var(--darkGrey)] border rounded-lg shadow-lg p-3 overflow-y-auto"
       style={{ maxHeight: "calc(100vh - 2rem - 8rem)", boxSizing: "border-box" }}
     >
       <div className="flex flex-1">

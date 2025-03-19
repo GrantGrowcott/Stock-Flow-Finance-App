@@ -2,7 +2,7 @@ import { supabase } from "../lib/supabaseClient";
 import { useRouter } from "next/navigation";
 import { User } from "@supabase/supabase-js";
 import { Dispatch, SetStateAction } from "react";
-import { TickerData } from "@/app/store/tickerSlice";
+import { TickerData } from "@/constants";
 
 // Authentication Logic for Google Sign in
 export const handleGoogleLogin = async () => {
@@ -206,6 +206,7 @@ export const handleEmailSignUp = async (
 
 
 export const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>, tickerData: TickerData[], router: ReturnType<typeof useRouter>, setActiveIndex: Dispatch<SetStateAction<number>>, setIsFocused: Dispatch<SetStateAction<boolean>>, activeIndex : number) => {
+  
   if (!tickerData.length) return;
 
     if (e.key === "ArrowDown") {

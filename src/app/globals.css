@@ -16,6 +16,9 @@
   --lightBlue: #9ac8e7;
   --red: #ff5733;
   --creme: #efeba7;
+  --hoverLight: #f0f0f0; 
+  --hoverDark: #222; 
+
 }
 
 .dark {

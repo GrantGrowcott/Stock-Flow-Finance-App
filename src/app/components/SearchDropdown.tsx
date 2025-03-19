@@ -4,12 +4,7 @@ import { TickerData } from "@/constants";
 import { useRouter } from "next/navigation";
 import React from "react";
 import { useRef } from "react";
-
-interface SearchDropdownProps {
-  activeIndex: number;
-  setActiveIndex: React.Dispatch<React.SetStateAction<number>>;
-  tickerData: TickerData[]; 
-}
+import { SearchDropdownProps } from "@/constants";
 
 const SearchDropdown: React.FC<SearchDropdownProps> = ({
   activeIndex,
@@ -17,7 +12,6 @@ const SearchDropdown: React.FC<SearchDropdownProps> = ({
   tickerData
 }) => {
   const router = useRouter();
-
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -26,8 +20,8 @@ const SearchDropdown: React.FC<SearchDropdownProps> = ({
       const activeItem = dropdown.children[activeIndex] as HTMLElement;
       if (activeItem) {
         activeItem.scrollIntoView({
-          block: "nearest", 
-          behavior: "smooth", 
+          block: "nearest",
+          behavior: "smooth",
         });
       }
     }
@@ -36,7 +30,7 @@ const SearchDropdown: React.FC<SearchDropdownProps> = ({
   return (
     <div
       ref={dropdownRef}
-      className="absolute w-full mt-1 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-md shadow-lg z-10 max-h-60 overflow-y-auto"
+      className="absolute w-full mt-1 bg-[var(--white)] dark:bg-[var(--darkGrey)] border border-[var(--grey)] dark:border-[var(--lightGrey)] rounded-md shadow-lg z-10 max-h-60 overflow-y-auto"
     >
       <ul>
         {tickerData.length > 0 ? (
@@ -45,23 +39,25 @@ const SearchDropdown: React.FC<SearchDropdownProps> = ({
               key={data.symbol || index}
               className={`p-2 cursor-pointer ${
                 activeIndex === index
-                  ? "bg-gray-300 dark:bg-gray-700"
-                  : "hover:bg-gray-200 dark:hover:bg-gray-700"
+                  ? "bg-[var(--grey)] dark:bg-[var(--lightGrey)]"
+                  : "hover:bg-[var(--lightBlue)] dark:hover:bg-[var(--darkGrey)]"
               }`}
               tabIndex={0}
               onClick={() => router.push(`/company/${data.symbol}`)}
-              onMouseEnter={() => setActiveIndex(index)} 
+              onMouseEnter={() => setActiveIndex(index)}
               onKeyDown={(e) => {
                 if (e.key === "Enter") {
                   router.push(`/company/${data.symbol}`);
                 }
               }}
             >
-              {data.symbol} - {data.exchangeShortName}
+              {data.symbol} - {data.name} {data.exchangeShortName}
             </li>
           ))
         ) : (
-          <li className="p-2">No search results found</li>
+          <li className="p-2 text-[var(--darkGrey)] dark:text-[var(--white)]">
+            No search results found
+          </li>
         )}
       </ul>
     </div>
