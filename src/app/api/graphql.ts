@@ -1,7 +1,7 @@
 import { ApolloServer } from "@apollo/server";
 import { startServerAndCreateNextHandler } from "@as-integrations/next";
 import { gql } from "graphql-tag";
-import { PriceHistory } from "../components/StockGraph";
+import { PriceHistory } from "@/constants";
 
 const typeDefs = gql`
   type PriceHistory {

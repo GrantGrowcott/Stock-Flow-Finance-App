@@ -1,46 +1,41 @@
-import { useQuery, gql } from "@apollo/client";
-
-
-export interface PriceHistory {
-    date: string;
-    close: number;
-    volume: number;
-}
-
-const GET_PRICE_HISTORY = gql`
-  query GetPriceHistory($symbol: String!) {
-    getPriceHistory(symbol: $symbol) {
-      date
-      close
-      volume
-    }
-  }
-`;
-
+import { useQuery } from "@apollo/client";
+import { GET_PRICE_HISTORY } from "@/constants";
+import { PriceHistory } from "@/constants";
+import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer } from "recharts";
+import GraphButtons from "./GraphButtons";
 
 const StockGraph = ({ symbol }: { symbol: string | undefined }) => {
+  const { data, loading, error } = useQuery(GET_PRICE_HISTORY, {
+    variables: { symbol },
+  });
 
-    
-    const { data, loading, error } = useQuery(GET_PRICE_HISTORY, {
-      variables: { symbol }, // <-- This is how symbol is passed to the backend
-    });
-    if (!symbol) {
-        return <p>No symbol provided.</p>;
-      }
-    if (loading) return <p>Loading...</p>;
-    if (error) return <p>Error fetching data.</p>;
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error fetching data.</p>;
+
   
-    return (
-      <div>
-        {data.getPriceHistory.map((item: PriceHistory, index: number) => (
-          <div key={index}>
-            <p>Date: {item.date}</p>
-            <p>Close: {item.close}</p>
-            <p>Volume: {item.volume}</p>
-          </div>
-        ))}
-      </div>
-    );
-  };
+  const chartData = data.getPriceHistory
+  .slice() 
+  .reverse()
+  .map((item: PriceHistory) => ({
+    date: item.date,
+    close: item.close,
+  }));
+
+  return (
+    <>
+    <div className="mt-5" style={{ width: "50%", height: 300 }}>
+    <GraphButtons />
+      <ResponsiveContainer width="100%" height="100%">
+        <LineChart data={chartData}>
+          <XAxis dataKey="date" tickFormatter={(date) => new Date(date).toLocaleDateString()}  />
+          <YAxis domain={["auto", "auto"]}  />
+          <Tooltip />
+          <Line type="monotone" dataKey="close" stroke="#8884d8" strokeWidth={2} dot={false} />
+        </LineChart>
+      </ResponsiveContainer>
+    </div>
+    </>
+  );
+};
 
 export default StockGraph;

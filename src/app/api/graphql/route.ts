@@ -1,7 +1,7 @@
 import { ApolloServer } from "@apollo/server";
 import { startServerAndCreateNextHandler } from "@as-integrations/next";
 import { gql } from "graphql-tag";
-import { PriceHistory } from "@/app/components/StockGraph";
+import { PriceHistory } from "@/constants";
 
 // Define GraphQL schema
 const typeDefs = gql`
@@ -19,7 +19,7 @@ const typeDefs = gql`
 // Fetch data from the FMP REST API
 const resolvers = {
     Query: {
-      getPriceHistory: async (_: any, { symbol }: { symbol: string }) => {
+      getPriceHistory: async (_: unknown, { symbol }: { symbol: string }) => {
         // Ensure the symbol is valid before making the request
         if (!symbol) {
           throw new Error("Symbol is required");

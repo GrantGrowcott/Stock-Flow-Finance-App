@@ -1,7 +1,7 @@
 import { Dispatch } from "@reduxjs/toolkit";
 import { setTickerData } from "../store/tickerSlice";
 import { Stock } from "@/constants";
-import { PriceHistory } from "../components/StockGraph";
+import { PriceHistory } from "@/constants";
 
 
 
