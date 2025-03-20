@@ -55,13 +55,15 @@ export interface NewsArticle {
     volume: number;
   }
 
-  export const GET_PRICE_HISTORY = gql`
-    query GetPriceHistory($symbol: String!) {
-      getPriceHistory(symbol: $symbol) {
-        date
-        close
-        volume
-      }
+
+export const GET_PRICE_HISTORY = gql`
+  query GetPriceHistory($symbol: String! ) {
+    getPriceHistory(symbol: $symbol) {
+      date
+      close
+      volume
     }
-  `;
+  }
+`;
+
 

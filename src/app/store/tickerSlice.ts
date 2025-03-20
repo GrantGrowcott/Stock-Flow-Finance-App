@@ -4,13 +4,14 @@ import { TickerData } from '@/constants';
 interface StockState {
   ticker: string;
   tickerData: TickerData[];
+  activeTime:string
 }
-
 
 
 const initialState: StockState = {
   ticker: "",
   tickerData: [],
+  activeTime: "5y"
 };
 
 const tickerSlice = createSlice({
@@ -23,9 +24,12 @@ const tickerSlice = createSlice({
     setTickerData: (state, action: PayloadAction<TickerData[]>) => {
       state.tickerData = action.payload;
     },
+    setActiveTime: (state, action: PayloadAction<string>) => {
+      state.activeTime = action.payload;
+    },
   },
 });
 
-export const { setTickerState, setTickerData} = tickerSlice.actions;
+export const { setTickerState, setTickerData, setActiveTime} = tickerSlice.actions;
 
 export default tickerSlice.reducer;

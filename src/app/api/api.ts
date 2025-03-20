@@ -122,3 +122,33 @@ export async function getNews() {
       console.error("Error fetching historical price data:", error)
     }
   }
+
+   
+
+// Function to filter the data based on active time
+export const filterData = (data: PriceHistory[], activeTime: string): PriceHistory[] => {
+  let filteredData = data;
+
+  if (activeTime === "3m") {
+    filteredData = data.slice(0, 90); // Last 3 months (approx. 90 days)
+  } else if (activeTime === "6m") {
+    filteredData = data.slice(0, 180); // Last 6 months (approx. 180 days)
+  } else if (activeTime === "1y") {
+    filteredData = data.slice(0, 365); // Last 1 year (approx. 365 days)
+  } else if (activeTime === "5y") {
+    filteredData = data; // No filtering for 5 years
+  }
+
+  return filteredData;
+};
+
+// Function to format the chart data
+export const chartData = (data: PriceHistory[], activeTime: string) => {
+  return filterData(data, activeTime)
+    .slice()
+    .reverse()
+    .map((item: { date: string; close: number }) => ({
+      date: item.date,
+      close: item.close,
+    }));
+};

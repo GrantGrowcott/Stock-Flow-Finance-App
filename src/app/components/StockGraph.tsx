@@ -1,39 +1,51 @@
+// StockGraph.tsx
 import { useQuery } from "@apollo/client";
 import { GET_PRICE_HISTORY } from "@/constants";
-import { PriceHistory } from "@/constants";
 import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer } from "recharts";
 import GraphButtons from "./GraphButtons";
+import { useSelector } from "react-redux";
+import { RootState } from "../store";
+import { useEffect } from "react";
+import { chartData } from "../api/api";  // Import the helper function
 
 const StockGraph = ({ symbol }: { symbol: string | undefined }) => {
-  const { data, loading, error } = useQuery(GET_PRICE_HISTORY, {
-    variables: { symbol },
+  const activeTime = useSelector((state: RootState) => state.ticker.activeTime);
+  const { data, loading, error, refetch } = useQuery(GET_PRICE_HISTORY, {
+    variables: { symbol, activeTime },
+    fetchPolicy: "network-only",
   });
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error fetching data.</p>;
+  useEffect(() => {
+    if (symbol && activeTime) {
+      refetch({ symbol, activeTime });
+    }
+  }, [symbol, activeTime, refetch]);
 
-  
-  const chartData = data.getPriceHistory
-  .slice() 
-  .reverse()
-  .map((item: PriceHistory) => ({
-    date: item.date,
-    close: item.close,
-  }));
+  if (loading) return <p>Loading stock data...</p>;
+  if (error) return <p>Error fetching data.</p>;
 
   return (
     <>
-    <div className="mt-5" style={{ width: "50%", height: 300 }}>
-    <GraphButtons />
-      <ResponsiveContainer width="100%" height="100%">
-        <LineChart data={chartData}>
-          <XAxis dataKey="date" tickFormatter={(date) => new Date(date).toLocaleDateString()}  />
-          <YAxis domain={["auto", "auto"]}  />
-          <Tooltip />
-          <Line type="monotone" dataKey="close" stroke="#8884d8" strokeWidth={2} dot={false} />
-        </LineChart>
-      </ResponsiveContainer>
-    </div>
+      <div className="mt-5" style={{ width: "50%", height: 300 }}>
+        <GraphButtons />
+        <ResponsiveContainer width="100%" height="100%">
+          <LineChart data={chartData(data.getPriceHistory, activeTime)}>
+            <XAxis
+              dataKey="date"
+              tickFormatter={(date) => new Date(date).toLocaleDateString()}
+            />
+            <YAxis domain={["auto", "auto"]} />
+            <Tooltip />
+            <Line
+              type="monotone"
+              dataKey="close"
+              stroke="var(--blue)"
+              strokeWidth={2}
+              dot={false}
+            />
+          </LineChart>
+        </ResponsiveContainer>
+      </div>
     </>
   );
 };
