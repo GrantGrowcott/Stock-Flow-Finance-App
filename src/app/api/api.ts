@@ -130,13 +130,13 @@ export const filterData = (data: PriceHistory[], activeTime: string): PriceHisto
   let filteredData = data;
 
   if (activeTime === "3m") {
-    filteredData = data.slice(0, 90); // Last 3 months (approx. 90 days)
+    filteredData = data.slice(0, 90); 
   } else if (activeTime === "6m") {
-    filteredData = data.slice(0, 180); // Last 6 months (approx. 180 days)
+    filteredData = data.slice(0, 180); 
   } else if (activeTime === "1y") {
-    filteredData = data.slice(0, 365); // Last 1 year (approx. 365 days)
+    filteredData = data.slice(0, 365); 
   } else if (activeTime === "5y") {
-    filteredData = data; // No filtering for 5 years
+    filteredData = data; 
   }
 
   return filteredData;

@@ -6,7 +6,8 @@ import GraphButtons from "./GraphButtons";
 import { useSelector } from "react-redux";
 import { RootState } from "../store";
 import { useEffect } from "react";
-import { chartData } from "../api/api";  // Import the helper function
+import { chartData } from "../api/api";
+import { useTheme } from "../context/ThemeContext";  
 
 const StockGraph = ({ symbol }: { symbol: string | undefined }) => {
   const activeTime = useSelector((state: RootState) => state.ticker.activeTime);
@@ -14,6 +15,8 @@ const StockGraph = ({ symbol }: { symbol: string | undefined }) => {
     variables: { symbol, activeTime },
     fetchPolicy: "network-only",
   });
+  const { darkMode } = useTheme();
+  
 
   useEffect(() => {
     if (symbol && activeTime) {
@@ -30,11 +33,12 @@ const StockGraph = ({ symbol }: { symbol: string | undefined }) => {
         <GraphButtons />
         <ResponsiveContainer width="100%" height="100%">
           <LineChart data={chartData(data.getPriceHistory, activeTime)}>
-            <XAxis
+            <XAxis 
               dataKey="date"
               tickFormatter={(date) => new Date(date).toLocaleDateString()}
+              tick={{ fill: darkMode ? "white" : "black" }}
             />
-            <YAxis domain={["auto", "auto"]} />
+            <YAxis domain={["auto", "auto"]} tick={{ fill: darkMode ? "white" : "black" }}/>
             <Tooltip />
             <Line
               type="monotone"
@@ -42,6 +46,7 @@ const StockGraph = ({ symbol }: { symbol: string | undefined }) => {
               stroke="var(--blue)"
               strokeWidth={2}
               dot={false}
+            
             />
           </LineChart>
         </ResponsiveContainer>
