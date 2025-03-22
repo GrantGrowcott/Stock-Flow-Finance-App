@@ -1,15 +1,12 @@
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../store";
 import { setActiveTime } from "../store/tickerSlice";
-import { useEffect } from "react";
 
 const GraphButtons = () => {
   const activeTime = useSelector((state: RootState) => state.ticker.activeTime);
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    console.log(activeTime);
-  }, [activeTime, dispatch]);
+  
 
 
   return (

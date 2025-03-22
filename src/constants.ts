@@ -55,6 +55,24 @@ export interface NewsArticle {
     volume: number;
   }
 
+  export type SymbolProps = {
+    symbol: string | undefined;
+  }
+
+  export interface StockInformation {
+    symbol : string;
+    price: number;
+    mktCap: number;
+    companyName: string;
+    currency: string;
+    exchangeShortName: string;
+    industry: string;
+    description: string;
+    dcfDiff: number;
+    dcf: number;
+    image: string;
+  }
+
 
 export const GET_PRICE_HISTORY = gql`
   query GetPriceHistory($symbol: String! ) {
@@ -65,5 +83,26 @@ export const GET_PRICE_HISTORY = gql`
     }
   }
 `;
+
+export const GET_STOCK_INFORMATION = gql`
+  query GetStockInformation($symbol: String!) {
+    getStockInformation(symbol: $symbol) {
+      symbol
+      price
+      mktCap
+      companyName
+      currency
+      exchangeShortName
+      industry
+      description
+      dcfDiff
+      dcf
+      image
+    }
+  }
+`;
+
+
+
 
 

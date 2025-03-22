@@ -2,6 +2,8 @@
 import { usePathname } from "next/navigation";
 import { useEffect } from "react";
 import StockGraph from "@/app/components/StockGraph";
+import StockNamePrice from "@/app/components/StockNamePrice";
+import StockDescription from "@/app/components/StockDescription";
 
 const StockPage = () => {
   const company = usePathname().split("/").pop();
@@ -10,7 +12,15 @@ const StockPage = () => {
     console.log(company);
   }, [company]);
 
-  return <div className="z-1"><StockGraph symbol = {company}/></div>;
+  return (
+    <div className="p-3">
+      <StockNamePrice symbol={company} />
+      <div>
+        <StockGraph symbol={company} />
+        <StockDescription symbol={company} />
+      </div>
+    </div>
+  );
 };
 
 export default StockPage;

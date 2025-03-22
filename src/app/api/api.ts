@@ -112,18 +112,6 @@ export async function getNews() {
     }
   }
 
-  export async function getPriceHistory (company:string | undefined, setGraphData: React.Dispatch<React.SetStateAction<PriceHistory[]>>) {
-    try {
-      const response  = await fetch (`https://financialmodelingprep.com/api/v3/historical-price-full/${company}?apikey=qKbye2ChaZdQ6BoVhnYPGb8ZzWj45ShM`)
-      const data = await response.json()
-      setGraphData(data.historical)
-    }
-    catch (error) {
-      console.error("Error fetching historical price data:", error)
-    }
-  }
-
-   
 
 // Function to filter the data based on active time
 export const filterData = (data: PriceHistory[], activeTime: string): PriceHistory[] => {

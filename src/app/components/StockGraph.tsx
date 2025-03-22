@@ -1,6 +1,6 @@
 // StockGraph.tsx
 import { useQuery } from "@apollo/client";
-import { GET_PRICE_HISTORY } from "@/constants";
+import { GET_PRICE_HISTORY, SymbolProps } from "@/constants";
 import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer } from "recharts";
 import GraphButtons from "./GraphButtons";
 import { useSelector } from "react-redux";
@@ -9,7 +9,7 @@ import { useEffect } from "react";
 import { chartData } from "../api/api";
 import { useTheme } from "../context/ThemeContext";  
 
-const StockGraph = ({ symbol }: { symbol: string | undefined }) => {
+const StockGraph = ({ symbol }: SymbolProps) => {
   const activeTime = useSelector((state: RootState) => state.ticker.activeTime);
   const { data, loading, error, refetch } = useQuery(GET_PRICE_HISTORY, {
     variables: { symbol, activeTime },
@@ -29,7 +29,7 @@ const StockGraph = ({ symbol }: { symbol: string | undefined }) => {
 
   return (
     <>
-      <div className="mt-5" style={{ width: "50%", height: 300 }}>
+      <div className="mt-5 flex-1 h-[300px]" >
         <GraphButtons />
         <ResponsiveContainer width="100%" height="100%">
           <LineChart data={chartData(data.getPriceHistory, activeTime)}>
