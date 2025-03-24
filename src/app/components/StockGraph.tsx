@@ -29,7 +29,7 @@ const StockGraph = ({ symbol }: SymbolProps) => {
 
   return (
     <>
-      <div className="mt-5 flex-1 h-[300px]" >
+      <div className="mt-5 flex-1 h-[200px]" >
         <GraphButtons />
         <ResponsiveContainer width="100%" height="100%">
           <LineChart data={chartData(data.getPriceHistory, activeTime)}>

@@ -218,7 +218,17 @@ export const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>, tickerDa
       setIsFocused(false);
     }
 };
-
+// Used to format any value that is above 1 million to present in the UI ( ex: Market Capitalization)
+export const formatNumbers = (num: number): string => {
+  if (num >= 1e12) {
+    return "$" + (num / 1e12).toFixed(2) + "T";
+  } else if (num >= 1e9) {
+    return "$" +(num / 1e9).toFixed(2) + "B";
+  } else if (num >= 1e6) {
+    return "$" +(num / 1e6).toFixed(2) + "M";
+  }
+  return num.toString() + " $";
+};
 
 
 

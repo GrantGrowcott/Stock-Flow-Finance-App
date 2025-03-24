@@ -63,6 +63,7 @@ export interface NewsArticle {
     symbol : string;
     price: number;
     mktCap: number;
+    range:string;
     companyName: string;
     currency: string;
     exchangeShortName: string;
@@ -90,6 +91,7 @@ export const GET_STOCK_INFORMATION = gql`
       symbol
       price
       mktCap
+      range
       companyName
       currency
       exchangeShortName

@@ -17,6 +17,7 @@ const typeDefs = gql`
     symbol : String!
     price: Float!
     mktCap: Float!
+    range: String!
     companyName: String!
     currency: String!
     exchangeShortName: String!
@@ -86,6 +87,7 @@ const resolvers = {
                 symbol : stock.symbol,
                 price: Number(stock.price),
                 mktCap: Number(stock.mktCap),
+                range: stock.range,
                 companyName: stock.companyName,
                 currency: stock.currency || '',
                 exchangeShortName: stock.exchangeShortName || '',
