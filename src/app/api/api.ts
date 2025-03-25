@@ -29,7 +29,7 @@ import { PriceHistory } from "@/constants";
 
 // Cash Flow Statement
 
-// https://financialmodelingprep.com/api/v3/cash-flow-sheet-statement/AAPL?apikey=qKbye2ChaZdQ6BoVhnYPGb8ZzWj45ShM
+// https://financialmodelingprep.com/api/v3/cash-flow-statement/AAPL?period=annual&apikey=qKbye2ChaZdQ6BoVhnYPGb8ZzWj45ShM
 
 //  Key Ratios
 
