@@ -13,10 +13,10 @@ export const icons = {
 
 export interface FinancialStatementsProps {
   stock: StockInformation;
-  ratios: Ratios; 
-  income: IncomeStatement;
-  balance:BalanceSheet;
-  cashflow: CashflowStatement;
+  ratios: Ratios[]; 
+  income: IncomeStatement[];
+  balance:BalanceSheet[];
+  cashflow: CashflowStatement[];
 }
 
 export interface NavbarProps {
