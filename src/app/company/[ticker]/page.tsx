@@ -18,7 +18,6 @@ const StockPage = () => {
         <StockNamePrice symbol={company} />
         <StockGraph symbol={company} />
       </div>
-      {/* <StockDescription symbol={company} /> */}
       <KeyFinancialStats symbol={company}/>
     </div>
   );

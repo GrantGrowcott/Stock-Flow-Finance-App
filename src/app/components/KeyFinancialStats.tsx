@@ -1,53 +1,127 @@
 import { useQuery } from "@apollo/client";
-import { GET_STOCK_INFORMATION } from "@/constants";
+import { GET_STOCK_INFORMATION, GET_RATIOS, GET_INCOME_STATEMENT, GET_BALANCE_SHEET, GET_CASHFLOW } from "@/constants";
 import { SymbolProps } from "@/constants";
 import { formatNumbers } from "../../../helpers/helpers";
+import FinancialStatements from "./FinancialStatements";
 
 const KeyFinancialStats = ({ symbol }: SymbolProps) => {
-  const { data, error } = useQuery(GET_STOCK_INFORMATION, {
+  const {
+    data: stockData,
+    loading: stockLoading,
+    error: stockError,
+  } = useQuery(GET_STOCK_INFORMATION, {
     variables: { symbol },
   });
 
-  if (error) return <p>Error fetching data.</p>;
-  if (!data || !data.getStockInformation) {
-    return <p>No stock information available.</p>;
+  const {
+    data: ratiosData,
+    loading: ratiosLoading,
+    error: ratiosError,
+  } = useQuery(GET_RATIOS, {
+    variables: { symbol },
+  });
+
+  const {
+    data: incomeData,
+    loading: incomeLoading,
+    error: incomeError,
+  } = useQuery(GET_INCOME_STATEMENT, {
+    variables: { symbol },
+  });
+
+  const {
+    data: balanceData,
+    loading: balanceLoading,
+    error: balanceError,
+  } = useQuery(GET_BALANCE_SHEET, {
+    variables: { symbol },
+  });
+
+  const {
+    data: cashflowData,
+    loading: cashflowLoading,
+    error: cashflowError,
+  } = useQuery(GET_CASHFLOW, {
+    variables: { symbol },
+  });
+
+  if (stockLoading || ratiosLoading || incomeLoading || balanceLoading || cashflowLoading) {
+    return <p>Loading financial data...</p>;
+  }
+  if (stockError || ratiosError || incomeError || balanceError || cashflowError) {
+    return <p>Error fetching data.</p>;
+  }
+  if (
+    !stockData?.getStockInformation ||
+    !ratiosData?.getRatios ||
+    !incomeData?.getIncomeStatement ||
+    !balanceData?.getBalanceSheet ||
+    !cashflowData?.getCashflow
+  ) {
+    return <p>No financial data available.</p>;
   }
 
-  const stock = data.getStockInformation;
+  const stock = stockData.getStockInformation;
+  const ratios = ratiosData.getRatios;
+  const income = incomeData.getIncomeStatement;
+  const balance = balanceData.getBalanceSheet;
+  const cashflow = cashflowData.getCashflow;
   return (
-    <div className="mt-10">
-      <h3 className="text-2xl text-center">Key Financial Data</h3>
-      <div className="flex items-start justify-around">
-        <ul className="flex items-start justify-center gap-5">
-          <div>
-            <li>Return on Equity:</li>
-            <li>Return on Invested Capital:</li>
-            <li>Retained Earnings:</li>
-            <li>DCF Buy Price:</li>
-            <li>Market Cap:</li>
-            <li>Gross Margin:</li>
-            <li>Price Range:</li>
-          </div>
-          <div>
-            <li>a</li>
-            <li>a</li>
-            <li>a</li>
-            <li>${stock.dcf.toFixed(2)}</li>
-            <li>{formatNumbers(stock.mktCap)} </li>
-            <li>a</li>
-            <li>${stock.range}</li>
-          </div>
-        </ul>
-        <ul>
-          <li>Debt/Equity Ratio:</li>
-          <li>Interest Coverage Ratio:</li>
-          <li>Current Ratio:</li>
-          <li>Dividend Payout Ratio:</li>
-          <li>Price/Book Ratio:</li>
-          <li>LTM Price/Earnings:</li>
-        </ul>
+    <>
+      <div className="mt-10">
+        <h3 className="text-2xl text-center">Key Financial Data</h3>
+        <div className="flex items-start justify-around gap-5 max-[1000px]:flex-col ">
+          <ul className="flex items-start justify-center gap-4 max-[1000px]:self-center ">
+            <div>
+              <li>Return on Equity:</li>
+              <li>Return on Capital:</li>
+              <li>Retained Earnings:</li>
+              <li>DCF Buy Price:</li>
+              <li>Market Cap:</li>
+              <li>Gross Margin:</li>
+              <li>Price Range:</li>
+            </div>
+            <div>
+              <li>{(ratios.returnOnEquityTTM * 100).toFixed(2)}%</li>
+              <li>{((ratios.returnOnEquityTTM / (1 + ratios.debtEquityRatioTTM)) * 100).toFixed(2)}%</li>
+              <li>{formatNumbers(balance.retainedEarnings)}</li>
+              <li>${stock.dcf.toFixed(2)}</li>
+              <li>{formatNumbers(stock.mktCap)} </li>
+              <li>{(ratios.grossProfitMarginTTM * 100).toFixed(2)}%</li>
+              <li>${stock.range}</li>
+            </div>
+          </ul>
+          <ul className="flex items-start justify-center gap-8 max-[1000px]:self-center">
+            <div>
+              <li>Debt/Equity Ratio:</li>
+              <li>Interest Coverage Ratio:</li>
+              <li>Current Ratio:</li>
+              <li>Dividend Payout Ratio:</li>
+              <li>LTM Price/Book Ratio:</li>
+              <li>LTM Price/Earnings:</li>
+              <li>LTM Price/Free Cashflow:</li>
+            </div>
+            <div>
+              <li>{ratios.debtEquityRatioTTM.toFixed(2)}</li>
+              <li>{ratios.interestCoverageTTM.toFixed(2)}</li>
+              <li>{ratios.currentRatioTTM.toFixed(2)}</li>
+              <li>
+                {income.eps !== undefined &&
+                ratios.dividendPerShareTTM !== undefined &&
+                ratios.dividendPerShareTTM !== 0
+                  ? (income.eps / ratios.dividendPerShareTTM).toFixed(2)
+                  : "N/A"}
+              </li>
+
+              <li>{ratios.priceToBookRatioTTM.toFixed(2)}</li>
+              <li>{ratios.priceEarningsRatioTTM.toFixed(2)}</li>
+              <li>{ratios.priceToFreeCashFlowsRatioTTM.toFixed(2)}</li>
+            </div>
+          </ul>
+        </div>
       </div>
-    </div>
+      <FinancialStatements stock={stock} ratios= {ratios} income= {income} balance= {balance} cashflow = {cashflow}/>
+    </>
   );
 };
 

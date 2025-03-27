@@ -1,19 +1,14 @@
 import { useQuery } from "@apollo/client";
 import { GET_STOCK_INFORMATION, SymbolProps } from "@/constants";
-import { useEffect } from "react";
 import Image from "next/image";
 import FavoriteStock from "./FavoriteStock";
 
 const StockNamePrice = ({ symbol }: SymbolProps) => {
-  const { data, error, refetch } = useQuery(GET_STOCK_INFORMATION, {
+  const { data, error } = useQuery(GET_STOCK_INFORMATION, {
     variables: { symbol },
+    skip: !symbol, 
+    fetchPolicy: "cache-first", 
   });
-
-  useEffect(() => {
-    if (symbol) {
-      refetch({ symbol });
-    }
-  }, [symbol, refetch]);
 
   if (error) return <p>Error fetching data.</p>;
 
@@ -26,7 +21,7 @@ const StockNamePrice = ({ symbol }: SymbolProps) => {
   return (
     <div className="mt-5 flex justify-between items-center ">
       <div>
-        <div className="flex  justify-center items-center gap-5">
+        <div className="flex justify-center items-center gap-5 max-[1000px]:flex-col">
           <Image src={stock.image} width={50} height={50} alt="Company Logo" />
           <h1 className="text-3xl font-bold">
             {stock.companyName} ({stock.symbol})

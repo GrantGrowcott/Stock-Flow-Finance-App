@@ -11,6 +11,14 @@ export const icons = {
     auth: 40,
 }
 
+export interface FinancialStatementsProps {
+  stock: StockInformation;
+  ratios: Ratios; 
+  income: IncomeStatement;
+  balance:BalanceSheet;
+  cashflow: CashflowStatement;
+}
+
 export interface NavbarProps {
     collapsed: boolean;
     toggleNavbar: () => void;
@@ -464,70 +472,66 @@ export const GET_CASHFLOW = gql`
 
 export const GET_RATIOS = gql`
   query GetRatios($symbol: String!) {
-    getRatios(symbol: $symbol) {
-      dividendYielTTM
-      dividendYielPercentageTTM
-      peRatioTTM
-      pegRatioTTM
-      payoutRatioTTM
-      currentRatioTTM
-      quickRatioTTM
-      cashRatioTTM
-      daysOfSalesOutstandingTTM
-      daysOfInventoryOutstandingTTM
-      operatingCycleTTM
-      daysOfPayablesOutstandingTTM
-      cashConversionCycleTTM
-      grossProfitMarginTTM
-      operatingProfitMarginTTM
-      pretaxProfitMarginTTM
-      netProfitMarginTTM
-      effectiveTaxRateTTM
-      returnOnAssetsTTM
-      returnOnEquityTTM
-      returnOnCapitalEmployedTTM
-      netIncomePerEBTTTM
-      ebtPerEbitTTM
-      ebitPerRevenueTTM
-      debtRatioTTM
-      debtEquityRatioTTM
-      longTermDebtToCapitalizationTTM
-      totalDebtToCapitalizationTTM
-      interestCoverageTTM
-      cashFlowToDebtRatioTTM
-      companyEquityMultiplierTTM
-      receivablesTurnoverTTM
-      payablesTurnoverTTM
-      inventoryTurnoverTTM
-      fixedAssetTurnoverTTM
-      assetTurnoverTTM
-      operatingCashFlowPerShareTTM
-      freeCashFlowPerShareTTM
-      cashPerShareTTM
-      operatingCashFlowSalesRatioTTM
-      freeCashFlowOperatingCashFlowRatioTTM
-      cashFlowCoverageRatiosTTM
-      shortTermCoverageRatiosTTM
-      capitalExpenditureCoverageRatioTTM
-      dividendPaidAndCapexCoverageRatioTTM
-      priceBookValueRatioTTM
-      priceToBookRatioTTM
-      priceToSalesRatioTTM
-      priceEarningsRatioTTM
-      priceToFreeCashFlowsRatioTTM
-      priceToOperatingCashFlowsRatioTTM
-      priceCashFlowRatioTTM
-      priceEarningsToGrowthRatioTTM
-      priceSalesRatioTTM
-      enterpriseValueMultipleTTM
-      priceFairValueTTM
-      dividendPerShareTTM
-    }
+  getRatios(symbol: $symbol) {
+    dividendYielTTM
+    dividendYielPercentageTTM
+    peRatioTTM
+    pegRatioTTM
+    payoutRatioTTM
+    currentRatioTTM
+    quickRatioTTM
+    cashRatioTTM
+    daysOfSalesOutstandingTTM
+    daysOfInventoryOutstandingTTM
+    operatingCycleTTM
+    daysOfPayablesOutstandingTTM
+    cashConversionCycleTTM
+    grossProfitMarginTTM
+    operatingProfitMarginTTM
+    pretaxProfitMarginTTM
+    netProfitMarginTTM
+    effectiveTaxRateTTM
+    returnOnAssetsTTM
+    returnOnEquityTTM
+    returnOnCapitalEmployedTTM
+    netIncomePerEBTTTM
+    ebtPerEbitTTM
+    ebitPerRevenueTTM
+    debtRatioTTM
+    debtEquityRatioTTM
+    longTermDebtToCapitalizationTTM
+    totalDebtToCapitalizationTTM
+    interestCoverageTTM
+    cashFlowToDebtRatioTTM
+    companyEquityMultiplierTTM
+    receivablesTurnoverTTM
+    payablesTurnoverTTM
+    inventoryTurnoverTTM
+    fixedAssetTurnoverTTM
+    assetTurnoverTTM
+    operatingCashFlowPerShareTTM
+    freeCashFlowPerShareTTM
+    cashPerShareTTM
+    operatingCashFlowSalesRatioTTM
+    freeCashFlowOperatingCashFlowRatioTTM
+    cashFlowCoverageRatiosTTM
+    shortTermCoverageRatiosTTM
+    capitalExpenditureCoverageRatioTTM
+    dividendPaidAndCapexCoverageRatioTTM
+    priceBookValueRatioTTM
+    priceToBookRatioTTM
+    priceToSalesRatioTTM
+    priceEarningsRatioTTM
+    priceToFreeCashFlowsRatioTTM
+    priceToOperatingCashFlowsRatioTTM
+    priceCashFlowRatioTTM
+    priceEarningsToGrowthRatioTTM
+    priceSalesRatioTTM
+    enterpriseValueMultipleTTM
+    priceFairValueTTM
+    dividendPerShareTTM
   }
-`; 
-
-
-
+}`; 
 
 export const typeDefs = gql`
   type PriceHistory {
@@ -692,7 +696,7 @@ export const typeDefs = gql`
     finalLink: String!
   }
 
-  type Ratios {
+ type Ratios {
   dividendYielTTM: Float!
   dividendYielPercentageTTM: Float!
   peRatioTTM: Float!
@@ -739,10 +743,18 @@ export const typeDefs = gql`
   capitalExpenditureCoverageRatioTTM: Float!
   dividendPaidAndCapexCoverageRatioTTM: Float!
   priceBookValueRatioTTM: Float!
-  priceToBookRatioTTM: Float
+  priceToBookRatioTTM: Float!
+  priceToSalesRatioTTM: Float!
+  priceEarningsRatioTTM: Float!
+  priceToFreeCashFlowsRatioTTM: Float!
+  priceToOperatingCashFlowsRatioTTM: Float!
+  priceCashFlowRatioTTM: Float!
+  priceEarningsToGrowthRatioTTM: Float!
+  priceSalesRatioTTM: Float!
+  enterpriseValueMultipleTTM: Float!
+  priceFairValueTTM: Float!
+  dividendPerShareTTM: Float!
 }
-
-
   type Query {
     getStockInformation(symbol: String!): StockInformation
     getIncomeStatement(symbol: String!): IncomeStatement

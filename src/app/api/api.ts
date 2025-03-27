@@ -36,14 +36,6 @@ import { PriceHistory } from "@/constants";
 // https://financialmodelingprep.com/api/v3/ratios-ttm/AAPL?apikey=qKbye2ChaZdQ6BoVhnYPGb8ZzWj45ShM
 
 
-// ROIC = ROE x (1/ (1 + (debt to equity ratio) x (1 - effective tax rate))
-//  Can find effective tax rate TTM in the ratios api
-//  Debt to equity is calculated through the balance sheet (total debt / total shareholder equity)
-
-
-//  Use checks and x's if the values(key metrics) are at appropriate ranges for values investing ( my hurdle rates)
-// Graph on the left, key metrics to the right, below all of this will be the financial statements
-
 
 // Stock Data for Search Dropdown Menu 
 export async function getStockTicker (dispatch: Dispatch ,ticker: string) {
@@ -75,42 +67,27 @@ export async function getNews() {
 
 
   // Retrieves the most active, gainers and losers from the stock market each day.
-  export async function getStockData( setStockData: React.Dispatch<React.SetStateAction<Stock[]>>, setActiveData: React.Dispatch<React.SetStateAction<string>>, category:string) {
+  export async function getStockData(category: string): Promise<Stock[]> {
+    const endpoints: { [key: string]: string } = {
+      Active: "stock_market/actives",
+      Gainers: "stock_market/gainers",
+      Losers: "stock_market/losers",
+    };
   
-    if (category === "Active") {
-      try {
-        const response = await fetch(`https://financialmodelingprep.com/api/v3/stock_market/actives?apikey=${process.env.NEXT_PUBLIC_FINANCIAL_API_KEY}`);
-        const data = await response.json();
-        setStockData(data);
-        setActiveData("Active");
-      } catch (error) {
-        console.error("Error fetching stock data:", error);
-        setStockData([]);
-      }
-    }
-    else if (category === "Gainers") {
-      try {
-        const response = await fetch(`https://financialmodelingprep.com/api/v3/stock_market/gainers?apikey=${process.env.NEXT_PUBLIC_FINANCIAL_API_KEY}`);
-        const data = await response.json();
-        setStockData(data);
-        setActiveData("Gainers");
-      } catch (error) {
-        console.error("Error fetching stock data:", error);
-        setStockData([]);
-      }
-    }
-    else if (category === "Losers") {
-      try {
-        const response = await fetch(`https://financialmodelingprep.com/api/v3/stock_market/losers?apikey=${process.env.NEXT_PUBLIC_FINANCIAL_API_KEY}`);
-        const data = await response.json();
-        setStockData(data);
-        setActiveData("Losers");
-      } catch (error) {
-        console.error("Error fetching stock data:", error);
-        setStockData([]);
-      }
+    if (!endpoints[category]) return [];
+  
+    try {
+      const response = await fetch(
+        `https://financialmodelingprep.com/api/v3/${endpoints[category]}?apikey=${process.env.NEXT_PUBLIC_FINANCIAL_API_KEY}`
+      );
+      const data = await response.json();
+      return data || [];
+    } catch (error) {
+      console.error("Error fetching stock data:", error);
+      return [];
     }
   }
+  
 
 
 // Function to filter the data based on active time

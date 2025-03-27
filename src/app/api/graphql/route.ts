@@ -78,7 +78,7 @@ const resolvers = {
                 throw new Error(`No income statement data found for ${symbol}`);
               }
           
-              const stock = data[0]; // Assuming the API returns an array of historical income statements
+              const stock = data[0]; 
           
               return {
                 date: stock.date,
