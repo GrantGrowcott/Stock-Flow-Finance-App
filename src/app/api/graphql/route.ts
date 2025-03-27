@@ -60,7 +60,7 @@ const resolvers = {
               return null;
             }
           },
-          getIncomeStatement: async (_: unknown, { symbol }: { symbol: string }): Promise<IncomeStatement | null> => {
+          getIncomeStatement: async (_: unknown, { symbol }: { symbol: string }): Promise<IncomeStatement[] | null> => {
             try {
               const response = await fetch(
                 `https://financialmodelingprep.com/api/v3/income-statement/${symbol}?apikey=${process.env.NEXT_PUBLIC_FINANCIAL_API_KEY}`
@@ -73,14 +73,12 @@ const resolvers = {
           
               const data = await response.json();
           
-              // Ensure data is not empty
-              if (!data || data.length === 0) {
+              // Ensure data is valid
+              if (!Array.isArray(data) || data.length === 0) {
                 throw new Error(`No income statement data found for ${symbol}`);
               }
           
-              const stock = data[0]; 
-          
-              return {
+              return data.map(stock => ({
                 date: stock.date,
                 symbol: stock.symbol,
                 reportedCurrency: stock.reportedCurrency,
@@ -104,7 +102,7 @@ const resolvers = {
                 interestExpense: stock.interestExpense,
                 depreciationAndAmortization: stock.depreciationAndAmortization,
                 ebitda: stock.ebitda,
-                ebitdaRatio: stock.ebitdaRatio ,
+                ebitdaRatio: stock.ebitdaRatio,
                 operatingIncome: stock.operatingIncome,
                 operatingIncomeRatio: stock.operatingIncomeRatio,
                 totalOtherIncomeExpensesNet: stock.totalOtherIncomeExpensesNet,
@@ -118,95 +116,95 @@ const resolvers = {
                 weightedAverageShsOut: stock.weightedAverageShsOut,
                 weightedAverageShsOutDil: stock.weightedAverageShsOutDil,
                 link: stock.link,
-                finalLink: stock.finalLink
-              };
+                finalLink: stock.finalLink,
+              }));
             } catch (error) {
-              console.error('Error fetching income statement:', error);
+              console.error("Error fetching income statement:", error);
               return null;
             }
           },
-          getBalanceSheet: async (_: unknown, { symbol }: { symbol: string }): Promise<BalanceSheet | null> => {
+          
+          getBalanceSheet: async (_: unknown, { symbol }: { symbol: string }): Promise<BalanceSheet[]> => {
             try {
               const response = await fetch(
                 `https://financialmodelingprep.com/api/v3/balance-sheet-statement/${symbol}?apikey=${process.env.NEXT_PUBLIC_FINANCIAL_API_KEY}`
               );
           
-              // Check for HTTP errors
               if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
               }
           
               const data = await response.json();
           
-              // Ensure data is not empty
-              if (!data || data.length === 0) {
+              // Ensure data is an array
+              if (!Array.isArray(data) || data.length === 0) {
                 throw new Error(`No balance sheet data found for ${symbol}`);
               }
           
-              const stock = data[0]; // Assuming the API returns an array of balance sheet statements
+              return data.map((item) => ({
+                date: item.date,
+                symbol: item.symbol,
+                reportedCurrency: item.reportedCurrency,
+                cik: item.cik,
+                fillingDate: item.fillingDate,
+                acceptedDate: item.acceptedDate,
+                calendarYear: item.calendarYear,
+                period: item.period,
+                cashAndCashEquivalents: item.cashAndCashEquivalents,
+                shortTermInvestments: item.shortTermInvestments,
+                cashAndShortTermInvestments: item.cashAndShortTermInvestments,
+                netReceivables: item.netReceivables,
+                inventory: item.inventory,
+                otherCurrentAssets: item.otherCurrentAssets,
+                totalCurrentAssets: item.totalCurrentAssets,
+                propertyPlantEquipmentNet: item.propertyPlantEquipmentNet,
+                goodwill: item.goodwill,
+                intangibleAssets: item.intangibleAssets,
+                goodwillAndIntangibleAssets: item.goodwillAndIntangibleAssets,
+                longTermInvestments: item.longTermInvestments,
+                taxAssets: item.taxAssets,
+                otherNonCurrentAssets: item.otherNonCurrentAssets,
+                totalNonCurrentAssets: item.totalNonCurrentAssets,
+                otherAssets: item.otherAssets,
+                totalAssets: item.totalAssets,
+                accountPayables: item.accountPayables,
+                shortTermDebt: item.shortTermDebt,
+                taxPayables: item.taxPayables,
+                deferredRevenue: item.deferredRevenue,
+                otherCurrentLiabilities: item.otherCurrentLiabilities,
+                totalCurrentLiabilities: item.totalCurrentLiabilities,
+                longTermDebt: item.longTermDebt,
+                deferredRevenueNonCurrent: item.deferredRevenueNonCurrent,
+                deferredTaxLiabilitiesNonCurrent: item.deferredTaxLiabilitiesNonCurrent,
+                otherNonCurrentLiabilities: item.otherNonCurrentLiabilities,
+                totalNonCurrentLiabilities: item.totalNonCurrentLiabilities,
+                otherLiabilities: item.otherLiabilities,
+                capitalLeaseObligations: item.capitalLeaseObligations,
+                totalLiabilities: item.totalLiabilities,
+                preferredStock: item.preferredStock,
+                commonStock: item.commonStock,
+                retainedEarnings: item.retainedEarnings,
+                accumulatedOtherComprehensiveIncomeLoss: item.accumulatedOtherComprehensiveIncomeLoss,
+                othertotalStockholdersEquity: item.othertotalStockholdersEquity,
+                totalStockholdersEquity: item.totalStockholdersEquity,
+                totalEquity: item.totalEquity,
+                totalLiabilitiesAndStockholdersEquity: item.totalLiabilitiesAndStockholdersEquity,
+                minorityInterest: item.minorityInterest,
+                totalLiabilitiesAndTotalEquity: item.totalLiabilitiesAndTotalEquity,
+                totalInvestments: item.totalInvestments,
+                totalDebt: item.totalDebt,
+                netDebt: item.netDebt,
+                link: item.link,
+                finalLink: item.finalLink
+              }));
           
-              return {
-                date: stock.date,
-                symbol: stock.symbol,
-                reportedCurrency: stock.reportedCurrency,
-                cik: stock.cik,
-                fillingDate: stock.fillingDate,
-                acceptedDate: stock.acceptedDate,
-                calendarYear: stock.calendarYear,
-                period: stock.period,
-                cashAndCashEquivalents: stock.cashAndCashEquivalents,
-                shortTermInvestments: stock.shortTermInvestments,
-                cashAndShortTermInvestments: stock.cashAndShortTermInvestments,
-                netReceivables: stock.netReceivables,
-                inventory: stock.inventory,
-                otherCurrentAssets: stock.otherCurrentAssets,
-                totalCurrentAssets: stock.totalCurrentAssets,
-                propertyPlantEquipmentNet: stock.propertyPlantEquipmentNet,
-                goodwill: stock.goodwill,
-                intangibleAssets: stock.intangibleAssets,
-                goodwillAndIntangibleAssets: stock.goodwillAndIntangibleAssets,
-                longTermInvestments: stock.longTermInvestments,
-                taxAssets: stock.taxAssets,
-                otherNonCurrentAssets: stock.otherNonCurrentAssets,
-                totalNonCurrentAssets: stock.totalNonCurrentAssets,
-                otherAssets: stock.otherAssets,
-                totalAssets: stock.totalAssets,
-                accountPayables: stock.accountPayables,
-                shortTermDebt: stock.shortTermDebt,
-                taxPayables: stock.taxPayables,
-                deferredRevenue: stock.deferredRevenue,
-                otherCurrentLiabilities: stock.otherCurrentLiabilities,
-                totalCurrentLiabilities: stock.totalCurrentLiabilities,
-                longTermDebt: stock.longTermDebt,
-                deferredRevenueNonCurrent: stock.deferredRevenueNonCurrent,
-                deferredTaxLiabilitiesNonCurrent: stock.deferredTaxLiabilitiesNonCurrent,
-                otherNonCurrentLiabilities: stock.otherNonCurrentLiabilities,
-                totalNonCurrentLiabilities: stock.totalNonCurrentLiabilities,
-                otherLiabilities: stock.otherLiabilities,
-                capitalLeaseObligations: stock.capitalLeaseObligations,
-                totalLiabilities: stock.totalLiabilities,
-                preferredStock: stock.preferredStock,
-                commonStock: stock.commonStock,
-                retainedEarnings: stock.retainedEarnings,
-                accumulatedOtherComprehensiveIncomeLoss: stock.accumulatedOtherComprehensiveIncomeLoss,
-                othertotalStockholdersEquity: stock.othertotalStockholdersEquity,
-                totalStockholdersEquity: stock.totalStockholdersEquity,
-                totalEquity: stock.totalEquity,
-                totalLiabilitiesAndStockholdersEquity: stock.totalLiabilitiesAndStockholdersEquity,
-                minorityInterest: stock.minorityInterest,
-                totalLiabilitiesAndTotalEquity: stock.totalLiabilitiesAndTotalEquity,
-                totalInvestments: stock.totalInvestments,
-                totalDebt: stock.totalDebt,
-                netDebt: stock.netDebt,
-                link: stock.link,
-                finalLink: stock.finalLink
-              };
             } catch (error) {
               console.error('Error fetching balance sheet:', error);
-              return null;
+              return [];
             }
           },
-          getCashflow: async (_: unknown, { symbol }: { symbol: string }): Promise<CashflowStatement | null> => {
+          
+          getCashflow: async (_: unknown, { symbol }: { symbol: string }): Promise<CashflowStatement[] | null> => {
             try {
               const response = await fetch(
                 `https://financialmodelingprep.com/api/v3/cash-flow-statement/${symbol}?apikey=${process.env.NEXT_PUBLIC_FINANCIAL_API_KEY}`
@@ -219,64 +217,63 @@ const resolvers = {
           
               const data = await response.json();
           
-              // Ensure data is not empty
-              if (!data || data.length === 0) {
+              // Ensure data is valid
+              if (!Array.isArray(data) || data.length === 0) {
                 throw new Error(`No cashflow data found for ${symbol}`);
               }
           
-              const cashflow = data[0]; // Assuming the API returns an array of cash flow statements
-          
-              return {
-                date: cashflow.date,
-                symbol: cashflow.symbol,
-                reportedCurrency: cashflow.reportedCurrency,
-                cik: cashflow.cik,
-                fillingDate: cashflow.fillingDate,
-                acceptedDate: cashflow.acceptedDate,
-                calendarYear: cashflow.calendarYear,
-                period: cashflow.period,
-                netIncome: cashflow.netIncome,
-                depreciationAndAmortization: cashflow.depreciationAndAmortization,
-                deferredIncomeTax: cashflow.deferredIncomeTax,
-                stockBasedCompensation: cashflow.stockBasedCompensation,
-                changeInWorkingCapital: cashflow.changeInWorkingCapital,
-                accountsReceivables: cashflow.accountsReceivables,
-                inventory: cashflow.inventory,
-                accountsPayables: cashflow.accountsPayables,
-                otherWorkingCapital: cashflow.otherWorkingCapital,
-                otherNonCashItems: cashflow.otherNonCashItems,
-                netCashProvidedByOperatingActivities: cashflow.netCashProvidedByOperatingActivities,
-                investmentsInPropertyPlantAndEquipment: cashflow.investmentsInPropertyPlantAndEquipment,
-                acquisitionsNet: cashflow.acquisitionsNet,
-                purchasesOfInvestments: cashflow.purchasesOfInvestments,
-                salesMaturitiesOfInvestments: cashflow.salesMaturitiesOfInvestments,
-                otherInvestingActivites: cashflow.otherInvestingActivites,
-                netCashUsedForInvestingActivities: cashflow.netCashUsedForInvestingActivities,
-                debtRepayment: cashflow.debtRepayment,
-                commonStockIssued: cashflow.commonStockIssued,
-                commonStockRepurchased: cashflow.commonStockRepurchased,
-                dividendsPaid: cashflow.dividendsPaid,
-                otherFinancingActivities: cashflow.otherFinancingActivities,
-                netCashUsedProvidedByFinancingActivities: cashflow.netCashUsedProvidedByFinancingActivities,
-                effectOfForexChangesOnCash: cashflow.effectOfForexChangesOnCash,
-                netChangeInCash: cashflow.netChangeInCash,
-                cashAtEndOfPeriod: cashflow.cashAtEndOfPeriod,
-                cashAtBeginningOfPeriod: cashflow.cashAtBeginningOfPeriod,
-                operatingCashFlow: cashflow.operatingCashFlow,
-                capitalExpenditure: cashflow.capitalExpenditure,
-                freeCashFlow: cashflow.freeCashFlow,
-                link: cashflow.link,
-                finalLink: cashflow.finalLink
-              };
+              return data.map(entry => ({
+                date: entry.date,
+                symbol: entry.symbol,
+                reportedCurrency: entry.reportedCurrency,
+                cik: entry.cik,
+                fillingDate: entry.fillingDate,
+                acceptedDate: entry.acceptedDate,
+                calendarYear: entry.calendarYear,
+                period: entry.period,
+                netIncome: entry.netIncome,
+                depreciationAndAmortization: entry.depreciationAndAmortization,
+                deferredIncomeTax: entry.deferredIncomeTax,
+                stockBasedCompensation: entry.stockBasedCompensation,
+                changeInWorkingCapital: entry.changeInWorkingCapital,
+                accountsReceivables: entry.accountsReceivables,
+                inventory: entry.inventory,
+                accountsPayables: entry.accountsPayables,
+                otherWorkingCapital: entry.otherWorkingCapital,
+                otherNonCashItems: entry.otherNonCashItems,
+                netCashProvidedByOperatingActivities: entry.netCashProvidedByOperatingActivities,
+                investmentsInPropertyPlantAndEquipment: entry.investmentsInPropertyPlantAndEquipment,
+                acquisitionsNet: entry.acquisitionsNet,
+                purchasesOfInvestments: entry.purchasesOfInvestments,
+                salesMaturitiesOfInvestments: entry.salesMaturitiesOfInvestments,
+                otherInvestingActivites: entry.otherInvestingActivites,
+                netCashUsedForInvestingActivities: entry.netCashUsedForInvestingActivities,
+                debtRepayment: entry.debtRepayment,
+                commonStockIssued: entry.commonStockIssued,
+                commonStockRepurchased: entry.commonStockRepurchased,
+                dividendsPaid: entry.dividendsPaid,
+                otherFinancingActivities: entry.otherFinancingActivities,
+                netCashUsedProvidedByFinancingActivities: entry.netCashUsedProvidedByFinancingActivities,
+                effectOfForexChangesOnCash: entry.effectOfForexChangesOnCash,
+                netChangeInCash: entry.netChangeInCash,
+                cashAtEndOfPeriod: entry.cashAtEndOfPeriod,
+                cashAtBeginningOfPeriod: entry.cashAtBeginningOfPeriod,
+                operatingCashFlow: entry.operatingCashFlow,
+                capitalExpenditure: entry.capitalExpenditure,
+                freeCashFlow: entry.freeCashFlow,
+                link: entry.link,
+                finalLink: entry.finalLink
+              }));
             } catch (error) {
-              console.error('Error fetching cashflow statement:', error);
+              console.error("Error fetching cashflow statement:", error);
               return null;
             }
           },
-          getRatios: async (_: unknown, { symbol }: { symbol: string }): Promise<Ratios | null> => {
+          
+          getRatios: async (_: unknown, { symbol }: { symbol: string }): Promise<Ratios[] | null> => {
             try {
               const response = await fetch(
-                `https://financialmodelingprep.com/api/v3/ratios-ttm/${symbol}?apikey=${process.env.NEXT_PUBLIC_FINANCIAL_API_KEY}`
+                `https://financialmodelingprep.com/api/v3/ratios/${symbol}?apikey=${process.env.NEXT_PUBLIC_FINANCIAL_API_KEY}`
               );
           
               // Check for HTTP errors
@@ -286,77 +283,77 @@ const resolvers = {
           
               const data = await response.json();
           
-              // Ensure data is not empty
-              if (!data || !data[0]) {
-                throw new Error(`No ratio data found for ${symbol}`);
+              // Ensure data is valid
+              if (!Array.isArray(data) || data.length === 0) {
+                throw new Error(`No cashflow data found for ${symbol}`);
               }
           
-              const ratios = data[0]; // Assuming the API returns an array of ratios
-          
-              return {
-                dividendYielTTM: ratios.dividendYielTTM,
-                dividendYielPercentageTTM: ratios.dividendYielPercentageTTM,
-                peRatioTTM: ratios.peRatioTTM,
-                pegRatioTTM: ratios.pegRatioTTM,
-                payoutRatioTTM: ratios.payoutRatioTTM,
-                currentRatioTTM: ratios.currentRatioTTM,
-                quickRatioTTM: ratios.quickRatioTTM,
-                cashRatioTTM: ratios.cashRatioTTM,
-                daysOfSalesOutstandingTTM: ratios.daysOfSalesOutstandingTTM,
-                daysOfInventoryOutstandingTTM: ratios.daysOfInventoryOutstandingTTM,
-                operatingCycleTTM: ratios.operatingCycleTTM,
-                daysOfPayablesOutstandingTTM: ratios.daysOfPayablesOutstandingTTM,
-                cashConversionCycleTTM: ratios.cashConversionCycleTTM,
-                grossProfitMarginTTM: ratios.grossProfitMarginTTM,
-                operatingProfitMarginTTM: ratios.operatingProfitMarginTTM,
-                pretaxProfitMarginTTM: ratios.pretaxProfitMarginTTM,
-                netProfitMarginTTM: ratios.netProfitMarginTTM,
-                effectiveTaxRateTTM: ratios.effectiveTaxRateTTM,
-                returnOnAssetsTTM: ratios.returnOnAssetsTTM,
-                returnOnEquityTTM: ratios.returnOnEquityTTM,
-                returnOnCapitalEmployedTTM: ratios.returnOnCapitalEmployedTTM,
-                netIncomePerEBTTTM: ratios.netIncomePerEBTTTM,
-                ebtPerEbitTTM: ratios.ebtPerEbitTTM,
-                ebitPerRevenueTTM: ratios.ebitPerRevenueTTM,
-                debtRatioTTM: ratios.debtRatioTTM,
-                debtEquityRatioTTM: ratios.debtEquityRatioTTM,
-                longTermDebtToCapitalizationTTM: ratios.longTermDebtToCapitalizationTTM,
-                totalDebtToCapitalizationTTM: ratios.totalDebtToCapitalizationTTM,
-                interestCoverageTTM: ratios.interestCoverageTTM,
-                cashFlowToDebtRatioTTM: ratios.cashFlowToDebtRatioTTM,
-                companyEquityMultiplierTTM: ratios.companyEquityMultiplierTTM,
-                receivablesTurnoverTTM: ratios.receivablesTurnoverTTM,
-                payablesTurnoverTTM: ratios.payablesTurnoverTTM,
-                inventoryTurnoverTTM: ratios.inventoryTurnoverTTM,
-                fixedAssetTurnoverTTM: ratios.fixedAssetTurnoverTTM,
-                assetTurnoverTTM: ratios.assetTurnoverTTM,
-                operatingCashFlowPerShareTTM: ratios.operatingCashFlowPerShareTTM,
-                freeCashFlowPerShareTTM: ratios.freeCashFlowPerShareTTM,
-                cashPerShareTTM: ratios.cashPerShareTTM,
-                operatingCashFlowSalesRatioTTM: ratios.operatingCashFlowSalesRatioTTM,
-                freeCashFlowOperatingCashFlowRatioTTM: ratios.freeCashFlowOperatingCashFlowRatioTTM,
-                cashFlowCoverageRatiosTTM: ratios.cashFlowCoverageRatiosTTM,
-                shortTermCoverageRatiosTTM: ratios.shortTermCoverageRatiosTTM,
-                capitalExpenditureCoverageRatioTTM: ratios.capitalExpenditureCoverageRatioTTM,
-                dividendPaidAndCapexCoverageRatioTTM: ratios.dividendPaidAndCapexCoverageRatioTTM,
-                priceBookValueRatioTTM: ratios.priceBookValueRatioTTM,
-                priceToBookRatioTTM: ratios.priceToBookRatioTTM,
-                priceToSalesRatioTTM: ratios.priceToSalesRatioTTM,
-                priceEarningsRatioTTM: ratios.priceEarningsRatioTTM,
-                priceToFreeCashFlowsRatioTTM: ratios.priceToFreeCashFlowsRatioTTM,
-                priceToOperatingCashFlowsRatioTTM: ratios.priceToOperatingCashFlowsRatioTTM,
-                priceCashFlowRatioTTM: ratios.priceCashFlowRatioTTM,
-                priceEarningsToGrowthRatioTTM: ratios.priceEarningsToGrowthRatioTTM,
-                priceSalesRatioTTM: ratios.priceSalesRatioTTM,
-                enterpriseValueMultipleTTM: ratios.enterpriseValueMultipleTTM,
-                priceFairValueTTM: ratios.priceFairValueTTM,
-                dividendPerShareTTM: ratios.dividendPerShareTTM,
-              };
+              // Return the data as an array of ratios
+              return data.map(item => ({
+                date: item.date,
+                calendarYear: item.calendarYear,
+                period: item.period,
+                currentRatio: item.currentRatio,
+                quickRatio: item.quickRatio,
+                cashRatio: item.cashRatio,
+                daysOfSalesOutstanding: item.daysOfSalesOutstanding,
+                daysOfInventoryOutstanding: item.daysOfInventoryOutstanding,
+                operatingCycle: item.operatingCycle,
+                daysOfPayablesOutstanding: item.daysOfPayablesOutstanding,
+                cashConversionCycle: item.cashConversionCycle,
+                grossProfitMargin: item.grossProfitMargin,
+                operatingProfitMargin: item.operatingProfitMargin,
+                pretaxProfitMargin: item.pretaxProfitMargin,
+                netProfitMargin: item.netProfitMargin,
+                effectiveTaxRate: item.effectiveTaxRate,
+                returnOnAssets: item.returnOnAssets,
+                returnOnEquity: item.returnOnEquity,
+                returnOnCapitalEmployed: item.returnOnCapitalEmployed,
+                netIncomePerEBT: item.netIncomePerEBT,
+                ebtPerEbit: item.ebtPerEbit,
+                ebitPerRevenue: item.ebitPerRevenue,
+                debtRatio: item.debtRatio,
+                debtEquityRatio: item.debtEquityRatio,
+                longTermDebtToCapitalization: item.longTermDebtToCapitalization,
+                totalDebtToCapitalization: item.totalDebtToCapitalization,
+                interestCoverage: item.interestCoverage,
+                cashFlowToDebtRatio: item.cashFlowToDebtRatio,
+                companyEquityMultiplier: item.companyEquityMultiplier,
+                receivablesTurnover: item.receivablesTurnover,
+                payablesTurnover: item.payablesTurnover,
+                inventoryTurnover: item.inventoryTurnover,
+                fixedAssetTurnover: item.fixedAssetTurnover,
+                assetTurnover: item.assetTurnover,
+                operatingCashFlowPerShare: item.operatingCashFlowPerShare,
+                freeCashFlowPerShare: item.freeCashFlowPerShare,
+                cashPerShare: item.cashPerShare,
+                payoutRatio: item.payoutRatio,
+                operatingCashFlowSalesRatio: item.operatingCashFlowSalesRatio,
+                freeCashFlowOperatingCashFlowRatio: item.freeCashFlowOperatingCashFlowRatio,
+                cashFlowCoverageRatios: item.cashFlowCoverageRatios,
+                shortTermCoverageRatios: item.shortTermCoverageRatios,
+                capitalExpenditureCoverageRatio: item.capitalExpenditureCoverageRatio,
+                dividendPaidAndCapexCoverageRatio: item.dividendPaidAndCapexCoverageRatio,
+                dividendPayoutRatio: item.dividendPayoutRatio,
+                priceBookValueRatio: item.priceBookValueRatio,
+                priceToBookRatio: item.priceToBookRatio,
+                priceToSalesRatio: item.priceToSalesRatio,
+                priceEarningsRatio: item.priceEarningsRatio,
+                priceToFreeCashFlowsRatio: item.priceToFreeCashFlowsRatio,
+                priceToOperatingCashFlowsRatio: item.priceToOperatingCashFlowsRatio,
+                priceCashFlowRatio: item.priceCashFlowRatio,
+                priceEarningsToGrowthRatio: item.priceEarningsToGrowthRatio,
+                priceSalesRatio: item.priceSalesRatio,
+                dividendYield: item.dividendYield,
+                enterpriseValueMultiple: item.enterpriseValueMultiple,
+                priceFairValue: item.priceFairValue
+              }));
             } catch (error) {
               console.error('Error fetching ratios:', error);
               return null;
             }
-          }     
+          }
+            
     },
   };
   

@@ -82,12 +82,12 @@ const KeyFinancialStats = ({ symbol }: SymbolProps) => {
               <li>Price Range:</li>
             </div>
             <div>
-              <li>{(ratios.returnOnEquityTTM * 100).toFixed(2)}%</li>
-              <li>{((ratios.returnOnEquityTTM / (1 + ratios.debtEquityRatioTTM)) * 100).toFixed(2)}%</li>
-              <li>{formatNumbers(balance.retainedEarnings)}</li>
+              <li>{(ratios[0].returnOnEquity * 100).toFixed(2)}%</li>
+              <li>{((ratios[0].returnOnEquity / (1 + ratios[0].debtEquityRatio)) * 100).toFixed(2)}%</li>
+              <li>{formatNumbers(balance[0].retainedEarnings)}</li>
               <li>${stock.dcf.toFixed(2)}</li>
               <li>{formatNumbers(stock.mktCap)} </li>
-              <li>{(ratios.grossProfitMarginTTM * 100).toFixed(2)}%</li>
+              <li>{(ratios[0].grossProfitMargin * 100).toFixed(2)}%</li>
               <li>${stock.range}</li>
             </div>
           </ul>
@@ -102,25 +102,18 @@ const KeyFinancialStats = ({ symbol }: SymbolProps) => {
               <li>LTM Price/Free Cashflow:</li>
             </div>
             <div>
-              <li>{ratios.debtEquityRatioTTM.toFixed(2)}</li>
-              <li>{ratios.interestCoverageTTM.toFixed(2)}</li>
-              <li>{ratios.currentRatioTTM.toFixed(2)}</li>
-              <li>
-                {income.eps !== undefined &&
-                ratios.dividendPerShareTTM !== undefined &&
-                ratios.dividendPerShareTTM !== 0
-                  ? (income.eps / ratios.dividendPerShareTTM).toFixed(2)
-                  : "N/A"}
-              </li>
-
-              <li>{ratios.priceToBookRatioTTM.toFixed(2)}</li>
-              <li>{ratios.priceEarningsRatioTTM.toFixed(2)}</li>
-              <li>{ratios.priceToFreeCashFlowsRatioTTM.toFixed(2)}</li>
+              <li>{ratios[0].debtEquityRatio.toFixed(2)}</li>
+              <li>{ratios[0].interestCoverage.toFixed(2)}</li>
+              <li>{ratios[0].currentRatio.toFixed(2)}</li>
+              <li>{ratios[0].dividendPayoutRatio.toFixed(2)}</li>
+              <li>{ratios[0].priceToBookRatio.toFixed(2)}</li>
+              <li>{ratios[0].priceEarningsRatio.toFixed(2)}</li>
+              <li>{ratios[0].priceToFreeCashFlowsRatio.toFixed(2)}</li>
             </div>
           </ul>
         </div>
       </div>
-      <FinancialStatements stock={stock} ratios= {ratios} income= {income} balance= {balance} cashflow = {cashflow}/>
+      <FinancialStatements stock={stock} ratios={ratios} income={income} balance={balance} cashflow={cashflow} />
     </>
   );
 };

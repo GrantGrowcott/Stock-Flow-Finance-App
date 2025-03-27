@@ -223,65 +223,68 @@ export interface NewsArticle {
     finalLink: string;
   }
 
-  export interface Ratios {
-    dividendYielTTM: number;
-    dividendYielPercentageTTM: number;
-    peRatioTTM: number;
-    pegRatioTTM: number;
-    payoutRatioTTM: number;
-    currentRatioTTM: number;
-    quickRatioTTM: number;
-    cashRatioTTM: number;
-    daysOfSalesOutstandingTTM: number;
-    daysOfInventoryOutstandingTTM: number;
-    operatingCycleTTM: number;
-    daysOfPayablesOutstandingTTM: number;
-    cashConversionCycleTTM: number;
-    grossProfitMarginTTM: number;
-    operatingProfitMarginTTM: number;
-    pretaxProfitMarginTTM: number;
-    netProfitMarginTTM: number;
-    effectiveTaxRateTTM: number;
-    returnOnAssetsTTM: number;
-    returnOnEquityTTM: number;
-    returnOnCapitalEmployedTTM: number;
-    netIncomePerEBTTTM: number;
-    ebtPerEbitTTM: number;
-    ebitPerRevenueTTM: number;
-    debtRatioTTM: number;
-    debtEquityRatioTTM: number;
-    longTermDebtToCapitalizationTTM: number;
-    totalDebtToCapitalizationTTM: number;
-    interestCoverageTTM: number;
-    cashFlowToDebtRatioTTM: number;
-    companyEquityMultiplierTTM: number;
-    receivablesTurnoverTTM: number;
-    payablesTurnoverTTM: number;
-    inventoryTurnoverTTM: number;
-    fixedAssetTurnoverTTM: number;
-    assetTurnoverTTM: number;
-    operatingCashFlowPerShareTTM: number;
-    freeCashFlowPerShareTTM: number;
-    cashPerShareTTM: number;
-    operatingCashFlowSalesRatioTTM: number;
-    freeCashFlowOperatingCashFlowRatioTTM: number;
-    cashFlowCoverageRatiosTTM: number;
-    shortTermCoverageRatiosTTM: number;
-    capitalExpenditureCoverageRatioTTM: number;
-    dividendPaidAndCapexCoverageRatioTTM: number;
-    priceBookValueRatioTTM: number;
-    priceToBookRatioTTM: number;
-    priceToSalesRatioTTM: number;
-    priceEarningsRatioTTM: number;
-    priceToFreeCashFlowsRatioTTM: number;
-    priceToOperatingCashFlowsRatioTTM: number;
-    priceCashFlowRatioTTM: number;
-    priceEarningsToGrowthRatioTTM: number;
-    priceSalesRatioTTM: number;
-    enterpriseValueMultipleTTM: number;
-    priceFairValueTTM: number;
-    dividendPerShareTTM: number;
-  }
+  export interface Ratios  {
+    date: string;
+    calendarYear: string;
+    period: string;
+    currentRatio: number;
+    quickRatio: number;
+    cashRatio: number;
+    daysOfSalesOutstanding: number;
+    daysOfInventoryOutstanding: number;
+    operatingCycle: number;
+    daysOfPayablesOutstanding: number;
+    cashConversionCycle: number;
+    grossProfitMargin: number;
+    operatingProfitMargin: number;
+    pretaxProfitMargin: number;
+    netProfitMargin: number;
+    effectiveTaxRate: number;
+    returnOnAssets: number;
+    returnOnEquity: number;
+    returnOnCapitalEmployed: number;
+    netIncomePerEBT: number;
+    ebtPerEbit: number;
+    ebitPerRevenue: number;
+    debtRatio: number;
+    debtEquityRatio: number;
+    longTermDebtToCapitalization: number;
+    totalDebtToCapitalization: number;
+    interestCoverage: number;
+    cashFlowToDebtRatio: number;
+    companyEquityMultiplier: number;
+    receivablesTurnover: number;
+    payablesTurnover: number;
+    inventoryTurnover: number;
+    fixedAssetTurnover: number;
+    assetTurnover: number;
+    operatingCashFlowPerShare: number;
+    freeCashFlowPerShare: number;
+    cashPerShare: number;
+    payoutRatio: number;
+    operatingCashFlowSalesRatio: number;
+    freeCashFlowOperatingCashFlowRatio: number;
+    cashFlowCoverageRatios: number;
+    shortTermCoverageRatios: number;
+    capitalExpenditureCoverageRatio: number;
+    dividendPaidAndCapexCoverageRatio: number;
+    dividendPayoutRatio: number;
+    priceBookValueRatio: number;
+    priceToBookRatio: number;
+    priceToSalesRatio: number;
+    priceEarningsRatio: number;
+    priceToFreeCashFlowsRatio: number;
+    priceToOperatingCashFlowsRatio: number;
+    priceCashFlowRatio: number;
+    priceEarningsToGrowthRatio: number;
+    priceSalesRatio: number;
+    dividendYield: number;
+    enterpriseValueMultiple: number;
+    priceFairValue: number;
+  };
+  
+  
+  
   
   
   
@@ -472,66 +475,69 @@ export const GET_CASHFLOW = gql`
 
 export const GET_RATIOS = gql`
   query GetRatios($symbol: String!) {
-  getRatios(symbol: $symbol) {
-    dividendYielTTM
-    dividendYielPercentageTTM
-    peRatioTTM
-    pegRatioTTM
-    payoutRatioTTM
-    currentRatioTTM
-    quickRatioTTM
-    cashRatioTTM
-    daysOfSalesOutstandingTTM
-    daysOfInventoryOutstandingTTM
-    operatingCycleTTM
-    daysOfPayablesOutstandingTTM
-    cashConversionCycleTTM
-    grossProfitMarginTTM
-    operatingProfitMarginTTM
-    pretaxProfitMarginTTM
-    netProfitMarginTTM
-    effectiveTaxRateTTM
-    returnOnAssetsTTM
-    returnOnEquityTTM
-    returnOnCapitalEmployedTTM
-    netIncomePerEBTTTM
-    ebtPerEbitTTM
-    ebitPerRevenueTTM
-    debtRatioTTM
-    debtEquityRatioTTM
-    longTermDebtToCapitalizationTTM
-    totalDebtToCapitalizationTTM
-    interestCoverageTTM
-    cashFlowToDebtRatioTTM
-    companyEquityMultiplierTTM
-    receivablesTurnoverTTM
-    payablesTurnoverTTM
-    inventoryTurnoverTTM
-    fixedAssetTurnoverTTM
-    assetTurnoverTTM
-    operatingCashFlowPerShareTTM
-    freeCashFlowPerShareTTM
-    cashPerShareTTM
-    operatingCashFlowSalesRatioTTM
-    freeCashFlowOperatingCashFlowRatioTTM
-    cashFlowCoverageRatiosTTM
-    shortTermCoverageRatiosTTM
-    capitalExpenditureCoverageRatioTTM
-    dividendPaidAndCapexCoverageRatioTTM
-    priceBookValueRatioTTM
-    priceToBookRatioTTM
-    priceToSalesRatioTTM
-    priceEarningsRatioTTM
-    priceToFreeCashFlowsRatioTTM
-    priceToOperatingCashFlowsRatioTTM
-    priceCashFlowRatioTTM
-    priceEarningsToGrowthRatioTTM
-    priceSalesRatioTTM
-    enterpriseValueMultipleTTM
-    priceFairValueTTM
-    dividendPerShareTTM
+    getRatios(symbol: $symbol) {
+      date
+      calendarYear
+      period
+      currentRatio
+      quickRatio
+      cashRatio
+      daysOfSalesOutstanding
+      daysOfInventoryOutstanding
+      operatingCycle
+      daysOfPayablesOutstanding
+      cashConversionCycle
+      grossProfitMargin
+      operatingProfitMargin
+      pretaxProfitMargin
+      netProfitMargin
+      effectiveTaxRate
+      returnOnAssets
+      returnOnEquity
+      returnOnCapitalEmployed
+      netIncomePerEBT
+      ebtPerEbit
+      ebitPerRevenue
+      debtRatio
+      debtEquityRatio
+      longTermDebtToCapitalization
+      totalDebtToCapitalization
+      interestCoverage
+      cashFlowToDebtRatio
+      companyEquityMultiplier
+      receivablesTurnover
+      payablesTurnover
+      inventoryTurnover
+      fixedAssetTurnover
+      assetTurnover
+      operatingCashFlowPerShare
+      freeCashFlowPerShare
+      cashPerShare
+      payoutRatio
+      operatingCashFlowSalesRatio
+      freeCashFlowOperatingCashFlowRatio
+      cashFlowCoverageRatios
+      shortTermCoverageRatios
+      capitalExpenditureCoverageRatio
+      dividendPaidAndCapexCoverageRatio
+      dividendPayoutRatio
+      priceBookValueRatio
+      priceToBookRatio
+      priceToSalesRatio
+      priceEarningsRatio
+      priceToFreeCashFlowsRatio
+      priceToOperatingCashFlowsRatio
+      priceCashFlowRatio
+      priceEarningsToGrowthRatio
+      priceSalesRatio
+      dividendYield
+      enterpriseValueMultiple
+      priceFairValue
+    }
   }
-}`; 
+`;
+
+
 
 export const typeDefs = gql`
   type PriceHistory {
@@ -697,71 +703,74 @@ export const typeDefs = gql`
   }
 
  type Ratios {
-  dividendYielTTM: Float!
-  dividendYielPercentageTTM: Float!
-  peRatioTTM: Float!
-  pegRatioTTM: Float!
-  payoutRatioTTM: Float!
-  currentRatioTTM: Float!
-  quickRatioTTM: Float!
-  cashRatioTTM: Float!
-  daysOfSalesOutstandingTTM: Float!
-  daysOfInventoryOutstandingTTM: Float!
-  operatingCycleTTM: Float!
-  daysOfPayablesOutstandingTTM: Float!
-  cashConversionCycleTTM: Float!
-  grossProfitMarginTTM: Float!
-  operatingProfitMarginTTM: Float!
-  pretaxProfitMarginTTM: Float!
-  netProfitMarginTTM: Float!
-  effectiveTaxRateTTM: Float!
-  returnOnAssetsTTM: Float!
-  returnOnEquityTTM: Float!
-  returnOnCapitalEmployedTTM: Float!
-  netIncomePerEBTTTM: Float!
-  ebtPerEbitTTM: Float!
-  ebitPerRevenueTTM: Float!
-  debtRatioTTM: Float!
-  debtEquityRatioTTM: Float!
-  longTermDebtToCapitalizationTTM: Float!
-  totalDebtToCapitalizationTTM: Float!
-  interestCoverageTTM: Float!
-  cashFlowToDebtRatioTTM: Float!
-  companyEquityMultiplierTTM: Float!
-  receivablesTurnoverTTM: Float!
-  payablesTurnoverTTM: Float!
-  inventoryTurnoverTTM: Float!
-  fixedAssetTurnoverTTM: Float!
-  assetTurnoverTTM: Float!
-  operatingCashFlowPerShareTTM: Float!
-  freeCashFlowPerShareTTM: Float!
-  cashPerShareTTM: Float!
-  operatingCashFlowSalesRatioTTM: Float!
-  freeCashFlowOperatingCashFlowRatioTTM: Float!
-  cashFlowCoverageRatiosTTM: Float!
-  shortTermCoverageRatiosTTM: Float!
-  capitalExpenditureCoverageRatioTTM: Float!
-  dividendPaidAndCapexCoverageRatioTTM: Float!
-  priceBookValueRatioTTM: Float!
-  priceToBookRatioTTM: Float!
-  priceToSalesRatioTTM: Float!
-  priceEarningsRatioTTM: Float!
-  priceToFreeCashFlowsRatioTTM: Float!
-  priceToOperatingCashFlowsRatioTTM: Float!
-  priceCashFlowRatioTTM: Float!
-  priceEarningsToGrowthRatioTTM: Float!
-  priceSalesRatioTTM: Float!
-  enterpriseValueMultipleTTM: Float!
-  priceFairValueTTM: Float!
-  dividendPerShareTTM: Float!
+  date: String!
+  calendarYear: String!
+  period: String!
+  currentRatio: Float!
+  quickRatio: Float!
+  cashRatio: Float!
+  daysOfSalesOutstanding: Float!
+  daysOfInventoryOutstanding: Float!
+  operatingCycle: Float!
+  daysOfPayablesOutstanding: Float!
+  cashConversionCycle: Float!
+  grossProfitMargin: Float!
+  operatingProfitMargin: Float!
+  pretaxProfitMargin: Float!
+  netProfitMargin: Float!
+  effectiveTaxRate: Float!
+  returnOnAssets: Float!
+  returnOnEquity: Float!
+  returnOnCapitalEmployed: Float!
+  netIncomePerEBT: Float!
+  ebtPerEbit: Float!
+  ebitPerRevenue: Float!
+  debtRatio: Float!
+  debtEquityRatio: Float!
+  longTermDebtToCapitalization: Float!
+  totalDebtToCapitalization: Float!
+  interestCoverage: Float!
+  cashFlowToDebtRatio: Float!
+  companyEquityMultiplier: Float!
+  receivablesTurnover: Float!
+  payablesTurnover: Float!
+  inventoryTurnover: Float!
+  fixedAssetTurnover: Float!
+  assetTurnover: Float!
+  operatingCashFlowPerShare: Float!
+  freeCashFlowPerShare: Float!
+  cashPerShare: Float!
+  payoutRatio: Float!
+  operatingCashFlowSalesRatio: Float!
+  freeCashFlowOperatingCashFlowRatio: Float!
+  cashFlowCoverageRatios: Float!
+  shortTermCoverageRatios: Float!
+  capitalExpenditureCoverageRatio: Float!
+  dividendPaidAndCapexCoverageRatio: Float!
+  dividendPayoutRatio: Float!
+  priceBookValueRatio: Float!
+  priceToBookRatio: Float!
+  priceToSalesRatio: Float!
+  priceEarningsRatio: Float!
+  priceToFreeCashFlowsRatio: Float!
+  priceToOperatingCashFlowsRatio: Float!
+  priceCashFlowRatio: Float!
+  priceEarningsToGrowthRatio: Float!
+  priceSalesRatio: Float!
+  dividendYield: Float!
+  enterpriseValueMultiple: Float!
+  priceFairValue: Float!
 }
+
+
+
   type Query {
     getStockInformation(symbol: String!): StockInformation
-    getIncomeStatement(symbol: String!): IncomeStatement
+    getIncomeStatement(symbol: String!): [IncomeStatement]
     getPriceHistory(symbol: String!): [PriceHistory]
-    getBalanceSheet(symbol: String!): BalanceSheet
-    getCashflow(symbol: String!): CashflowStatement
-    getRatios(symbol: String!): Ratios
+    getBalanceSheet(symbol: String!): [BalanceSheet]
+    getCashflow(symbol: String!): [CashflowStatement]
+    getRatios(symbol: String!): [Ratios]
   }
 `;
 

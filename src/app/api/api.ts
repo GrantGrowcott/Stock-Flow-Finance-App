@@ -36,6 +36,9 @@ import { PriceHistory } from "@/constants";
 // https://financialmodelingprep.com/api/v3/ratios-ttm/AAPL?apikey=qKbye2ChaZdQ6BoVhnYPGb8ZzWj45ShM
 
 
+// 5 Years of Key Ratios
+
+// https://financialmodelingprep.com/api/v3/ratios/AAPL?apikey=qKbye2ChaZdQ6BoVhnYPGb8ZzWj45ShM
 
 // Stock Data for Search Dropdown Menu 
 export async function getStockTicker (dispatch: Dispatch ,ticker: string) {
