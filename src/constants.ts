@@ -270,40 +270,6 @@ export interface NewsArticle {
     finalLink: string;
   }
 
-  export const cashFlowFields: { label: string; key: keyof CashflowStatement }[] = [
-    { label: "Net Income", key: "netIncome" },
-    { label: "Depreciation and Amortization", key: "depreciationAndAmortization" },
-    { label: "Deferred Income Tax", key: "deferredIncomeTax" },
-    { label: "Stock-Based Compensation", key: "stockBasedCompensation" },
-    { label: "Change in Working Capital", key: "changeInWorkingCapital" },
-    { label: "Accounts Receivables", key: "accountsReceivables" },
-    { label: "Inventory", key: "inventory" },
-    { label: "Accounts Payables", key: "accountsPayables" },
-    { label: "Other Working Capital", key: "otherWorkingCapital" },
-    { label: "Other Non-Cash Items", key: "otherNonCashItems" },
-    { label: "Net Cash Provided by Operating Activities", key: "netCashProvidedByOperatingActivities" },
-    { label: "Investments in Property, Plant, and Equipment", key: "investmentsInPropertyPlantAndEquipment" },
-    { label: "Acquisitions Net", key: "acquisitionsNet" },
-    { label: "Purchases of Investments", key: "purchasesOfInvestments" },
-    { label: "Sales & Maturities of Investments", key: "salesMaturitiesOfInvestments" },
-    { label: "Other Investing Activities", key: "otherInvestingActivites" },
-    { label: "Net Cash Used for Investing Activities", key: "netCashUsedForInvestingActivities" },
-    { label: "Debt Repayment", key: "debtRepayment" },
-    { label: "Common Stock Issued", key: "commonStockIssued" },
-    { label: "Common Stock Repurchased", key: "commonStockRepurchased" },
-    { label: "Dividends Paid", key: "dividendsPaid" },
-    { label: "Other Financing Activities", key: "otherFinancingActivities" },
-    { label: "Net Cash Used/Provided by Financing Activities", key: "netCashUsedProvidedByFinancingActivities" },
-    { label: "Effect of Forex Changes on Cash", key: "effectOfForexChangesOnCash" },
-    { label: "Net Change in Cash", key: "netChangeInCash" },
-    { label: "Cash at End of Period", key: "cashAtEndOfPeriod" },
-    { label: "Cash at Beginning of Period", key: "cashAtBeginningOfPeriod" },
-    { label: "Operating Cash Flow", key: "operatingCashFlow" },
-    { label: "Capital Expenditure", key: "capitalExpenditure" },
-    { label: "Free Cash Flow", key: "freeCashFlow" },
-  ];
-  
-
   export interface CashflowStatement {
     date: string;
     symbol: string;
@@ -329,12 +295,12 @@ export interface NewsArticle {
     purchasesOfInvestments: number;
     salesMaturitiesOfInvestments: number;
     otherInvestingActivites: number;
-    netCashUsedForInvestingActivities: number;
+    netCashUsedForInvestingActivites: number;
     debtRepayment: number;
     commonStockIssued: number;
     commonStockRepurchased: number;
     dividendsPaid: number;
-    otherFinancingActivities: number;
+    otherFinancingActivites: number;
     netCashUsedProvidedByFinancingActivities: number;
     effectOfForexChangesOnCash: number;
     netChangeInCash: number;
@@ -347,62 +313,7 @@ export interface NewsArticle {
     finalLink: string;
   }
 
-  export const ratiosField: { label: string; key: keyof Ratios }[] = [
-    { label: "Current Ratio", key: "currentRatio" },
-    { label: "Quick Ratio", key: "quickRatio" },
-    { label: "Cash Ratio", key: "cashRatio" },
-    { label: "Days of Sales Outstanding", key: "daysOfSalesOutstanding" },
-    { label: "Days of Inventory Outstanding", key: "daysOfInventoryOutstanding" },
-    { label: "Operating Cycle", key: "operatingCycle" },
-    { label: "Days of Payables Outstanding", key: "daysOfPayablesOutstanding" },
-    { label: "Cash Conversion Cycle", key: "cashConversionCycle" },
-    { label: "Gross Profit Margin", key: "grossProfitMargin" },
-    { label: "Operating Profit Margin", key: "operatingProfitMargin" },
-    { label: "Pretax Profit Margin", key: "pretaxProfitMargin" },
-    { label: "Net Profit Margin", key: "netProfitMargin" },
-    { label: "Effective Tax Rate", key: "effectiveTaxRate" },
-    { label: "Return on Assets", key: "returnOnAssets" },
-    { label: "Return on Equity", key: "returnOnEquity" },
-    { label: "Return on Capital Employed", key: "returnOnCapitalEmployed" },
-    { label: "Net Income Per EBT", key: "netIncomePerEBT" },
-    { label: "EBT Per EBIT", key: "ebtPerEbit" },
-    { label: "EBIT Per Revenue", key: "ebitPerRevenue" },
-    { label: "Debt Ratio", key: "debtRatio" },
-    { label: "Debt to Equity Ratio", key: "debtEquityRatio" },
-    { label: "Long-Term Debt to Capitalization", key: "longTermDebtToCapitalization" },
-    { label: "Total Debt to Capitalization", key: "totalDebtToCapitalization" },
-    { label: "Interest Coverage", key: "interestCoverage" },
-    { label: "Cash Flow to Debt Ratio", key: "cashFlowToDebtRatio" },
-    { label: "Company Equity Multiplier", key: "companyEquityMultiplier" },
-    { label: "Receivables Turnover", key: "receivablesTurnover" },
-    { label: "Payables Turnover", key: "payablesTurnover" },
-    { label: "Inventory Turnover", key: "inventoryTurnover" },
-    { label: "Fixed Asset Turnover", key: "fixedAssetTurnover" },
-    { label: "Asset Turnover", key: "assetTurnover" },
-    { label: "Operating Cash Flow Per Share", key: "operatingCashFlowPerShare" },
-    { label: "Free Cash Flow Per Share", key: "freeCashFlowPerShare" },
-    { label: "Cash Per Share", key: "cashPerShare" },
-    { label: "Payout Ratio", key: "payoutRatio" },
-    { label: "Operating Cash Flow Sales Ratio", key: "operatingCashFlowSalesRatio" },
-    { label: "Free Cash Flow Operating Cash Flow Ratio", key: "freeCashFlowOperatingCashFlowRatio" },
-    { label: "Cash Flow Coverage Ratios", key: "cashFlowCoverageRatios" },
-    { label: "Short-Term Coverage Ratios", key: "shortTermCoverageRatios" },
-    { label: "Capital Expenditure Coverage Ratio", key: "capitalExpenditureCoverageRatio" },
-    { label: "Dividend Paid and CapEx Coverage Ratio", key: "dividendPaidAndCapexCoverageRatio" },
-    { label: "Dividend Payout Ratio", key: "dividendPayoutRatio" },
-    { label: "Price to Book Value Ratio", key: "priceBookValueRatio" },
-    { label: "Price to Book Ratio", key: "priceToBookRatio" },
-    { label: "Price to Sales Ratio", key: "priceToSalesRatio" },
-    { label: "Price to Earnings Ratio", key: "priceEarningsRatio" },
-    { label: "Price to Free Cash Flows Ratio", key: "priceToFreeCashFlowsRatio" },
-    { label: "Price to Operating Cash Flows Ratio", key: "priceToOperatingCashFlowsRatio" },
-    { label: "Price to Cash Flow Ratio", key: "priceCashFlowRatio" },
-    { label: "Price Earnings to Growth Ratio", key: "priceEarningsToGrowthRatio" },
-    { label: "Price Sales Ratio", key: "priceSalesRatio" },
-    { label: "Dividend Yield", key: "dividendYield" },
-    { label: "Enterprise Value Multiple", key: "enterpriseValueMultiple" },
-    { label: "Price Fair Value", key: "priceFairValue" },
-  ];
+
   
 
   export interface Ratios  {
@@ -634,12 +545,12 @@ export const GET_CASHFLOW = gql`
       purchasesOfInvestments
       salesMaturitiesOfInvestments
       otherInvestingActivites
-      netCashUsedForInvestingActivities
+      netCashUsedForInvestingActivites
       debtRepayment
       commonStockIssued
       commonStockRepurchased
       dividendsPaid
-      otherFinancingActivities
+      otherFinancingActivites
       netCashUsedProvidedByFinancingActivities
       effectOfForexChangesOnCash
       netChangeInCash
@@ -866,12 +777,12 @@ export const typeDefs = gql`
     purchasesOfInvestments: Float!
     salesMaturitiesOfInvestments: Float!
     otherInvestingActivites: Float!
-    netCashUsedForInvestingActivities: Float
+    netCashUsedForInvestingActivites: Float
     debtRepayment: Float!
     commonStockIssued: Float!
     commonStockRepurchased: Float!
     dividendsPaid: Float!
-    otherFinancingActivities: Float
+    otherFinancingActivites: Float
     netCashUsedProvidedByFinancingActivities: Float!
     effectOfForexChangesOnCash: Float!
     netChangeInCash: Float!

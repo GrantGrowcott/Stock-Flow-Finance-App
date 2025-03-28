@@ -1,13 +1,15 @@
 import { FinancialStatementsProps } from "@/constants";
 import React, { useState } from "react";
 import IncomeStatement from "./IncomeStatement";
+import BalanceSheet from "./BalanceSheet";
+import CashflowStatement from "./CashflowStatement";
+import Ratios from "./Ratios";
+
 
 const FinancialStatements = ({ ratios, income, balance, cashflow }: FinancialStatementsProps) => {
-  const [activeStatement, setActiveStatement] = useState<string>("Income"); // Track the active statement
+  const [activeStatement, setActiveStatement] = useState<string>("Income");
 
-  // Define the statementHandle function
-  const statementHandle = (statement: string) => {
-    setActiveStatement(statement); // Set the active statement
+  const statementHandle = (statement: string) => { 
     if (statement === "Income") {
       setActiveStatement("Income");
     } else if (statement === "Balance") {
@@ -36,37 +38,13 @@ const FinancialStatements = ({ ratios, income, balance, cashflow }: FinancialSta
         </button>
       </ul>
       {activeStatement === "Income" && <IncomeStatement income={income} />}
+      {activeStatement === "Balance" && <BalanceSheet balance={balance} />}
+      {activeStatement === "Cashflow" && <CashflowStatement cashflow={cashflow} />}
+      {activeStatement === "Ratios" && <Ratios ratios={ratios} />}
     </div>
   );
 };
 
 export default FinancialStatements;
 
-{
-  /* <ul className="grid grid-cols-6 gap-4 mt-5">
-        <li></li>
-        {cashflow
-          .slice(0, 5)
-          .reverse()
-          .map((item, index) => (
-            <li key={`year-${index}`} className="text-center">
-              {item.calendarYear}
-            </li>
-          ))}
 
-        {/* Financial Data Rows */
-}
-//   {labelKey.map(({ label, key }) => (
-//     <React.Fragment key={key}>
-//       <li className="col-span-1 font-semibold text-center">{label}</li>
-//       {statementData
-//         .slice(0, 5)
-//         .reverse()
-//         .map((item, index) => (
-//           <li key={`${key}-${index}`} className="text-center">
-//             {item[key]}
-//           </li>
-//         ))}
-//     </React.Fragment>
-//   ))}
-// </ul> */}
