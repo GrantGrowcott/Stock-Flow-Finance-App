@@ -11,8 +11,15 @@ export const icons = {
     auth: 40,
 }
 
+export type StatementData = IncomeStatement[] | BalanceSheet[] | CashflowStatement[] | Ratios[];
+
+export type FieldsType =
+  | { label: string; key: keyof IncomeStatement }[]
+  | { label: string; key: keyof BalanceSheet }[]
+  | { label: string; key: keyof CashflowStatement }[]
+  | { label: string; key: keyof Ratios }[];
+
 export interface FinancialStatementsProps {
-  stock: StockInformation;
   ratios: Ratios[]; 
   income: IncomeStatement[];
   balance:BalanceSheet[];
@@ -82,6 +89,41 @@ export interface NewsArticle {
     image: string;
   }
 
+  export const incomeStatementFields: { label: string; key: keyof IncomeStatement }[] = [
+    { label: "Revenue", key: "revenue" },
+    { label: "Cost of Revenue", key: "costOfRevenue" },
+    { label: "Gross Profit", key: "grossProfit" },
+    { label: "Gross Profit Ratio", key: "grossProfitRatio" },
+    { label: "Research & Development Expenses", key: "researchAndDevelopmentExpenses" },
+    { label: "General & Administrative Expenses", key: "generalAndAdministrativeExpenses" },
+    { label: "Selling & Marketing Expenses", key: "sellingAndMarketingExpenses" },
+    { label: "Selling, General & Administrative Expenses", key: "sellingGeneralAndAdministrativeExpenses" },
+    { label: "Other Expenses", key: "otherExpenses" },
+    { label: "Operating Expenses", key: "operatingExpenses" },
+    { label: "Cost & Expenses", key: "costAndExpenses" },
+    { label: "Interest Income", key: "interestIncome" },
+    { label: "Interest Expense", key: "interestExpense" },
+    { label: "Depreciation & Amortization", key: "depreciationAndAmortization" },
+    { label: "EBITDA", key: "ebitda" },
+    { label: "EBITDA Ratio", key: "ebitdaRatio" },
+    { label: "Operating Income", key: "operatingIncome" },
+    { label: "Operating Income Ratio", key: "operatingIncomeRatio" },
+    { label: "Total Other Income/Expenses Net", key: "totalOtherIncomeExpensesNet" },
+    { label: "Income Before Tax", key: "incomeBeforeTax" },
+    { label: "Income Before Tax Ratio", key: "incomeBeforeTaxRatio" },
+    { label: "Income Tax Expense", key: "incomeTaxExpense" },
+    { label: "Net Income", key: "netIncome" },
+    { label: "Net Income Ratio", key: "netIncomeRatio" },
+    { label: "EPS", key: "eps" },
+    { label: "EPS Diluted", key: "epsDiluted" },
+    { label: "Weighted Average Shares Outstanding", key: "weightedAverageShsOut" },
+    { label: "Weighted Average Shares Outstanding (Diluted)", key: "weightedAverageShsOutDil" },
+  ];
+  
+
+  
+
+
   export interface IncomeStatement {
     date: string;
     symbol: string;
@@ -122,6 +164,54 @@ export interface NewsArticle {
     link: string;
     finalLink: string;
   }
+
+  export const balanceSheetFields: { label: string; key: keyof BalanceSheet }[] = [
+    { label: "Cash & Cash Equivalents", key: "cashAndCashEquivalents" },
+    { label: "Short-Term Investments", key: "shortTermInvestments" },
+    { label: "Cash & Short-Term Investments", key: "cashAndShortTermInvestments" },
+    { label: "Net Receivables", key: "netReceivables" },
+    { label: "Inventory", key: "inventory" },
+    { label: "Other Current Assets", key: "otherCurrentAssets" },
+    { label: "Total Current Assets", key: "totalCurrentAssets" },
+    { label: "Property, Plant & Equipment (Net)", key: "propertyPlantEquipmentNet" },
+    { label: "Goodwill", key: "goodwill" },
+    { label: "Intangible Assets", key: "intangibleAssets" },
+    { label: "Goodwill & Intangible Assets", key: "goodwillAndIntangibleAssets" },
+    { label: "Long-Term Investments", key: "longTermInvestments" },
+    { label: "Tax Assets", key: "taxAssets" },
+    { label: "Other Non-Current Assets", key: "otherNonCurrentAssets" },
+    { label: "Total Non-Current Assets", key: "totalNonCurrentAssets" },
+    { label: "Other Assets", key: "otherAssets" },
+    { label: "Total Assets", key: "totalAssets" },
+    { label: "Accounts Payables", key: "accountPayables" },
+    { label: "Short-Term Debt", key: "shortTermDebt" },
+    { label: "Tax Payables", key: "taxPayables" },
+    { label: "Deferred Revenue", key: "deferredRevenue" },
+    { label: "Other Current Liabilities", key: "otherCurrentLiabilities" },
+    { label: "Total Current Liabilities", key: "totalCurrentLiabilities" },
+    { label: "Long-Term Debt", key: "longTermDebt" },
+    { label: "Deferred Revenue (Non-Current)", key: "deferredRevenueNonCurrent" },
+    { label: "Deferred Tax Liabilities (Non-Current)", key: "deferredTaxLiabilitiesNonCurrent" },
+    { label: "Other Non-Current Liabilities", key: "otherNonCurrentLiabilities" },
+    { label: "Total Non-Current Liabilities", key: "totalNonCurrentLiabilities" },
+    { label: "Other Liabilities", key: "otherLiabilities" },
+    { label: "Capital Lease Obligations", key: "capitalLeaseObligations" },
+    { label: "Total Liabilities", key: "totalLiabilities" },
+    { label: "Preferred Stock", key: "preferredStock" },
+    { label: "Common Stock", key: "commonStock" },
+    { label: "Retained Earnings", key: "retainedEarnings" },
+    { label: "Accumulated Other Comprehensive Income/Loss", key: "accumulatedOtherComprehensiveIncomeLoss" },
+    { label: "Other Total Stockholders' Equity", key: "othertotalStockholdersEquity" },
+    { label: "Total Stockholders' Equity", key: "totalStockholdersEquity" },
+    { label: "Total Equity", key: "totalEquity" },
+    { label: "Total Liabilities & Stockholders' Equity", key: "totalLiabilitiesAndStockholdersEquity" },
+    { label: "Minority Interest", key: "minorityInterest" },
+    { label: "Total Liabilities & Total Equity", key: "totalLiabilitiesAndTotalEquity" },
+    { label: "Total Investments", key: "totalInvestments" },
+    { label: "Total Debt", key: "totalDebt" },
+    { label: "Net Debt", key: "netDebt" },
+  ];
+  
 
   export interface BalanceSheet {
     date: string;
@@ -180,6 +270,40 @@ export interface NewsArticle {
     finalLink: string;
   }
 
+  export const cashFlowFields: { label: string; key: keyof CashflowStatement }[] = [
+    { label: "Net Income", key: "netIncome" },
+    { label: "Depreciation and Amortization", key: "depreciationAndAmortization" },
+    { label: "Deferred Income Tax", key: "deferredIncomeTax" },
+    { label: "Stock-Based Compensation", key: "stockBasedCompensation" },
+    { label: "Change in Working Capital", key: "changeInWorkingCapital" },
+    { label: "Accounts Receivables", key: "accountsReceivables" },
+    { label: "Inventory", key: "inventory" },
+    { label: "Accounts Payables", key: "accountsPayables" },
+    { label: "Other Working Capital", key: "otherWorkingCapital" },
+    { label: "Other Non-Cash Items", key: "otherNonCashItems" },
+    { label: "Net Cash Provided by Operating Activities", key: "netCashProvidedByOperatingActivities" },
+    { label: "Investments in Property, Plant, and Equipment", key: "investmentsInPropertyPlantAndEquipment" },
+    { label: "Acquisitions Net", key: "acquisitionsNet" },
+    { label: "Purchases of Investments", key: "purchasesOfInvestments" },
+    { label: "Sales & Maturities of Investments", key: "salesMaturitiesOfInvestments" },
+    { label: "Other Investing Activities", key: "otherInvestingActivites" },
+    { label: "Net Cash Used for Investing Activities", key: "netCashUsedForInvestingActivities" },
+    { label: "Debt Repayment", key: "debtRepayment" },
+    { label: "Common Stock Issued", key: "commonStockIssued" },
+    { label: "Common Stock Repurchased", key: "commonStockRepurchased" },
+    { label: "Dividends Paid", key: "dividendsPaid" },
+    { label: "Other Financing Activities", key: "otherFinancingActivities" },
+    { label: "Net Cash Used/Provided by Financing Activities", key: "netCashUsedProvidedByFinancingActivities" },
+    { label: "Effect of Forex Changes on Cash", key: "effectOfForexChangesOnCash" },
+    { label: "Net Change in Cash", key: "netChangeInCash" },
+    { label: "Cash at End of Period", key: "cashAtEndOfPeriod" },
+    { label: "Cash at Beginning of Period", key: "cashAtBeginningOfPeriod" },
+    { label: "Operating Cash Flow", key: "operatingCashFlow" },
+    { label: "Capital Expenditure", key: "capitalExpenditure" },
+    { label: "Free Cash Flow", key: "freeCashFlow" },
+  ];
+  
+
   export interface CashflowStatement {
     date: string;
     symbol: string;
@@ -222,6 +346,64 @@ export interface NewsArticle {
     link: string;
     finalLink: string;
   }
+
+  export const ratiosField: { label: string; key: keyof Ratios }[] = [
+    { label: "Current Ratio", key: "currentRatio" },
+    { label: "Quick Ratio", key: "quickRatio" },
+    { label: "Cash Ratio", key: "cashRatio" },
+    { label: "Days of Sales Outstanding", key: "daysOfSalesOutstanding" },
+    { label: "Days of Inventory Outstanding", key: "daysOfInventoryOutstanding" },
+    { label: "Operating Cycle", key: "operatingCycle" },
+    { label: "Days of Payables Outstanding", key: "daysOfPayablesOutstanding" },
+    { label: "Cash Conversion Cycle", key: "cashConversionCycle" },
+    { label: "Gross Profit Margin", key: "grossProfitMargin" },
+    { label: "Operating Profit Margin", key: "operatingProfitMargin" },
+    { label: "Pretax Profit Margin", key: "pretaxProfitMargin" },
+    { label: "Net Profit Margin", key: "netProfitMargin" },
+    { label: "Effective Tax Rate", key: "effectiveTaxRate" },
+    { label: "Return on Assets", key: "returnOnAssets" },
+    { label: "Return on Equity", key: "returnOnEquity" },
+    { label: "Return on Capital Employed", key: "returnOnCapitalEmployed" },
+    { label: "Net Income Per EBT", key: "netIncomePerEBT" },
+    { label: "EBT Per EBIT", key: "ebtPerEbit" },
+    { label: "EBIT Per Revenue", key: "ebitPerRevenue" },
+    { label: "Debt Ratio", key: "debtRatio" },
+    { label: "Debt to Equity Ratio", key: "debtEquityRatio" },
+    { label: "Long-Term Debt to Capitalization", key: "longTermDebtToCapitalization" },
+    { label: "Total Debt to Capitalization", key: "totalDebtToCapitalization" },
+    { label: "Interest Coverage", key: "interestCoverage" },
+    { label: "Cash Flow to Debt Ratio", key: "cashFlowToDebtRatio" },
+    { label: "Company Equity Multiplier", key: "companyEquityMultiplier" },
+    { label: "Receivables Turnover", key: "receivablesTurnover" },
+    { label: "Payables Turnover", key: "payablesTurnover" },
+    { label: "Inventory Turnover", key: "inventoryTurnover" },
+    { label: "Fixed Asset Turnover", key: "fixedAssetTurnover" },
+    { label: "Asset Turnover", key: "assetTurnover" },
+    { label: "Operating Cash Flow Per Share", key: "operatingCashFlowPerShare" },
+    { label: "Free Cash Flow Per Share", key: "freeCashFlowPerShare" },
+    { label: "Cash Per Share", key: "cashPerShare" },
+    { label: "Payout Ratio", key: "payoutRatio" },
+    { label: "Operating Cash Flow Sales Ratio", key: "operatingCashFlowSalesRatio" },
+    { label: "Free Cash Flow Operating Cash Flow Ratio", key: "freeCashFlowOperatingCashFlowRatio" },
+    { label: "Cash Flow Coverage Ratios", key: "cashFlowCoverageRatios" },
+    { label: "Short-Term Coverage Ratios", key: "shortTermCoverageRatios" },
+    { label: "Capital Expenditure Coverage Ratio", key: "capitalExpenditureCoverageRatio" },
+    { label: "Dividend Paid and CapEx Coverage Ratio", key: "dividendPaidAndCapexCoverageRatio" },
+    { label: "Dividend Payout Ratio", key: "dividendPayoutRatio" },
+    { label: "Price to Book Value Ratio", key: "priceBookValueRatio" },
+    { label: "Price to Book Ratio", key: "priceToBookRatio" },
+    { label: "Price to Sales Ratio", key: "priceToSalesRatio" },
+    { label: "Price to Earnings Ratio", key: "priceEarningsRatio" },
+    { label: "Price to Free Cash Flows Ratio", key: "priceToFreeCashFlowsRatio" },
+    { label: "Price to Operating Cash Flows Ratio", key: "priceToOperatingCashFlowsRatio" },
+    { label: "Price to Cash Flow Ratio", key: "priceCashFlowRatio" },
+    { label: "Price Earnings to Growth Ratio", key: "priceEarningsToGrowthRatio" },
+    { label: "Price Sales Ratio", key: "priceSalesRatio" },
+    { label: "Dividend Yield", key: "dividendYield" },
+    { label: "Enterprise Value Multiple", key: "enterpriseValueMultiple" },
+    { label: "Price Fair Value", key: "priceFairValue" },
+  ];
+  
 
   export interface Ratios  {
     date: string;

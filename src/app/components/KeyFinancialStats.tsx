@@ -113,7 +113,7 @@ const KeyFinancialStats = ({ symbol }: SymbolProps) => {
           </ul>
         </div>
       </div>
-      <FinancialStatements stock={stock} ratios={ratios} income={income} balance={balance} cashflow={cashflow} />
+      <FinancialStatements ratios={ratios} income={income} balance={balance} cashflow={cashflow} />
     </>
   );
 };
