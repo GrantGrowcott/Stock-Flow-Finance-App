@@ -1,5 +1,11 @@
+import RetirementCalculation from "../components/RetirementCalculation";
+
 const RetirementCalculator = () => {
-  return <div>Retirement Calculator Page</div>;
+  return (
+    <>
+    <RetirementCalculation/>
+    </>
+  );
 };
 
 export default RetirementCalculator;
