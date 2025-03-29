@@ -227,7 +227,7 @@ export const formatNumbers = (num: number): string => {
   } else if (num >= 1e6 || num <= -1e6) {
     return "$" +(num / 1e6).toFixed(2) + "M";
   }
-  return num.toString() + " $";
+  return" $" + num.toString();
 };
 
 

@@ -5,19 +5,22 @@ import BalanceSheet from "./BalanceSheet";
 import CashflowStatement from "./CashflowStatement";
 import Ratios from "./Ratios";
 
-
 const FinancialStatements = ({ ratios, income, balance, cashflow }: FinancialStatementsProps) => {
   const [activeStatement, setActiveStatement] = useState<string>("Income");
 
-  const statementHandle = (statement: string) => { 
+  const statementHandle = (statement: string) => {
     if (statement === "Income") {
       setActiveStatement("Income");
+      console.log(activeStatement);
     } else if (statement === "Balance") {
       setActiveStatement("Balance");
+      console.log(activeStatement);
     } else if (statement === "Cashflow") {
       setActiveStatement("Cashflow");
+      console.log(activeStatement);
     } else if (statement === "Ratios") {
       setActiveStatement("Ratios");
+      console.log(activeStatement);
     }
   };
 
@@ -25,18 +28,21 @@ const FinancialStatements = ({ ratios, income, balance, cashflow }: FinancialSta
     <div>
       <ul className="flex content-around items-center gap-3 mx-auto mt-10 w-fit">
         <button onClick={() => statementHandle("Income")}>
-          <li>Income Statement</li>
+          <li className={`font-semibold ${activeStatement === "Income" ? "underline decoration-4 decoration-[var(--blue)]" : ""}`}>Income Statement</li>
         </button>
         <button onClick={() => statementHandle("Balance")}>
-          <li>Balance Sheet</li>
+          <li className={`font-semibold ${activeStatement === "Balance" ? "underline decoration-4 decoration-[var(--blue)]" : ""}`}>Balance Sheet</li>
         </button>
         <button onClick={() => statementHandle("Cashflow")}>
-          <li>Cash Flow Statement</li>
+          <li className={`font-semibold ${activeStatement === "Cashflow" ? "underline decoration-4 decoration-[var(--blue)]" : ""}`}>
+            Cash Flow Statement
+          </li>
         </button>
         <button onClick={() => statementHandle("Ratios")}>
-          <li>Ratios</li>
+          <li className={`font-semibold ${activeStatement === "Ratios" ? "underline decoration-4 decoration-[var(--blue)]" : ""}`}>Ratios</li>
         </button>
       </ul>
+
       {activeStatement === "Income" && <IncomeStatement income={income} />}
       {activeStatement === "Balance" && <BalanceSheet balance={balance} />}
       {activeStatement === "Cashflow" && <CashflowStatement cashflow={cashflow} />}
@@ -46,5 +52,3 @@ const FinancialStatements = ({ ratios, income, balance, cashflow }: FinancialSta
 };
 
 export default FinancialStatements;
-
-

@@ -73,33 +73,33 @@ const KeyFinancialStats = ({ symbol }: SymbolProps) => {
         <div className="flex items-start justify-around gap-5 max-[1000px]:flex-col ">
           <ul className="flex items-start justify-center gap-4 max-[1000px]:self-center ">
             <div>
-              <li>Return on Equity:</li>
-              <li>Return on Capital:</li>
-              <li>Retained Earnings:</li>
-              <li>DCF Buy Price:</li>
-              <li>Market Cap:</li>
-              <li>Gross Margin:</li>
-              <li>Price Range:</li>
+              <li className="font-semibold">Return on Equity:</li>
+              <li className="font-semibold">Return on Capital:</li>
+              <li className="font-semibold">Retained Earnings:</li>
+              <li className="font-semibold">DCF Buy Price:</li>
+              <li className="font-semibold">Price Range:</li>
+              <li className="font-semibold">Market Cap:</li>
+              <li className="font-semibold">Gross Margin:</li>
             </div>
             <div>
               <li>{(ratios[0].returnOnEquity * 100).toFixed(2)}%</li>
               <li>{((ratios[0].returnOnEquity / (1 + ratios[0].debtEquityRatio)) * 100).toFixed(2)}%</li>
               <li>{formatNumbers(balance[0].retainedEarnings)}</li>
               <li>${stock.dcf.toFixed(2)}</li>
+              <li>${stock.range}</li>
               <li>{formatNumbers(stock.mktCap)} </li>
               <li>{(ratios[0].grossProfitMargin * 100).toFixed(2)}%</li>
-              <li>${stock.range}</li>
             </div>
           </ul>
           <ul className="flex items-start justify-center gap-8 max-[1000px]:self-center">
             <div>
-              <li>Debt/Equity Ratio:</li>
-              <li>Interest Coverage Ratio:</li>
-              <li>Current Ratio:</li>
-              <li>Dividend Payout Ratio:</li>
-              <li>LTM Price/Book Ratio:</li>
-              <li>LTM Price/Earnings:</li>
-              <li>LTM Price/Free Cashflow:</li>
+              <li className="font-semibold">Debt/Equity Ratio:</li>
+              <li className="font-semibold">Interest Coverage Ratio:</li>
+              <li className="font-semibold">Current Ratio:</li>
+              <li className="font-semibold">Dividend Payout Ratio:</li>
+              <li className="font-semibold">LTM Price/Book Ratio:</li>
+              <li className="font-semibold">LTM Price/Earnings:</li>
+              <li className="font-semibold">LTM Price/Free Cashflow:</li>
             </div>
             <div>
               <li>{ratios[0].debtEquityRatio.toFixed(2)}</li>

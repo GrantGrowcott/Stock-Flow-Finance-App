@@ -13,12 +13,20 @@ const StockPage = () => {
   }, [company]);
 
   return (
-    <div className="p-3">
-      <div >
+    <div className="h-[calc(100vh-5rem)] flex flex-col p-3">
+
+      
+      {/* Fixed Navbar Section */}
+      <div className="flex-shrink-0">
         <StockNamePrice symbol={company} />
-        <StockGraph symbol={company} />
       </div>
-      <KeyFinancialStats symbol={company}/>
+
+      {/* Scrollable Content */}
+      <div className="flex-grow overflow-y-auto">
+        <StockGraph symbol={company} />
+        <KeyFinancialStats symbol={company} />
+      </div>
+
     </div>
   );
 };
