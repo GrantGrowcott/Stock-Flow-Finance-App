@@ -4,7 +4,7 @@ interface RatiosProps {
   ratios: RatiosType[];
 }
 const Ratios: React.FC<RatiosProps> = ({ ratios }) => {
-    const latestRatios = ratios.slice(0, 5).reverse();
+  const latestRatios = ratios.slice(0, 5).reverse();
   const years = latestRatios.map((item) => item.calendarYear);
 
   return (
@@ -18,215 +18,229 @@ const Ratios: React.FC<RatiosProps> = ({ ratios }) => {
       <div className="font-bold">Current Ratio</div>
       {latestRatios.map((item, index) => (
         <div key={index} className="text-center">
-          {item.currentRatio ?? "N/A"}
+          {item.currentRatio.toFixed(2) ?? "N/A"}
         </div>
       ))}
       <div className="font-bold">Quick Ratio</div>
       {latestRatios.map((item, index) => (
         <div key={index} className="text-center">
-          {item.quickRatio ?? "N/A"}
+          {item.quickRatio.toFixed(2) ?? "N/A"}
         </div>
       ))}
       <div className="font-bold">Cash Ratio</div>
       {latestRatios.map((item, index) => (
         <div key={index} className="text-center">
-          {item.cashRatio ?? "N/A"}
+          {item.cashRatio.toFixed(2) ?? "N/A"}
         </div>
       ))}
       <div className="font-bold">Days of Sales Outstanding</div>
       {latestRatios.map((item, index) => (
         <div key={index} className="text-center">
-          {item.daysOfSalesOutstanding ?? "N/A"}
+          {item.daysOfSalesOutstanding.toFixed(2) ?? "N/A"}
         </div>
       ))}
       <div className="font-bold">Days of Inventory Outstanding</div>
       {latestRatios.map((item, index) => (
         <div key={index} className="text-center">
-          {item.daysOfInventoryOutstanding ?? "N/A"}
+          {item.daysOfInventoryOutstanding.toFixed(2) ?? "N/A"}
         </div>
       ))}
       <div className="font-bold">Operating Cycle</div>
       {latestRatios.map((item, index) => (
         <div key={index} className="text-center">
-          {item.operatingCycle ?? "N/A"}
+          {item.operatingCycle.toFixed(2) ?? "N/A"}
         </div>
       ))}
       <div className="font-bold">Days of Payables Outstanding</div>
       {latestRatios.map((item, index) => (
         <div key={index} className="text-center">
-          {item.daysOfPayablesOutstanding ?? "N/A"}
+          {item.daysOfPayablesOutstanding.toFixed(2) ?? "N/A"}
         </div>
       ))}
       <div className="font-bold">Cash Conversion Cycle</div>
       {latestRatios.map((item, index) => (
         <div key={index} className="text-center">
-          {item.cashConversionCycle ?? "N/A"}
+          {item.cashConversionCycle.toFixed(2) ?? "N/A"}
         </div>
       ))}
       <div className="font-bold">Gross Profit Margin</div>
       {latestRatios.map((item, index) => (
         <div key={index} className="text-center">
-          {item.grossProfitMargin ?? "N/A"}
+          {item.grossProfitMargin !== null && item.grossProfitMargin !== undefined
+            ? (item.grossProfitMargin * 100).toFixed(2)
+            : "N/A"}
         </div>
       ))}
       <div className="font-bold">Operating Profit Margin</div>
       {latestRatios.map((item, index) => (
         <div key={index} className="text-center">
-          {item.operatingProfitMargin ?? "N/A"}
+          {item.operatingProfitMargin !== null && item.operatingProfitMargin !== undefined
+            ? (item.operatingProfitMargin * 100).toFixed(2)
+            : "N/A"}
         </div>
       ))}
       <div className="font-bold">Pretax Profit Margin</div>
       {latestRatios.map((item, index) => (
         <div key={index} className="text-center">
-          {item.pretaxProfitMargin ?? "N/A"}
+          {item.pretaxProfitMargin !== null && item.pretaxProfitMargin !== undefined
+            ? (item.pretaxProfitMargin * 100).toFixed(2)
+            : "N/A"}
         </div>
       ))}
       <div className="font-bold">Net Profit Margin</div>
       {latestRatios.map((item, index) => (
         <div key={index} className="text-center">
-          {item.netProfitMargin ?? "N/A"}
+          {item.netProfitMargin !== null && item.netProfitMargin !== undefined
+            ? (item.netProfitMargin * 100).toFixed(2)
+            : "N/A"}
         </div>
       ))}
       <div className="font-bold">Effective Tax Rate</div>
       {latestRatios.map((item, index) => (
         <div key={index} className="text-center">
-          {item.effectiveTaxRate ?? "N/A"}
+          {item.effectiveTaxRate.toFixed(2) ?? "N/A"}
         </div>
       ))}
       <div className="font-bold">Return on Assets</div>
       {latestRatios.map((item, index) => (
         <div key={index} className="text-center">
-          {item.returnOnAssets ?? "N/A"}
+          {item.returnOnAssets !== null && item.returnOnAssets !== undefined
+            ? (item.returnOnAssets * 100).toFixed(2)
+            : "N/A"}
         </div>
       ))}
       <div className="font-bold">Return on Equity</div>
       {latestRatios.map((item, index) => (
         <div key={index} className="text-center">
-          {item.returnOnEquity ?? "N/A"}
+          {item.returnOnEquity !== null && item.returnOnEquity !== undefined
+            ? (item.returnOnEquity * 100).toFixed(2)
+            : "N/A"}
         </div>
       ))}
       <div className="font-bold">Return on Capital Employed</div>
       {latestRatios.map((item, index) => (
         <div key={index} className="text-center">
-          {item.returnOnCapitalEmployed ?? "N/A"}
+          {item.returnOnCapitalEmployed !== null && item.returnOnCapitalEmployed !== undefined
+            ? (item.returnOnCapitalEmployed * 100).toFixed(2)
+            : "N/A"}
         </div>
       ))}
       <div className="font-bold">Net Income/EBT</div>
       {latestRatios.map((item, index) => (
         <div key={index} className="text-center">
-          {item.netIncomePerEBT ?? "N/A"}
+          {item.netIncomePerEBT.toFixed(2) ?? "N/A"}
         </div>
       ))}
       <div className="font-bold">Debt Ratio</div>
       {latestRatios.map((item, index) => (
         <div key={index} className="text-center">
-          {item.debtRatio ?? "N/A"}
+          {item.debtRatio.toFixed(2) ?? "N/A"}
         </div>
       ))}
       <div className="font-bold">Debt/Equity Ratio</div>
       {latestRatios.map((item, index) => (
         <div key={index} className="text-center">
-          {item.debtEquityRatio ?? "N/A"}
+          {item.debtEquityRatio.toFixed(2) ?? "N/A"}
         </div>
       ))}
       <div className="font-bold">Long Term Debt to Capitalization</div>
       {latestRatios.map((item, index) => (
         <div key={index} className="text-center">
-          {item.longTermDebtToCapitalization ?? "N/A"}
+          {item.longTermDebtToCapitalization.toFixed(2) ?? "N/A"}
         </div>
       ))}
       <div className="font-bold">Interest Coverage</div>
       {latestRatios.map((item, index) => (
         <div key={index} className="text-center">
-          {item.interestCoverage ?? "N/A"}
+          {item.interestCoverage.toFixed(2) ?? "N/A"}
         </div>
       ))}
       <div className="font-bold">Cashflow/Debt Ratio</div>
       {latestRatios.map((item, index) => (
         <div key={index} className="text-center">
-          {item.cashFlowToDebtRatio ?? "N/A"}
+          {item.cashFlowToDebtRatio.toFixed(2) ?? "N/A"}
         </div>
       ))}
       <div className="font-bold">Inventory Turnover</div>
       {latestRatios.map((item, index) => (
         <div key={index} className="text-center">
-          {item.inventoryTurnover ?? "N/A"}
+          {item.inventoryTurnover.toFixed(2) ?? "N/A"}
         </div>
       ))}
       <div className="font-bold">Free Cash Flow/ Share</div>
       {latestRatios.map((item, index) => (
         <div key={index} className="text-center">
-          {item.freeCashFlowPerShare ?? "N/A"}
+          {item.freeCashFlowPerShare.toFixed(2) ?? "N/A"}
         </div>
       ))}
       <div className="font-bold">Payout Ratio</div>
       {latestRatios.map((item, index) => (
         <div key={index} className="text-center">
-          {item.payoutRatio ?? "N/A"}
+          {item.payoutRatio.toFixed(2) ?? "N/A"}
         </div>
       ))}
       <div className="font-bold">Dividend Payout Ratio</div>
       {latestRatios.map((item, index) => (
         <div key={index} className="text-center">
-          {item.dividendPayoutRatio ?? "N/A"}
+          {item.dividendPayoutRatio.toFixed(2) ?? "N/A"}
         </div>
       ))}
       <div className="font-bold">Price/Book Ratio</div>
       {latestRatios.map((item, index) => (
         <div key={index} className="text-center">
-          {item.priceToBookRatio ?? "N/A"}
+          {item.priceToBookRatio.toFixed(2) ?? "N/A"}
         </div>
       ))}
       <div className="font-bold">Price/Sales Ratio</div>
       {latestRatios.map((item, index) => (
         <div key={index} className="text-center">
-          {item.priceToSalesRatio ?? "N/A"}
+          {item.priceToSalesRatio.toFixed(2) ?? "N/A"}
         </div>
       ))}
-       <div className="font-bold">Price/Earnings Ratio</div>
+      <div className="font-bold">Price/Earnings Ratio</div>
       {latestRatios.map((item, index) => (
         <div key={index} className="text-center">
-          {item.priceEarningsRatio ?? "N/A"}
+          {item.priceEarningsRatio.toFixed(2) ?? "N/A"}
         </div>
       ))}
-       <div className="font-bold">Price/Free Cashflow Ratio</div>
+      <div className="font-bold">Price/Free Cashflow Ratio</div>
       {latestRatios.map((item, index) => (
         <div key={index} className="text-center">
-          {item.priceToFreeCashFlowsRatio ?? "N/A"}
+          {item.priceToFreeCashFlowsRatio.toFixed(2) ?? "N/A"}
         </div>
       ))}
-       <div className="font-bold">Price/Operating Cashflow Ratio</div>
+      <div className="font-bold">Price/Operating Cashflow Ratio</div>
       {latestRatios.map((item, index) => (
         <div key={index} className="text-center">
-          {item.priceToOperatingCashFlowsRatio ?? "N/A"}
+          {item.priceToOperatingCashFlowsRatio.toFixed(2) ?? "N/A"}
         </div>
       ))}
-       <div className="font-bold">PEG Ratio</div>
+      <div className="font-bold">PEG Ratio</div>
       {latestRatios.map((item, index) => (
         <div key={index} className="text-center">
-          {item.priceEarningsToGrowthRatio ?? "N/A"}
+          {item.priceEarningsToGrowthRatio.toFixed(2) ?? "N/A"}
         </div>
       ))}
       <div className="font-bold">Dividend Yield</div>
       {latestRatios.map((item, index) => (
         <div key={index} className="text-center">
-          {item.dividendYield ?? "N/A"}
+          {item.dividendYield.toFixed(2) ?? "N/A"}
         </div>
       ))}
       <div className="font-bold">Enterprise Value Multiple</div>
       {latestRatios.map((item, index) => (
         <div key={index} className="text-center">
-          {item.enterpriseValueMultiple ?? "N/A"}
+          {item.enterpriseValueMultiple.toFixed(2) ?? "N/A"}
         </div>
       ))}
       <div className="font-bold">Fair Value Price</div>
       {latestRatios.map((item, index) => (
         <div key={index} className="text-center">
-          {item.priceFairValue ?? "N/A"}
+          {item.priceFairValue.toFixed(2) ?? "N/A"}
         </div>
       ))}
     </div>
   );
-}
- 
+};
+
 export default Ratios;
