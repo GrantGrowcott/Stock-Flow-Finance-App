@@ -70,7 +70,7 @@ const RetirementCalculation = () => {
 
   return (
     <>
-      <div className="flex flex-row w-full gap-8 px-6 mt-5 max-lg:flex-col">
+      <div className="flex flex-row w-full gap-8  max-lg:flex-col">
         <div className="flex flex-col gap-3">
           <h1 className="text-center font-bold text-2xl">Investment Withdrawal Calculator</h1>
           <label className="font-bold">Current Total Investment Value ($)</label>
