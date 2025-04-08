@@ -8,8 +8,10 @@ type YearDropdownProps = {
 export default function YearDropdown({ selectedYears, setSelectedYears }: YearDropdownProps) {
   
 
+console.log(selectedYears)
+
   return (
-    <div className="absolute left-10 top-1 mt-5">
+    <div className="mt-2 mb-10">
       <label htmlFor="years" className="block mb-1 font-medium">
         Select Term:
       </label>
