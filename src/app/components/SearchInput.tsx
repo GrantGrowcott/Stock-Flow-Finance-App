@@ -16,14 +16,13 @@ const SearchInput = () => {
   const [activeIndex, setActiveIndex] = useState(-1);
   const router = useRouter();
 
-  // UseRef to persist debounced function across re-renders
   const debounceRef = useRef(debounce((searchTerm: string) => {
     if (searchTerm.trim() !== "") {
       getStockTicker(dispatch, searchTerm);
     } else {
-      dispatch(setTickerData([])); // Clear results if input is empty
+      dispatch(setTickerData([])); 
     }
-  }, 300)); // 300ms debounce delay
+  }, 300)); 
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value.toUpperCase();

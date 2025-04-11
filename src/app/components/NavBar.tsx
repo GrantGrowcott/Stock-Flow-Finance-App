@@ -38,7 +38,6 @@ const Navbar = ({ collapsed }: NavbarProps) => {
           { href: "/", icon: "home", label: "Home" },
           { href: "/retirement-calculator", icon: "calculator", label: "Retirement Calculator" },
           { href: "/rate-of-return", icon: "rate", label: "Rate of Return Calculator" },
-          { href: "/stock-screener", icon: "filter", label: "Stock Screener" },
           { href: "/portfolio-tracker", icon: "portfolio", label: "Portfolio Tracker" },
         ].map(({ href, icon, label }) => (
           <li

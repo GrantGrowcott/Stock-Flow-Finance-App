@@ -168,10 +168,10 @@ export const handleSignUp = async (
   const success = await recoverEmailPassword(password);
   if (success) {
     setSuccessMessage(true);
-    setErrorMessage(""); 
+    setErrorMessage("");
   } else {
-    setSuccessMessage(false); 
-    setErrorMessage("Password recovery failed. Please try again."); 
+    setSuccessMessage(false);
+    setErrorMessage("Password recovery failed. Please try again.");
   }
 };
 
@@ -203,33 +203,52 @@ export const handleEmailSignUp = async (
   }
 };
 
-
-
-export const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>, tickerData: TickerData[], router: ReturnType<typeof useRouter>, setActiveIndex: Dispatch<SetStateAction<number>>, setIsFocused: Dispatch<SetStateAction<boolean>>, activeIndex : number) => {
-  
+export const handleKeyDown = (
+  e: React.KeyboardEvent<HTMLInputElement>,
+  tickerData: TickerData[],
+  router: ReturnType<typeof useRouter>,
+  setActiveIndex: Dispatch<SetStateAction<number>>,
+  setIsFocused: Dispatch<SetStateAction<boolean>>,
+  activeIndex: number
+) => {
   if (!tickerData.length) return;
 
-    if (e.key === "ArrowDown") {
-      setActiveIndex((prev) => (prev < tickerData.length - 1 ? prev + 1 : 0));
-    } else if (e.key === "ArrowUp") {
-      setActiveIndex((prev) => (prev > 0 ? prev - 1 : tickerData.length - 1));
-    } else if (e.key === "Enter" && activeIndex >= 0) {
-      router.push(`/company/${tickerData[activeIndex].symbol}`);
-      setIsFocused(false);
-    }
+  if (e.key === "ArrowDown") {
+    setActiveIndex((prev) => (prev < tickerData.length - 1 ? prev + 1 : 0));
+  } else if (e.key === "ArrowUp") {
+    setActiveIndex((prev) => (prev > 0 ? prev - 1 : tickerData.length - 1));
+  } else if (e.key === "Enter" && activeIndex >= 0) {
+    router.push(`/company/${tickerData[activeIndex].symbol}`);
+    setIsFocused(false);
+  }
 };
+
+export async function handlePortfolioKeyDown(
+  e: React.KeyboardEvent<HTMLInputElement>,
+  tickerData: TickerData[],
+  setActiveIndex: Dispatch<SetStateAction<number>>,
+  setIsFocused: Dispatch<SetStateAction<boolean>>,
+  activeIndex: number,
+) {
+  if (!tickerData.length) return;
+
+  if (e.key === "ArrowDown") {
+    setActiveIndex((prev) => (prev < tickerData.length - 1 ? prev + 1 : 0));
+  } else if (e.key === "ArrowUp") {
+    setActiveIndex((prev) => (prev > 0 ? prev - 1 : tickerData.length - 1));
+  } else if (e.key === "Enter" && activeIndex >= 0) {
+    
+    setIsFocused(false);
+  }
+}
 // Used to format any value that is above 1 million to present in the UI ( ex: Market Capitalization)
 export const formatNumbers = (num: number): string => {
   if (num >= 1e12 || num <= -1e12) {
     return "$" + (num / 1e12).toFixed(2) + "T";
   } else if (num >= 1e9 || num <= -1e9) {
-    return "$" +(num / 1e9).toFixed(2) + "B";
+    return "$" + (num / 1e9).toFixed(2) + "B";
   } else if (num >= 1e6 || num <= -1e6) {
-    return "$" +(num / 1e6).toFixed(2) + "M";
+    return "$" + (num / 1e6).toFixed(2) + "M";
   }
-  return" $" + num.toString();
+  return " $" + num.toString();
 };
-
-
-
-  

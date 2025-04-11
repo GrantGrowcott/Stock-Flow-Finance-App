@@ -2,9 +2,16 @@ import { Dispatch } from "@reduxjs/toolkit";
 import { setTickerData } from "../store/tickerSlice";
 import { Stock } from "@/constants";
 import { PriceHistory } from "@/constants";
+import { TickerData } from "@/constants";
+import { supabase } from "../../../lib/supabaseClient";
+import { AppDispatch } from "../store";
+import { setPortfolioInfo } from "../store/portfolioSlice";
 
 
 
+
+// Search Ticker
+// https://financialmodelingprep.com/api/v3/search-ticker?query=AAPL&limit=10&apikey=qKbye2ChaZdQ6BoVhnYPGb8ZzWj45ShM
 
 // Historical Price over the last 5 years( each day)
 
@@ -40,6 +47,8 @@ import { PriceHistory } from "@/constants";
 
 // https://financialmodelingprep.com/api/v3/ratios/AAPL?apikey=qKbye2ChaZdQ6BoVhnYPGb8ZzWj45ShM
 
+
+
 // Stock Data for Search Dropdown Menu 
 export async function getStockTicker (dispatch: Dispatch ,ticker: string) {
    
@@ -53,6 +62,144 @@ export async function getStockTicker (dispatch: Dispatch ,ticker: string) {
     }
 
 }
+
+// Used to pull ticker data for the portfolio 
+
+export async function getPortfolioTicker (setTickerData: React.Dispatch<React.SetStateAction<TickerData[]>> ,ticker: string) {
+   
+  try {
+      const response = await fetch(`https://financialmodelingprep.com/api/v3/search-ticker?query=${ticker}&limit=10&apikey=${process.env.NEXT_PUBLIC_FINANCIAL_API_KEY}`);
+      const data = await response.json();
+      setTickerData(data); 
+  } catch (error) {
+      console.error("Error fetching stock ticker:", error);
+      setTickerData([]);
+  }
+
+}
+// Takes in the Ticker Symbol that the person wants to add and calls the api to retrieve more specific data. Then adds that to the database 
+
+export async function setPortfolioData(symbol: string, dispatch: AppDispatch) {
+  try {
+    const response = await fetch(
+      `https://financialmodelingprep.com/api/v3/profile/${symbol}?apikey=${process.env.NEXT_PUBLIC_FINANCIAL_API_KEY}`
+    );
+    const [company] = await response.json();
+
+    const {
+      data: { user },
+      error: authError,
+    } = await supabase.auth.getUser();
+
+    if (authError || !user) throw new Error("Not authenticated");
+
+    // ✅ Check if symbol already exists for this user
+    const { data: existing, error: checkError } = await supabase
+      .from("user_portfolio")
+      .select("id")
+      .eq("user_id", user.id)
+      .eq("symbol", company.symbol)
+      .maybeSingle(); // returns null if not found
+
+    if (checkError) throw checkError;
+    if (existing) {
+      console.warn("⚠️ Ticker already exists in portfolio");
+      return; // Skip insert
+    }
+
+    // ✅ Insert new record
+    const { error: insertError } = await supabase.from("user_portfolio").insert([
+      {
+        user_id: user.id,
+        symbol: company.symbol,
+        company_name: company.companyName,
+        price: company.price,
+        sector: company.sector,
+        industry: company.industry,
+        description: company.description,
+      },
+    ]);
+
+    if (insertError) throw insertError;
+
+    // ✅ Fetch updated portfolio
+    const { data: updatedPortfolio, error: fetchError } = await supabase
+      .from("user_portfolio")
+      .select("*")
+      .eq("user_id", user.id);
+
+    if (fetchError) throw fetchError;
+
+    dispatch(setPortfolioInfo(updatedPortfolio));
+
+    console.log("✅ Saved to portfolio");
+  } catch (error) {
+    console.error("Error saving to Supabase:", error);
+  }
+}
+
+
+
+// Retrieve the data from the user_portfolio data
+export async function getUserPortfolio(dispatch: AppDispatch) {
+  const {
+    data: { user },
+    error: authError,
+  } = await supabase.auth.getUser();
+
+  if (authError || !user) throw new Error("Not authenticated");
+
+  const { data, error } = await supabase
+    .from("user_portfolio")
+    .select("*")
+    .eq("user_id", user.id)
+    .order("created_at", { ascending: false });
+
+  if (error) throw error;
+
+  dispatch(setPortfolioInfo(data));  // Dispatch the portfolio data to Redux store
+  console.log(data)
+}
+
+
+
+export async function deleteItemPortfolio(dispatch: AppDispatch,id: string) {
+  const {
+    data: { user },
+    error: authError,
+  } = await supabase.auth.getUser();
+
+  if (authError || !user) throw new Error("Not authenticated");
+  console.log("Deleting with ID:", id);
+console.log("Authenticated user ID:", user.id);
+
+
+  // Delete the portfolio item from the database
+  const { error: deleteError } = await supabase
+    .from("user_portfolio")
+    .delete()
+    .eq("id", id)  // Deleting item based on the given id
+    .eq("user_id", user.id);  // Ensure the user is the one who owns the portfolio item
+
+  if (deleteError) {
+    throw deleteError;
+  }
+
+  // After deleting, you should fetch updated portfolio data to reflect the change in the UI
+  const { data, error } = await supabase
+    .from("user_portfolio")
+    .select("*")
+    .eq("user_id", user.id);
+
+  if (error) throw error;
+
+  // Dispatch updated portfolio data to Redux
+  dispatch(setPortfolioInfo(data));
+}
+
+
+
+
 // Retrieves Market News to be displayed on the home page
 export async function getNews() {
     try {

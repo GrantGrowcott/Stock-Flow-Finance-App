@@ -1,5 +1,11 @@
+import PortfolioSearch from "../components/PortfolioSearch";
+import PortfolioData from "../components/PortfolioData";
+
 const PortfolioTracker = () => {
-    return ( <div>Portfolio Tracker Page</div> );
+    return ( <div>
+        <PortfolioSearch/>
+        <PortfolioData/>
+    </div> );
 }
  
 export default PortfolioTracker;

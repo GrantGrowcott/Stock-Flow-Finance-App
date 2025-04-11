@@ -19,9 +19,9 @@ console.log(selectedYears)
         id="years"
         value={selectedYears}
         onChange={(e) => setSelectedYears(Number(e.target.value))}
-        className="border rounded px-3 py-2"
+        className="border rounded px-3 py-2 text-[var(--black)] placeholder:text-[var(--black)] bg-[var(--grey)]"
       >
-        <option value={5}>5 Years</option>
+        <option className="placeholder:text-[var(--black)]" value={5}>5 Years</option>
         <option value={10}>10 Years</option>
       </select>
     </div>
