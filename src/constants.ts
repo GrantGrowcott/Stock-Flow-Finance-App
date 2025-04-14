@@ -9,6 +9,16 @@ export const icons = {
     settings: 35,
     theme: 40,
     auth: 40,
+    containerHeight: 600,
+    yWidth: 80
+}
+
+export const CACHE_KEY = "cachedNews"; 
+export const CACHE_EXPIRATION = 60 * 30 * 1000; 
+
+export type YearDropdownProps = {
+  selectedYears: number
+  setSelectedYears: (years:number) => void
 }
 
 export type StatementData = IncomeStatement[] | BalanceSheet[] | CashflowStatement[] | Ratios[];
@@ -24,6 +34,37 @@ export interface FinancialStatementsProps {
   income: IncomeStatement[];
   balance:BalanceSheet[];
   cashflow: CashflowStatement[];
+}
+
+export interface RetirementParams {
+  principle: number;
+  annualReturn: number;
+  currentAge: number;
+  retirementAge: number;
+  monthlyContribution: number;
+  withdraw: number;
+  death: number;
+}
+
+export interface FinalValues {
+  age: number;
+  value: number;
+}
+
+export interface IncomeStatementProps {
+  income: IncomeStatement[];
+}
+
+export interface BalanceSheetProps {
+  balance: BalanceSheet[];
+}
+
+export interface CashflowStatementProps {
+  cashflow: CashflowStatement[];
+}
+
+export interface RatiosProps {
+  ratios: Ratios[];
 }
 
 export interface NavbarProps {
@@ -50,6 +91,18 @@ export interface NewsArticle {
     price: number;
     changesPercentage: number;
   }
+
+  export type StockListProps = {
+    stocks: Stocks[];
+  };
+
+  type Stocks = {
+    symbol: string;
+    date: string;
+    reportedCurrency: string;
+    fillingDate: string;
+    revenue: string;
+  };
 
   export interface TickerData {
     symbol : string;

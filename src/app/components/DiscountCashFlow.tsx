@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import YearDropdown from "./YearDropdown";
+import { calculateDCF } from "../../../helpers/helpers";
 
 const DiscountCashFlow = () => {
   const [freeCashFlow, setFreeCashFlow] = useState<number | string>("100");
@@ -11,44 +12,17 @@ const DiscountCashFlow = () => {
   const [sharesOutstanding, setSharesOutstanding] = useState<number | string>("10");
   const [equityValue, setEquityValue] = useState<number | string>("");
 
-  const calculateTerminalValue = () => {
-    let currentFCF = Number(freeCashFlow);
-    const freeGrowth = Number(freeCashGrowth) / 100;
-    const rate = Number(terminalGrowthRate) / 100;
-    const discount = Number(wacc) / 100;
-
-    const projectedFCFs: number[] = [];
-
-    // 1. Project FCFs for each year
-    for (let i = 0; i < selectedYears; i++) {
-      if (i !== 0) currentFCF *= 1 + freeGrowth;
-      projectedFCFs.push(currentFCF);
-    }
-
-    // 2. Discount each FCF to present value
-    const discountedFCFs = projectedFCFs.map((fcf, i) => {
-      return fcf / Math.pow(1 + discount, i + 1);
+  const handleCalculate = () => {
+    const value = calculateDCF({
+      freeCashFlow: Number(freeCashFlow),
+      freeCashGrowth: Number(freeCashGrowth),
+      terminalGrowthRate: Number(terminalGrowthRate),
+      wacc: Number(wacc),
+      sharesOutstanding: Number(sharesOutstanding),
+      selectedYears: selectedYears,
     });
 
-    // 3. Calculate Terminal Value (Gordon Growth)
-    const finalYearFCF = projectedFCFs[projectedFCFs.length - 1];
-    const terminalValue = (finalYearFCF * (1 + rate)) / (discount - rate);
-
-    // 4. Discount Terminal Value to present value
-    const discountedTerminalValue = terminalValue / Math.pow(1 + discount, selectedYears);
-
-    // 5. Sum all values
-    const totalValue = discountedFCFs.reduce((sum, val) => sum + val, 0) + discountedTerminalValue;
-
-    const perShareValue = totalValue / Number(sharesOutstanding);
-    setEquityValue("$" + perShareValue.toFixed(2));
-
-    console.log("Projected FCFs:", projectedFCFs);
-    console.log("Discounted FCFs:", discountedFCFs);
-    console.log("Terminal Value:", terminalValue.toFixed(2));
-    console.log("Discounted Terminal Value:", discountedTerminalValue.toFixed(2));
-    console.log("Intrinsic Value:", totalValue.toFixed(2));
-    console.log("Per Share Value", perShareValue);
+    setEquityValue("$" + value.toFixed(2));
   };
 
   return (
@@ -60,7 +34,7 @@ const DiscountCashFlow = () => {
         placeholder="100"
         value={freeCashFlow}
         onChange={(e) => setFreeCashFlow(e.target.value)}
-       className="pl-1 text-[var(--black)] placeholder:text-[var(--black)] rounded-md my-2 bg-[var(--grey)]"
+        className="pl-1 text-[var(--black)] placeholder:text-[var(--black)] rounded-md my-2 bg-[var(--grey)]"
       />
       <label className="font-bold my-2">WACC (%)</label>
       <input
@@ -95,7 +69,7 @@ const DiscountCashFlow = () => {
         className="pl-1 text-[var(--black)] placeholder:text-[var(--black)] rounded-md my-2 bg-[var(--grey)]"
       />
       <YearDropdown selectedYears={selectedYears} setSelectedYears={setSelectedYears} />
-      <button onClick={calculateTerminalValue} className="bg-[var(--blue)] p-3 rounded-md mt-5">
+      <button onClick={handleCalculate} className="bg-[var(--blue)] p-3 rounded-md mt-5">
         Submit
       </button>
 

@@ -2,6 +2,7 @@
 import { useState } from "react";
 import YearDropdown from "../components/YearDropdown";
 import DiscountCashFlow from "../components/DiscountCashFlow";
+import { calculateValuation } from "../../../helpers/helpers";
 
 const RateOfReturn = () => {
   const [earningsPerShare, setEarningsPerShare] = useState<number | string>("19.53");
@@ -11,13 +12,15 @@ const RateOfReturn = () => {
   const [selectedYears, setSelectedYears] = useState<number>(10);
   const [buyPrice, setBuyPrice] = useState<number | string>("");
 
-  const calculateValuation = () => {
-    const futureEarnings = Number(earningsPerShare) * Math.pow(1 + Number(earningsGrowth) / 100, selectedYears);
-
-    const futurePrice = futureEarnings * Number(priceEarnings);
-
-    const presentValue = futurePrice / Math.pow(1 + Number(discountRate) / 100, selectedYears);
-    setBuyPrice("$" + presentValue.toFixed(2));
+  const handleSubmit = () => {
+    const price = calculateValuation(
+      Number(earningsPerShare),
+      Number(earningsGrowth),
+      Number(priceEarnings),
+      Number(discountRate),
+      selectedYears
+    );
+    setBuyPrice(price);
   };
 
   return (
@@ -61,7 +64,7 @@ const RateOfReturn = () => {
               className="pl-1 text-[var(--black)] placeholder:text-[var(--black)] rounded-md my-2 bg-[var(--grey)]"
             />
             <YearDropdown selectedYears={selectedYears} setSelectedYears={setSelectedYears} />
-              <button onClick={calculateValuation}>
+              <button onClick={handleSubmit}>
                 <h3 className="bg-[var(--blue)] p-3 rounded-md mt-5 ">Submit</h3>
               </button>
               <h3 className="text-xl mt-5 font-bold">Buy Price: {buyPrice}</h3>

@@ -1,14 +1,8 @@
 'use client'
-
-type YearDropdownProps = {
-    selectedYears: number
-    setSelectedYears: (years:number) => void
-}
+import { YearDropdownProps } from "@/constants"
 
 export default function YearDropdown({ selectedYears, setSelectedYears }: YearDropdownProps) {
   
-
-console.log(selectedYears)
 
   return (
     <div className="mt-2 mb-10">

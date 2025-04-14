@@ -1,14 +1,12 @@
-import { Ratios as RatiosType } from "@/constants";
+import { RatiosProps } from "@/constants";
 
-interface RatiosProps {
-  ratios: RatiosType[];
-}
+
 const Ratios: React.FC<RatiosProps> = ({ ratios }) => {
   const latestRatios = ratios.slice(0, 5).reverse();
   const years = latestRatios.map((item) => item.calendarYear);
 
   return (
-    <div className="grid grid-cols-6 gap-4 mt-5 border border-gray-300 p-4">
+    <div className="grid grid-cols-6 gap-4 mt-5 border-[var(--grey)] p-4">
       <div className="font-bold"></div>
       {years.map((year, index) => (
         <div key={index} className="font-bold text-center">

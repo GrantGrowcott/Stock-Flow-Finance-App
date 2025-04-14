@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../store";
 import { useEffect } from "react";
 import { getUserPortfolio, deleteItemPortfolio } from "../api/api";
+import { icons } from "@/constants";
 
 const FavoriteStock = ({ symbol }: SymbolProps) => {
   const dispatch = useDispatch();
@@ -36,8 +37,8 @@ const FavoriteStock = ({ symbol }: SymbolProps) => {
       <Image
         src={isInPortfolio ? "/heart.png" : "/plus.png"}
         alt={isInPortfolio ? "In Watch list" : "Add to Watch list"}
-        width={48}
-        height={48}
+        width={icons.profile}
+        height={icons.profile}
       />
     </button>
   );

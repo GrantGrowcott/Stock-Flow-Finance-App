@@ -1,16 +1,13 @@
-import { CashflowStatement as CashflowStatementType } from "@/constants";
 import { formatNumbers } from "../../../helpers/helpers";
+import { CashflowStatementProps } from "@/constants";
 
-interface CashflowStatementProps {
-  cashflow: CashflowStatementType[];
-}
 
 const CashflowStatement: React.FC<CashflowStatementProps> = ({ cashflow }) => {
   const latestCashflow = cashflow.slice(0, 5).reverse();
   const years = latestCashflow.map((item) => item.calendarYear);
 
   return (
-    <div className="grid grid-cols-6 gap-4 mt-5 border border-gray-300 p-4">
+    <div className="grid grid-cols-6 gap-4 mt-5 border-[var(--grey)] p-4">
       <div className="font-bold"></div>
       {years.map((year, index) => (
         <div key={index} className="font-bold text-center">

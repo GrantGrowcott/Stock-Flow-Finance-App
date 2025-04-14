@@ -1,16 +1,5 @@
 "use client";
-
-type Stock = {
-  symbol: string;
-  date: string;
-  reportedCurrency: string;
-  fillingDate: string;
-  revenue: string;
-};
-
-type StockListProps = {
-  stocks: Stock[];
-};
+import { StockListProps } from "@/constants";
 
 export default function StockList({ stocks }: StockListProps) {
   return (

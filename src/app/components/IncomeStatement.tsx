@@ -1,17 +1,14 @@
 import React from "react";
-import { IncomeStatement as IncomeStatementType } from "@/constants";
 import { displayValue, displayPercent } from "../../../helpers/helpers";
+import { IncomeStatementProps } from "@/constants";
 
-interface IncomeStatementProps {
-  income: IncomeStatementType[];
-}
 
 const IncomeStatement: React.FC<IncomeStatementProps> = ({ income }) => {
   const latestIncome = income.slice(0, 5).reverse();
   const years = latestIncome.map((item) => item.calendarYear);
 
   return (
-    <div className="grid grid-cols-6 gap-4 mt-5 border border-gray-300 p-4">
+    <div className="grid grid-cols-6 gap-4 mt-5 border-[var(--grey)] p-4">
       <div className="font-bold"></div>
       {years.map((year, index) => (
         <div key={index} className="font-bold text-center">

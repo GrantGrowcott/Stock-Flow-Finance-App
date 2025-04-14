@@ -6,9 +6,6 @@ const GraphButtons = () => {
   const activeTime = useSelector((state: RootState) => state.ticker.activeTime);
   const dispatch = useDispatch();
 
-  
-
-
   return (
     <div className="flex justify-end">
       <button

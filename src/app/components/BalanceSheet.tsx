@@ -1,18 +1,13 @@
-import { BalanceSheet as BalanceSheetType } from "@/constants";
 import { formatNumbers } from "../../../helpers/helpers";
+import { BalanceSheetProps } from "@/constants";
 
-
-
-interface BalanceSheetProps {
-  balance: BalanceSheetType[];
-}
 
 const BalanceSheet: React.FC<BalanceSheetProps> = ({balance}) => {
     const latestBalance = balance.slice(0, 5).reverse();
     const years = latestBalance.map(item => item.calendarYear);
 
   return (
-    <div className="grid grid-cols-6 gap-4 mt-5 border border-gray-300 p-4"> 
+    <div className="grid grid-cols-6 gap-4 mt-5 border-[var(--grey)] p-4"> 
 
       <div className="font-bold"></div> 
       {years.map((year, index) => (

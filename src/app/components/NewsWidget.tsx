@@ -1,9 +1,7 @@
 import { useState, useEffect, useRef } from "react";
-import { NewsArticle } from "@/constants";
+import { NewsArticle, CACHE_KEY, CACHE_EXPIRATION } from "@/constants";
 import { getNews } from "../api/api";
 
-const CACHE_KEY = "cachedNews"; // Key for local storage
-const CACHE_EXPIRATION = 60 * 30 * 1000; // 30 minutes expiration
 
 const NewsWidget = () => {
   const [news, setNews] = useState<NewsArticle[]>([]);
@@ -14,13 +12,12 @@ const NewsWidget = () => {
     const fetchNews = async () => {
       setLoading(true);
 
-      // Check if cached data exists and is still valid
       const cachedData = localStorage.getItem(CACHE_KEY);
       if (cachedData) {
         const { articles, timestamp } = JSON.parse(cachedData);
         if (Date.now() - timestamp < CACHE_EXPIRATION) {
           setNews(articles);
-          prevNews.current = articles; // Store it in ref to prevent re-renders
+          prevNews.current = articles; 
           setLoading(false);
           return;
         }
