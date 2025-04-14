@@ -2,7 +2,7 @@ import PortfolioSearch from "../components/PortfolioSearch";
 import PortfolioData from "../components/PortfolioData";
 
 const PortfolioTracker = () => {
-    return ( <div>
+    return ( <div >
         <PortfolioSearch/>
         <PortfolioData/>
     </div> );

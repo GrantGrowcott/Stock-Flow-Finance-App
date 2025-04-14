@@ -2,6 +2,7 @@ import { BalanceSheet as BalanceSheetType } from "@/constants";
 import { formatNumbers } from "../../../helpers/helpers";
 
 
+
 interface BalanceSheetProps {
   balance: BalanceSheetType[];
 }

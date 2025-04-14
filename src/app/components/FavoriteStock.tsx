@@ -1,9 +1,44 @@
 import Image from "next/image";
-const FavoriteStock = () => {
+import { SymbolProps } from "@/constants";
+import { setPortfolioData } from "../api/api";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../store";
+import { useEffect } from "react";
+import { getUserPortfolio, deleteItemPortfolio } from "../api/api";
+
+const FavoriteStock = ({ symbol }: SymbolProps) => {
+  const dispatch = useDispatch();
+  const portfolioData = useSelector((state: RootState) => state.portfolio.portfolioData);
+
+  const matchedItem = portfolioData?.find((item) => item.symbol === symbol);
+  const isInPortfolio = Boolean(matchedItem);
+
+  useEffect(() => {
+    getUserPortfolio(dispatch);
+  }, [dispatch]);
+
+  const handleClick = () => {
+    
+    if (isInPortfolio && matchedItem?.id) {
+      deleteItemPortfolio(dispatch,matchedItem.id);
+    } else {
+      setPortfolioData(symbol, dispatch);
+    }
+  };
   return (
-    <button className="flex items-center justify-start gap-4  mt-3 p-3 rounded-2xl hover:bg-[var(--white)] dark:hover:bg-[var(--darkGrey)]">
-      <h3 className="text-lg">Add to Watch list</h3>
-      <Image src="/plus.png" alt="Add to Watch list" width={48} height={48} />
+    <button
+    onClick={handleClick}
+      className="flex items-center justify-start gap-4 mt-3 p-3 rounded-2xl hover:bg-[var(--white)] dark:hover:bg-[var(--darkGrey)]"
+    >
+      <h3 className="text-lg">
+        {isInPortfolio ? "In Watch list" : "Add to Watch list"}
+      </h3>
+      <Image
+        src={isInPortfolio ? "/heart.png" : "/plus.png"}
+        alt={isInPortfolio ? "In Watch list" : "Add to Watch list"}
+        width={48}
+        height={48}
+      />
     </button>
   );
 };

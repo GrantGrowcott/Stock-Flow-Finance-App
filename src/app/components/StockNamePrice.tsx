@@ -28,7 +28,7 @@ const StockNamePrice = ({ symbol }: SymbolProps) => {
           </h1>
           <span className=" bg-[var(--blue)] p-2 rounded-md">{stock.currency}</span>
         </div>
-        <FavoriteStock />
+        <FavoriteStock symbol={symbol}/>
       </div>
       <div className="flex justify-center self-start mr-7 mt-2">
         <h2 className="text-3xl font-bold">${stock.price}</h2>

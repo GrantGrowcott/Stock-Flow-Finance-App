@@ -1,8 +1,7 @@
 import React from "react";
 import { IncomeStatement as IncomeStatementType } from "@/constants";
-import { formatNumbers } from "../../../helpers/helpers";
+import { displayValue, displayPercent } from "../../../helpers/helpers";
 
-// Define the correct prop type for IncomeStatement component
 interface IncomeStatementProps {
   income: IncomeStatementType[];
 }
@@ -19,142 +18,165 @@ const IncomeStatement: React.FC<IncomeStatementProps> = ({ income }) => {
           {year}
         </div>
       ))}
+
       <div className="font-bold">Revenue</div>
       {latestIncome.map((item, index) => (
         <div key={index} className="text-center">
-          {formatNumbers(item.revenue)}
+          {displayValue(item.revenue)}
         </div>
       ))}
+
       <div className="font-bold">Cost of Revenue</div>
       {latestIncome.map((item, index) => (
         <div key={index} className="text-center">
-          {formatNumbers(item.costOfRevenue)}
+          {displayValue(item.costOfRevenue)}
         </div>
       ))}
+
       <div className="font-bold">Gross Profit</div>
       {latestIncome.map((item, index) => (
         <div key={index} className="text-center">
-          {formatNumbers(item.grossProfit)}
+          {displayValue(item.grossProfit)}
         </div>
       ))}
-      <div className="font-bold">Gross Profit</div>
+
+      <div className="font-bold">Gross Profit Ratio</div>
       {latestIncome.map((item, index) => (
         <div key={index} className="text-center">
-          {item.grossProfit != null ? Number(item.grossProfitRatio * 100).toFixed(2) + "%"  : "N/A"}
+          {displayPercent(item.grossProfitRatio)}
         </div>
       ))}
+
       <div className="font-bold">R & D Expenses</div>
       {latestIncome.map((item, index) => (
         <div key={index} className="text-center">
-          {formatNumbers(item.researchAndDevelopmentExpenses)}
+          {displayValue(item.researchAndDevelopmentExpenses)}
         </div>
       ))}
+
       <div className="font-bold">G & A Expenses</div>
       {latestIncome.map((item, index) => (
         <div key={index} className="text-center">
-          {formatNumbers(item.generalAndAdministrativeExpenses)}
+          {displayValue(item.generalAndAdministrativeExpenses)}
         </div>
       ))}
+
       <div className="font-bold">SG & A Expenses</div>
       {latestIncome.map((item, index) => (
         <div key={index} className="text-center">
-          {formatNumbers(item.sellingGeneralAndAdministrativeExpenses)}
+          {displayValue(item.sellingGeneralAndAdministrativeExpenses)}
         </div>
       ))}
+
       <div className="font-bold">Other Expenses</div>
       {latestIncome.map((item, index) => (
         <div key={index} className="text-center">
-          {formatNumbers(item.otherExpenses)}
+          {displayValue(item.otherExpenses)}
         </div>
       ))}
+
       <div className="font-bold">Operating Expenses</div>
       {latestIncome.map((item, index) => (
         <div key={index} className="text-center">
-          {formatNumbers(item.operatingExpenses)}
+          {displayValue(item.operatingExpenses)}
         </div>
       ))}
+
       <div className="font-bold">Costs and Expenses</div>
       {latestIncome.map((item, index) => (
         <div key={index} className="text-center">
-          {formatNumbers(item.costAndExpenses)}
+          {displayValue(item.costAndExpenses)}
         </div>
       ))}
+
       <div className="font-bold">Interest Income</div>
       {latestIncome.map((item, index) => (
         <div key={index} className="text-center">
-          {formatNumbers(item.interestIncome)}
+          {displayValue(item.interestIncome)}
         </div>
       ))}
+
       <div className="font-bold">Interest Expense</div>
       {latestIncome.map((item, index) => (
         <div key={index} className="text-center">
-          {formatNumbers(item.interestExpense)}
+          {displayValue(item.interestExpense)}
         </div>
       ))}
+
       <div className="font-bold">Depreciation & Amortization</div>
       {latestIncome.map((item, index) => (
         <div key={index} className="text-center">
-          {formatNumbers(item.depreciationAndAmortization)}
+          {displayValue(item.depreciationAndAmortization)}
         </div>
       ))}
+
       <div className="font-bold">Operating Income</div>
       {latestIncome.map((item, index) => (
         <div key={index} className="text-center">
-          {formatNumbers(item.operatingIncome)}
+          {displayValue(item.operatingIncome)}
         </div>
       ))}
+
       <div className="font-bold">Operating Ratio</div>
       {latestIncome.map((item, index) => (
         <div key={index} className="text-center">
-          {(item.operatingIncomeRatio * 100).toFixed(2)}%
+          {displayPercent(item.operatingIncomeRatio)}
         </div>
       ))}
+
       <div className="font-bold">Total Other Expenses</div>
       {latestIncome.map((item, index) => (
         <div key={index} className="text-center">
-          {formatNumbers(item.totalOtherIncomeExpensesNet)}
+          {displayValue(item.totalOtherIncomeExpensesNet)}
         </div>
       ))}
+
       <div className="font-bold">Income Before Tax</div>
       {latestIncome.map((item, index) => (
         <div key={index} className="text-center">
-          {formatNumbers(item.incomeBeforeTax)}
+          {displayValue(item.incomeBeforeTax)}
         </div>
       ))}
+
       <div className="font-bold">Income Before Tax Ratio</div>
       {latestIncome.map((item, index) => (
         <div key={index} className="text-center">
-          {item.grossProfit != null ? Number(item.incomeBeforeTaxRatio * 100).toFixed(2)  : "N/A"}
+          {displayPercent(item.incomeBeforeTaxRatio)}
         </div>
       ))}
+
       <div className="font-bold">Income Tax Expense</div>
       {latestIncome.map((item, index) => (
         <div key={index} className="text-center">
-          {formatNumbers(item.incomeTaxExpense)}
+          {displayValue(item.incomeTaxExpense)}
         </div>
       ))}
+
       <div className="font-bold">Net Income</div>
       {latestIncome.map((item, index) => (
         <div key={index} className="text-center">
-          {formatNumbers(item.netIncome)}
+          {displayValue(item.netIncome)}
         </div>
       ))}
+
       <div className="font-bold">EPS</div>
       {latestIncome.map((item, index) => (
         <div key={index} className="text-center">
-          {item.eps}
+          {displayValue(item.eps, false)}
         </div>
       ))}
+
       <div className="font-bold">Weighted Shares Outstanding Basic</div>
       {latestIncome.map((item, index) => (
         <div key={index} className="text-center">
-          {item.weightedAverageShsOut}
+          {displayValue(item.weightedAverageShsOut)}
         </div>
       ))}
+
       <div className="font-bold">Weighted Shares Outstanding Diluted</div>
       {latestIncome.map((item, index) => (
         <div key={index} className="text-center">
-          {item.weightedAverageShsOutDil}
+          {displayValue(item.weightedAverageShsOutDil)}
         </div>
       ))}
     </div>

@@ -11,16 +11,12 @@ const FinancialStatements = ({ ratios, income, balance, cashflow }: FinancialSta
   const statementHandle = (statement: string) => {
     if (statement === "Income") {
       setActiveStatement("Income");
-      console.log(activeStatement);
     } else if (statement === "Balance") {
       setActiveStatement("Balance");
-      console.log(activeStatement);
     } else if (statement === "Cashflow") {
-      setActiveStatement("Cashflow");
-      console.log(activeStatement);
+      setActiveStatement("Cashflow"); 
     } else if (statement === "Ratios") {
       setActiveStatement("Ratios");
-      console.log(activeStatement);
     }
   };
 

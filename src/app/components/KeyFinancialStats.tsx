@@ -49,8 +49,14 @@ const KeyFinancialStats = ({ symbol }: SymbolProps) => {
     return <p>Loading financial data...</p>;
   }
   if (stockError || ratiosError || incomeError || balanceError || cashflowError) {
+    console.error("Stock Error:", JSON.stringify(stockError, null, 2));
+    console.error("Ratios Error:", JSON.stringify(ratiosError, null, 2));
+    console.error("Income Error:", JSON.stringify(incomeError, null, 2));
+    console.error("Balance Error:", JSON.stringify(balanceError, null, 2));
+    console.error("Cashflow Error:", JSON.stringify(cashflowError, null, 2));
+    
     return <p>Error fetching data.</p>;
-  }
+  }  
   if (
     !stockData?.getStockInformation ||
     !ratiosData?.getRatios ||
@@ -58,8 +64,16 @@ const KeyFinancialStats = ({ symbol }: SymbolProps) => {
     !balanceData?.getBalanceSheet ||
     !cashflowData?.getCashflow
   ) {
+    console.warn("Missing data:", {
+      stockData,
+      ratiosData,
+      incomeData,
+      balanceData,
+      cashflowData,
+    });
     return <p>No financial data available.</p>;
   }
+  
 
   const stock = stockData.getStockInformation;
   const ratios = ratiosData.getRatios;

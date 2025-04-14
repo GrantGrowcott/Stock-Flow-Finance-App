@@ -7,48 +7,6 @@ import { supabase } from "../../../lib/supabaseClient";
 import { AppDispatch } from "../store";
 import { setPortfolioInfo } from "../store/portfolioSlice";
 
-
-
-
-// Search Ticker
-// https://financialmodelingprep.com/api/v3/search-ticker?query=AAPL&limit=10&apikey=qKbye2ChaZdQ6BoVhnYPGb8ZzWj45ShM
-
-// Historical Price over the last 5 years( each day)
-
-// https://financialmodelingprep.com/api/v3/historical-price-full/AAPL?apikey=qKbye2ChaZdQ6BoVhnYPGb8ZzWj45ShM
-
-// Full Company Profile ( not available on free tier)
-
-// https://financialmodelingprep.com/api/v4/company-outlook?symbol=AAPL&apikey=qKbye2ChaZdQ6BoVhnYPGb8ZzWj45ShM
-
-// Profile of Company 
-// Includes the company image, description, market cap, current price ticker etc  
-
-// https://financialmodelingprep.com/api/v3/profile/AAPL?apikey=qKbye2ChaZdQ6BoVhnYPGb8ZzWj45ShM
-
-// Income Statement
-
-// https://financialmodelingprep.com/api/v3/income-statement/AAPL?apikey=qKbye2ChaZdQ6BoVhnYPGb8ZzWj45ShM
-
-// Balance Sheet
-
-// https://financialmodelingprep.com/api/v3/balance-sheet-statement/AAPL?apikey=qKbye2ChaZdQ6BoVhnYPGb8ZzWj45ShM
-
-// Cash Flow Statement
-
-// https://financialmodelingprep.com/api/v3/cash-flow-statement/AAPL?period=annual&apikey=qKbye2ChaZdQ6BoVhnYPGb8ZzWj45ShM
-
-//  Key Ratios
-
-// https://financialmodelingprep.com/api/v3/ratios-ttm/AAPL?apikey=qKbye2ChaZdQ6BoVhnYPGb8ZzWj45ShM
-
-
-// 5 Years of Key Ratios
-
-// https://financialmodelingprep.com/api/v3/ratios/AAPL?apikey=qKbye2ChaZdQ6BoVhnYPGb8ZzWj45ShM
-
-
-
 // Stock Data for Search Dropdown Menu 
 export async function getStockTicker (dispatch: Dispatch ,ticker: string) {
    
@@ -79,7 +37,7 @@ export async function getPortfolioTicker (setTickerData: React.Dispatch<React.Se
 }
 // Takes in the Ticker Symbol that the person wants to add and calls the api to retrieve more specific data. Then adds that to the database 
 
-export async function setPortfolioData(symbol: string, dispatch: AppDispatch) {
+export async function setPortfolioData(symbol: string | undefined, dispatch: AppDispatch) {
   try {
     const response = await fetch(
       `https://financialmodelingprep.com/api/v3/profile/${symbol}?apikey=${process.env.NEXT_PUBLIC_FINANCIAL_API_KEY}`
@@ -93,21 +51,19 @@ export async function setPortfolioData(symbol: string, dispatch: AppDispatch) {
 
     if (authError || !user) throw new Error("Not authenticated");
 
-    // ✅ Check if symbol already exists for this user
     const { data: existing, error: checkError } = await supabase
       .from("user_portfolio")
       .select("id")
       .eq("user_id", user.id)
       .eq("symbol", company.symbol)
-      .maybeSingle(); // returns null if not found
+      .maybeSingle(); 
 
     if (checkError) throw checkError;
     if (existing) {
       console.warn("⚠️ Ticker already exists in portfolio");
-      return; // Skip insert
+      return; 
     }
 
-    // ✅ Insert new record
     const { error: insertError } = await supabase.from("user_portfolio").insert([
       {
         user_id: user.id,
@@ -122,7 +78,6 @@ export async function setPortfolioData(symbol: string, dispatch: AppDispatch) {
 
     if (insertError) throw insertError;
 
-    // ✅ Fetch updated portfolio
     const { data: updatedPortfolio, error: fetchError } = await supabase
       .from("user_portfolio")
       .select("*")
@@ -132,13 +87,10 @@ export async function setPortfolioData(symbol: string, dispatch: AppDispatch) {
 
     dispatch(setPortfolioInfo(updatedPortfolio));
 
-    console.log("✅ Saved to portfolio");
   } catch (error) {
     console.error("Error saving to Supabase:", error);
   }
 }
-
-
 
 // Retrieve the data from the user_portfolio data
 export async function getUserPortfolio(dispatch: AppDispatch) {
@@ -157,12 +109,10 @@ export async function getUserPortfolio(dispatch: AppDispatch) {
 
   if (error) throw error;
 
-  dispatch(setPortfolioInfo(data));  // Dispatch the portfolio data to Redux store
-  console.log(data)
+  dispatch(setPortfolioInfo(data));  
 }
 
-
-
+// Delete an Item from the Portfolio and Update the UI
 export async function deleteItemPortfolio(dispatch: AppDispatch,id: string) {
   const {
     data: { user },
@@ -170,35 +120,26 @@ export async function deleteItemPortfolio(dispatch: AppDispatch,id: string) {
   } = await supabase.auth.getUser();
 
   if (authError || !user) throw new Error("Not authenticated");
-  console.log("Deleting with ID:", id);
-console.log("Authenticated user ID:", user.id);
-
-
+  
   // Delete the portfolio item from the database
   const { error: deleteError } = await supabase
     .from("user_portfolio")
     .delete()
-    .eq("id", id)  // Deleting item based on the given id
-    .eq("user_id", user.id);  // Ensure the user is the one who owns the portfolio item
+    .eq("id", id) 
+    .eq("user_id", user.id); 
 
   if (deleteError) {
     throw deleteError;
   }
 
-  // After deleting, you should fetch updated portfolio data to reflect the change in the UI
   const { data, error } = await supabase
     .from("user_portfolio")
     .select("*")
     .eq("user_id", user.id);
 
   if (error) throw error;
-
-  // Dispatch updated portfolio data to Redux
   dispatch(setPortfolioInfo(data));
 }
-
-
-
 
 // Retrieves Market News to be displayed on the home page
 export async function getNews() {
@@ -214,7 +155,6 @@ export async function getNews() {
       return { articles: [] };
     }
   }
-
 
   // Retrieves the most active, gainers and losers from the stock market each day.
   export async function getStockData(category: string): Promise<Stock[]> {
@@ -238,8 +178,6 @@ export async function getNews() {
     }
   }
   
-
-
 // Function to filter the data based on active time
 export const filterData = (data: PriceHistory[], activeTime: string): PriceHistory[] => {
   let filteredData = data;

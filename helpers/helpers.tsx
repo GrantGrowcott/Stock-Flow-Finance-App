@@ -3,6 +3,8 @@ import { useRouter } from "next/navigation";
 import { User } from "@supabase/supabase-js";
 import { Dispatch, SetStateAction } from "react";
 import { TickerData } from "@/constants";
+import { AppDispatch } from "@/app/store";
+import { deleteItemPortfolio } from "@/app/api/api";
 
 // Authentication Logic for Google Sign in
 export const handleGoogleLogin = async () => {
@@ -124,7 +126,6 @@ export const checkAuth = async (
     router.push("/login");
   } else {
     setUser(data.user);
-    console.log("Authenticated user:", data.user);
   }
 };
 
@@ -252,3 +253,30 @@ export const formatNumbers = (num: number): string => {
   }
   return " $" + num.toString();
 };
+
+
+export const handleDelete = async (setLoading: Dispatch<SetStateAction<boolean>>, setError: Dispatch<SetStateAction<boolean | null | string>>, id: string, dispatch: AppDispatch) => {
+    setLoading(true);
+    setError(null);
+    try {
+      await deleteItemPortfolio(dispatch, id);
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        console.error("❌ Failed to delete item:", err.message);
+        setError(err.message);
+      } else {
+        console.error("❌ Failed to delete item:", err);
+        setError("Failed to delete item");
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
+
+
+  export const displayValue = (value: number | null | undefined, format = true) =>
+    value != null ? (format ? formatNumbers(value) : value) : "N/A";
+  
+  export const displayPercent = (value: number | null | undefined) =>
+    value != null ? (value * 100).toFixed(2) + "%" : "N/A";
+  

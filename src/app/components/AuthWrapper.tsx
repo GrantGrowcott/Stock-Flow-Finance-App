@@ -57,7 +57,6 @@ export default function AuthWrapper({ children }: { children: React.ReactNode })
 
   return (
     <div className="flex">
-      {/* Hide Navbar and SearchBar if on an auth-related page */}
       {!authPages.includes(pathname) && <Navbar collapsed={collapsed} toggleNavbar={toggleNavbar} />}
       <div className="w-full">
         {!authPages.includes(pathname) && <SearchBar collapsed={collapsed} toggleNavbar={toggleNavbar} />}

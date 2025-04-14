@@ -691,8 +691,8 @@ export const typeDefs = gql`
     epsDiluted: Float
     weightedAverageShsOut: Float!
     weightedAverageShsOutDil: Float!
-    link: String!
-    finalLink: String!
+    link: String
+    finalLink: String
   }
 
   type BalanceSheet {
@@ -748,8 +748,8 @@ export const typeDefs = gql`
     totalInvestments: Float!
     totalDebt: Float!
     netDebt: Float!
-    link: String!
-    finalLink: String!
+    link: String
+    finalLink: String
   }
 
   type CashflowStatement {
@@ -791,8 +791,8 @@ export const typeDefs = gql`
     operatingCashFlow: Float!
     capitalExpenditure: Float!
     freeCashFlow: Float!
-    link: String!
-    finalLink: String!
+    link: String
+    finalLink: String
   }
 
  type Ratios {
@@ -858,13 +858,13 @@ export const typeDefs = gql`
 
 
   type Query {
-    getStockInformation(symbol: String!): StockInformation
-    getIncomeStatement(symbol: String!): [IncomeStatement]
-    getPriceHistory(symbol: String!): [PriceHistory]
-    getBalanceSheet(symbol: String!): [BalanceSheet]
-    getCashflow(symbol: String!): [CashflowStatement]
-    getRatios(symbol: String!): [Ratios]
-  }
+  getStockInformation(symbol: String!): StockInformation
+  getIncomeStatement(symbol: String!): [IncomeStatement]!
+  getPriceHistory(symbol: String!): [PriceHistory]!
+  getBalanceSheet(symbol: String!): [BalanceSheet]!
+  getCashflow(symbol: String!): [CashflowStatement]!
+  getRatios(symbol: String!): [Ratios]!
+}
 `;
 
 
