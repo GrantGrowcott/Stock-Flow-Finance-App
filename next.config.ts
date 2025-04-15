@@ -9,7 +9,7 @@ const nextConfig: NextConfig = {
       },
       {
         protocol: "https",
-        hostname: "images.financialmodelingprep.com", // Add this line
+        hostname: "images.financialmodelingprep.com",// Add this line
       },
     ],
   },
