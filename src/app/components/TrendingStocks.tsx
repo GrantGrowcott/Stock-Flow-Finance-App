@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { getStockData } from "../api/api";
 import { Stock } from "@/constants";
 
@@ -6,17 +6,17 @@ const TrendingStocks = () => {
   const [stockData, setStockData] = useState<{ [key: string]: Stock[] }>({});
   const [activeData, setActiveData] = useState<string>("Active");
 
-  const fetchStockData = async (category: string) => {
+  const fetchStockData = useCallback(async (category: string) => {
     if (!stockData[category]) {
       const data = await getStockData(category);
       setStockData((prev) => ({ ...prev, [category]: data }));
     }
     setActiveData(category);
-  };
+  }, [stockData]);
 
   useEffect(() => {
     fetchStockData("Active");
-  }, []);
+  }, [fetchStockData]);
 
   return (
     <div
@@ -37,7 +37,10 @@ const TrendingStocks = () => {
         ))}
       </div>
 
-      <div className="mx-auto w-full overflow-y-auto" style={{ maxHeight: "calc(100vh - 2rem - 8rem)", boxSizing: "border-box" }}>
+      <div
+        className="mx-auto w-full overflow-y-auto"
+        style={{ maxHeight: "calc(100vh - 2rem - 8rem)", boxSizing: "border-box" }}
+      >
         <div className="grid grid-cols-4 gap-4 text-center">
           <h3 className="font-bold">Symbol</h3>
           <h3 className="font-bold">Change</h3>

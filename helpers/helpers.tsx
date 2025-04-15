@@ -368,7 +368,6 @@ export const checkDeathValue = (deathMoney: FinalValues[]): string => {
     : "✅ Congratulations, you will have enough money in retirement!!!!";
 };
 
-// lib/valuationHelpers.ts
 
 export const calculateValuation = (
   earningsPerShare: number,
