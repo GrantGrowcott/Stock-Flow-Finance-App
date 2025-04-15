@@ -2,6 +2,7 @@ import { ApolloServer } from "@apollo/server";
 import { startServerAndCreateNextHandler } from "@as-integrations/next";
 import { PriceHistory } from "@/constants";
 import { StockInformation, typeDefs, IncomeStatement, BalanceSheet, CashflowStatement, Ratios } from "@/constants";
+import { NextRequest } from 'next/server';
 
 const resolvers = {
     Query: {
@@ -332,6 +333,11 @@ const resolvers = {
   
 
 const server = new ApolloServer({ typeDefs, resolvers });
-const handler = startServerAndCreateNextHandler(server);
+const handler = startServerAndCreateNextHandler<NextRequest>(server);
 
-export { handler as POST };
+export async function POST(
+  req: Request,
+  _context: { params: Record<string, string> } // satisfies RouteContext
+): Promise<Response> {
+  return handler(req);
+}
