@@ -25,7 +25,7 @@ const NewsWidget = () => {
       const cachedData = localStorage.getItem(CACHE_KEY);
       if (cachedData) {
         const { articles, timestamp } = JSON.parse(cachedData);
-        if (Date.now() - timestamp < CACHE_EXPIRATION) {
+        if (Date.now() - timestamp < CACHE_EXPIRATION && Array.isArray(articles)) {
           setNews(articles);
           setLoading(false);
           return;
@@ -34,7 +34,7 @@ const NewsWidget = () => {
 
       try {
         const data = await getNews();
-        setNews(data.articles || []);
+        setNews(Array.isArray(data.articles) ? data.articles : []);
         localStorage.setItem(
           CACHE_KEY,
           JSON.stringify({ articles: data.articles, timestamp: Date.now() })
@@ -66,7 +66,7 @@ const NewsWidget = () => {
               >
                 <p>{article.title}</p>
               </a>
-              <p className="text-sm text-gray-500">{article.source.name}</p>
+              <p className="text-sm text-gray-500">{article.source?.name}</p>
               <p className="text-m py-1">
                 {typeof article.content === "string" ? article.content.slice(0, 200) : ""}...
               </p>
