@@ -337,7 +337,6 @@ const handler = startServerAndCreateNextHandler<NextRequest>(server);
 
 export async function POST(
   req: Request,
-  _context: { params: Record<string, string> } // satisfies RouteContext
 ): Promise<Response> {
   return handler(req);
 }
