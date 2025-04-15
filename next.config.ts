@@ -5,11 +5,15 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "avatars.githubusercontent.com",
+        hostname: "avatars.githubusercontent.com", 
       },
       {
         protocol: "https",
-        hostname: "images.financialmodelingprep.com",// Add this line
+        hostname: "lh3.googleusercontent.com", 
+      },
+      {
+        protocol: "https",
+        hostname: "images.financialmodelingprep.com", 
       },
     ],
   },
