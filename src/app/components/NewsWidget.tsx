@@ -2,7 +2,6 @@ import { useState, useEffect, useRef } from "react";
 import { NewsArticle, CACHE_KEY, CACHE_EXPIRATION } from "@/constants";
 import { getNews } from "../api/api";
 
-
 const NewsWidget = () => {
   const [news, setNews] = useState<NewsArticle[]>([]);
   const [loading, setLoading] = useState(true);
@@ -64,7 +63,7 @@ const NewsWidget = () => {
                 <p>{article.title}</p>
               </a>
               {article.source.name}
-              <p className="text-m py-1">{article.content?.slice(0, 200)}...</p>
+              <p className="text-m py-1">{typeof article.content === 'string' ? article.content.slice(0, 200) : ''}...</p>
               <p>{article.publishedAt?.split("T")[0]}</p>
             </li>
           ))}

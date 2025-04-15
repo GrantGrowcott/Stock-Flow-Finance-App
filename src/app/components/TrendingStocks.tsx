@@ -7,12 +7,16 @@ const TrendingStocks = () => {
   const [activeData, setActiveData] = useState<string>("Active");
 
   const fetchStockData = useCallback(async (category: string) => {
-    if (!stockData[category]) {
-      const data = await getStockData(category);
-      setStockData((prev) => ({ ...prev, [category]: data }));
+    try {
+      if (activeData !== category && !stockData[category]) {
+        const data = await getStockData(category);
+        setStockData((prev) => ({ ...prev, [category]: data }));
+      }
+      setActiveData(category);
+    } catch (error) {
+      console.error("Failed to fetch stock data:", error);
     }
-    setActiveData(category);
-  }, [stockData]);
+  }, [stockData, activeData]);
 
   useEffect(() => {
     fetchStockData("Active");
@@ -28,9 +32,7 @@ const TrendingStocks = () => {
           <button
             key={category}
             onClick={() => fetchStockData(category)}
-            className={`py-3 flex-1 font-bold ${
-              activeData === category ? "text-[var(--blue)] underline hover:bg-[var(--lightBlue)]" : ""
-            }`}
+            className={`py-3 flex-1 font-bold ${activeData === category ? "text-[var(--blue)] underline hover:bg-[var(--lightBlue)]" : ""}`}
           >
             <h3 className="font-bold">{category}</h3>
           </button>
@@ -47,7 +49,7 @@ const TrendingStocks = () => {
           <h3 className="font-bold">Price</h3>
           <h3 className="font-bold">% Change</h3>
         </div>
-        {stockData[activeData]?.length > 0 ? (
+        {stockData[activeData] && stockData[activeData].length > 0 ? (
           stockData[activeData].map((stock, index) => (
             <div key={index} className="grid grid-cols-4 gap-4 mt-3 text-center">
               <p>{stock.symbol}</p>
