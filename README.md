@@ -1,6 +1,24 @@
+# 📈 Stock Tracker App
+
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-## Getting Started
+To view the current project as it stands, please click the following link [Stock Flow](https://finance-app-phi-six.vercel.app/)
+---
+
+## 🚀 Project Purpose
+
+This application allows users to:
+
+- ✅ Track and manage a **stock watchlist**
+- 📰 View **real-time news** on public companies
+- 🧮 Calculate **retirement wealth**
+- 📉 Estimate the **appropriate purchase price** for securities
+
+It's designed to simplify financial planning and investment research through intuitive tools and real-time data.
+
+---
+
+## 🛠️ Getting Started
 
 First, run the development server:
 
@@ -12,7 +30,7 @@ yarn dev
 pnpm dev
 # or
 bun dev
-```
+
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
