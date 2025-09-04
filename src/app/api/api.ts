@@ -171,7 +171,9 @@ export async function getNews() {
         `https://financialmodelingprep.com/api/v3/${endpoints[category]}?apikey=${process.env.NEXT_PUBLIC_FINANCIAL_API_KEY}`
       );
       const data = await response.json();
+
       return data || [];
+      
     } catch (error) {
       console.error("Error fetching stock data:", error);
       return [];
