@@ -5,7 +5,7 @@ import { RootState } from "../store";
 import { setLoginState } from "../store/userSlice";
 import { supabase } from "../../../lib/supabaseClient";
 import Navbar from "./NavBar";
-import SearchBar from "./SearchBar";
+// import SearchBar from "./SearchBar";
 import Login from "../login/page";
 import PasswordRecovery from "../password-recovery/page";
 import PasswordReset from "../password-reset/page";
@@ -59,7 +59,8 @@ export default function AuthWrapper({ children }: { children: React.ReactNode })
     <div className="flex">
       {!authPages.includes(pathname) && <Navbar collapsed={collapsed} toggleNavbar={toggleNavbar} />}
       <div className="w-full">
-        {!authPages.includes(pathname) && <SearchBar collapsed={collapsed} toggleNavbar={toggleNavbar} />}
+        {/* Commented out the Search bar because I need to pay for the ability to search ticker data (will need paying users or something) */}
+        {/* {!authPages.includes(pathname) && <SearchBar collapsed={collapsed} toggleNavbar={toggleNavbar} />} */}
         {children}
       </div>
     </div>
