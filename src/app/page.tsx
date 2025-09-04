@@ -1,6 +1,6 @@
 "use client";
 import NewsWidget  from "./components/NewsWidget";
-import TrendingStocks from "./components/TrendingStocks";
+// import TrendingStocks from "./components/TrendingStocks";
 
 function HomePage() {
   return (
