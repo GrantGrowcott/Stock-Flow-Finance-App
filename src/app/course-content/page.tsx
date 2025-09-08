@@ -1,6 +1,11 @@
 import { supabase } from "../../../lib/supabaseClient";
 import VideoGallery from "../components/VideoGallery";
-import Head from "next/head";
+
+export const metadata = {
+  title: "Course Content",
+  description:
+    "Value Investing based course content to teach students how to invest link the greatest investors in the world.",
+};
 
 export default async function CourseContent() {
   const { data: files, error } = await supabase.storage.from("videos").list();
@@ -15,17 +20,8 @@ export default async function CourseContent() {
       .map((file) => supabase.storage.from("videos").getPublicUrl(file.name).data.publicUrl) || [];
 
   return (
-    <>
-      <Head>
-        <title>Course Content</title>
-        <meta
-          name="description"
-          content="Value Investing based course content to teach students how to invest link the greatest investors in the world."
-        />
-      </Head>
-      <div className="h-[calc(100vh-5rem)] overflow-y-auto ">
-        <VideoGallery videoUrls={urls} />
-      </div>
-    </>
+    <div className="h-[calc(100vh-5rem)] overflow-y-auto ">
+      <VideoGallery videoUrls={urls} />
+    </div>
   );
 }
