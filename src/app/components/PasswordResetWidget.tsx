@@ -4,7 +4,6 @@ import { useState } from "react";
 import { handlePassword } from "../../../helpers/helpers";
 import { useRouter } from "next/navigation";
 import { icons } from "@/constants";
-import Head from "next/head";
 
 const PasswordResetWidget = () => {
   const [password, setPassword] = useState("");
@@ -12,11 +11,7 @@ const PasswordResetWidget = () => {
   const router = useRouter();
 
   return (
-    <>
-      <Head>
-        <title>Password Reset</title>
-        <meta name="description" content="Page to recover the users password" />
-      </Head>
+      
       <div className="flex flex-col items-center justify-center h-screen bg-[url(/clouds.webp)] bg-cover">
         <div className="bg-gradient-to-t from-[var(--white)] to-[var(--lightBlue)] p-7 mx-5 rounded-2xl flex flex-col">
           <Image src="/login-icon.png" alt="Logo" width={icons.login} height={icons.login} className="mb-5 mx-auto" />
@@ -42,7 +37,6 @@ const PasswordResetWidget = () => {
           {successMessage && <p className="text-[var(--green)] text-center mt-4">{successMessage}</p>}
         </div>
       </div>
-    </>
   );
 };
 
