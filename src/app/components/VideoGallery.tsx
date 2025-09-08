@@ -8,7 +8,7 @@ export default function VideoGallery({ videoUrls }: Props) {
   if (!videoUrls.length) return <div>No videos found</div>;
 
   return (
-    <div className="p-6 space-y-6">
+    <div className="p-6 space-y-6 flex-2">
       {videoUrls.map((url, i) => (
         <div key={i} className="rounded-xl shadow-md p-4">
           <video controls controlsList="nodownload" className="w-full rounded-lg">

@@ -1,5 +1,6 @@
-import { supabase } from "../../../lib/supabaseClient";
+import { fetchVideoUrls } from "../../../helpers/videoHelpers";
 import VideoGallery from "../components/VideoGallery";
+import ScrollCourseContent from "../components/ScrollCourseContent";
 
 export const metadata = {
   title: "Course Content",
@@ -8,20 +9,16 @@ export const metadata = {
 };
 
 export default async function CourseContent() {
-  const { data: files, error } = await supabase.storage.from("videos").list();
-
-  if (error) {
-    console.error("Error fetching videos:", error.message);
-  }
-
-  const urls =
-    files
-      ?.filter((file) => file.name.match(/\.(mp4|mkv|webm)$/i))
-      .map((file) => supabase.storage.from("videos").getPublicUrl(file.name).data.publicUrl) || [];
+  const urls = await fetchVideoUrls();
 
   return (
-    <div className="h-[calc(100vh-5rem)] overflow-y-auto ">
-      <VideoGallery videoUrls={urls} />
+    <div className="flex h-[calc(100vh-5rem)]">
+      <div className="w-2/5 overflow-y-auto border-r">
+        <ScrollCourseContent />
+      </div>
+      <div className="w-3/5 overflow-y-auto">
+        <VideoGallery videoUrls={urls} />
+      </div>
     </div>
   );
 }
