@@ -1,4 +1,3 @@
-"use client";
 import NewsWidget from "./components/NewsWidget";
 // import TrendingStocks from "./components/TrendingStocks";
 
