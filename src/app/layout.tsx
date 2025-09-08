@@ -7,6 +7,7 @@ import { ApolloProvider } from "@apollo/client";
 import { Provider } from "react-redux";
 import { store } from "./store";
 import client from "../../lib/apollo-client";
+import Head from "next/head";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -32,6 +33,12 @@ export default function RootLayout({
     <Provider store={store}>
       <ApolloProvider client={client}> 
       <html lang="en">
+         <Head>
+            <title>Stock Flow</title>
+            <link rel="icon" href="/favicon.ico" />
+            <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+            <meta name="apple-mobile-web-app-title" content="Stock Flow" />
+          </Head>
         <body className={`${geistSans.variable} ${geistMono.variable} ${openSans.variable} antialiased`}>
           <ThemeProvider>
             <AuthWrapper>{children}</AuthWrapper> 
