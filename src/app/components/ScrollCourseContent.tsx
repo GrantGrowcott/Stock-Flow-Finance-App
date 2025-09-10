@@ -5,10 +5,9 @@ import { supabase } from "../../../lib/supabaseClient";
 export type Video = {
   id: string;
   title: string;
-  videoUrl: string;  
-  pdfId?: string;    
+  videoUrl: string;
+  pdfId?: string;
 };
-
 
 type Section = {
   number: number;
@@ -47,13 +46,10 @@ const sections: Section[] = [
   },
 ];
 
-
 export default function ScrollCourseContent({ onSelectVideo }: Props) {
   const totalVideos = sections.reduce((acc, s) => acc + s.videos.length, 0);
 
-  const [completed, setCompleted] = useState<boolean[]>(
-    Array(totalVideos).fill(false)
-  );
+  const [completed, setCompleted] = useState<boolean[]>(Array(totalVideos).fill(false));
   const [userId, setUserId] = useState<string | null>(null);
 
   useEffect(() => {
@@ -107,11 +103,7 @@ export default function ScrollCourseContent({ onSelectVideo }: Props) {
 
   // Helper to calculate global index
   const getGlobalIndex = (sectionIdx: number, videoIdx: number) => {
-    return (
-      sections
-        .slice(0, sectionIdx)
-        .reduce((acc, s) => acc + s.videos.length, 0) + videoIdx
-    );
+    return sections.slice(0, sectionIdx).reduce((acc, s) => acc + s.videos.length, 0) + videoIdx;
   };
 
   const handleVideoClick = (video: Video) => {
@@ -120,9 +112,7 @@ export default function ScrollCourseContent({ onSelectVideo }: Props) {
 
   return (
     <div className="w-full h-full overflow-y-auto border-r p-4">
-      <h1 className="font-bold text-lg mb-4 border rounded-lg w-full p-6">
-        Course Content
-      </h1>
+      <h1 className="font-bold text-lg mb-4 border rounded-lg w-full p-6">Course Content</h1>
 
       <ul className="space-y-6 p-2">
         {sections.map((section, sIdx) => (
@@ -146,11 +136,7 @@ export default function ScrollCourseContent({ onSelectVideo }: Props) {
                     />
                     <button
                       onClick={() => handleVideoClick(video)}
-                      className={`text-left ${
-                        completed[globalIndex]
-                          ? "text-gray-500"
-                          : "text-blue-600"
-                      }`}
+                      className={`text-left ${completed[globalIndex] ? "text-gray-500" : "text-blue-600"}`}
                     >
                       Video {video.id}: {video.title}
                     </button>
