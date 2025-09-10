@@ -31,7 +31,7 @@ export default function VideoGallery({ video }: VideoGalleryProps) {
 
       {video.pdfId && (
         <a
-          href={`/api/file?id=${video.pdfId}`}
+          href={`/api/video?id=${video.pdfId}`}
           target="_blank"
           rel="noopener noreferrer"
           className="block mt-4 text-blue-600 underline"

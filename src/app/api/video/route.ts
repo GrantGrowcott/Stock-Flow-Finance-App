@@ -1,5 +1,19 @@
 import { google } from "googleapis";
 import { NextRequest, NextResponse } from "next/server";
+import { Readable } from "stream";
+
+function nodeToWebStream(nodeStream: Readable): ReadableStream {
+  return new ReadableStream({
+    start(controller) {
+      nodeStream.on("data", (chunk) => controller.enqueue(chunk));
+      nodeStream.on("end", () => controller.close());
+      nodeStream.on("error", (err) => controller.error(err));
+    },
+    cancel() {
+      nodeStream.destroy();
+    },
+  });
+}
 
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
@@ -18,13 +32,11 @@ export async function GET(req: NextRequest) {
 
     const drive = google.drive({ version: "v3", auth: oauth2Client });
 
-    // Get file metadata to know size and type
     const fileMeta = await drive.files.get({ fileId, fields: "name,mimeType,size" });
     const fileName = fileMeta.data.name || "video.mp4";
     const mimeType = fileMeta.data.mimeType || "video/mp4";
     const fileSize = Number(fileMeta.data.size);
 
-    // Parse Range header
     const rangeHeader = req.headers.get("range");
     let start = 0;
     let end = fileSize - 1;
@@ -39,13 +51,13 @@ export async function GET(req: NextRequest) {
 
     const contentLength = end - start + 1;
 
-    // Get partial content from Google Drive
     const response = await drive.files.get(
       { fileId, alt: "media" },
       { headers: { Range: `bytes=${start}-${end}` }, responseType: "stream" }
     );
 
-    const stream = response.data as any; // Node Readable stream
+    // Convert Node Readable to Web ReadableStream
+    const stream = nodeToWebStream(response.data as Readable);
 
     return new NextResponse(stream, {
       status: rangeHeader ? 206 : 200,
@@ -59,8 +71,15 @@ export async function GET(req: NextRequest) {
         }),
       },
     });
-  } catch (err: any) {
+  } catch (err: unknown) {
+  if (err instanceof Error) {
+    // Now TypeScript knows `err` has a `message`
     console.error(err);
     return NextResponse.json({ error: err.message }, { status: 500 });
+  } else {
+    console.error(err);
+    return NextResponse.json({ error: "Unknown error" }, { status: 500 });
   }
+}
+
 }
