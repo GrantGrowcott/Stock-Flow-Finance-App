@@ -17,6 +17,7 @@
     "@supabase/supabase-js": "^2.48.1",
     "ajv": "^8.17.1",
     "better-auth": "^1.1.18",
+    "googleapis": "^159.0.0",
     "graphql": "^16.10.0",
     "lodash.debounce": "^4.0.8",
     "next": "15.1.7",
